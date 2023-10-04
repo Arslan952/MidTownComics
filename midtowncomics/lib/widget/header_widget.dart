@@ -145,40 +145,42 @@ class _Header_WidgetState extends State<Header_Widget> {
                               size: allsize * 0.02,
                             )),
                       ),
-                            Consumer<StreamedDataProvider>(builder: (context, provider, child) {
-                              List<dynamic>cartdatalist=provider.cartdata['DATA']['cartList'];
-                              String totalnumber=cartdatalist.isEmpty?"":cartdatalist[0]['cart_total_qty'];
-                              return Padding(
-                                padding: EdgeInsets.only(right: size.width * 0.05),
-                                child: IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const CustomDialougue2();
-                                      },
-                                    );
-                                  },
-                                  icon: Badge(
-                                    backgroundColor: const Color(0xffdf0b14),
-                                    largeSize: allsize * 0.016,
-                                    offset: Offset(allsize * 0.01, -allsize * 0.005),
-                                    // position: BadgePosition.bottomRight(allsize * 0.01),
-                                    label: Text(
-                                      totalnumber,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: allsize * 0.01),
-                                    ),
-                                    child: Icon(
-                                      CupertinoIcons.cart_fill,
-                                      color: Colors.white,
-                                      size: allsize * 0.02,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            })
+                            // Consumer<StreamedDataProvider>(builder: (context, provider, child) {
+                            //   List<dynamic>cartdatalist=provider.cartdata['DATA']['cartList'];
+                            //   String totalnumber=cartdatalist.isEmpty?"":cartdatalist[0]['cart_total_qty'];
+                            //   return
+                            // })
+                       Padding(
+              padding: EdgeInsets.only(right: size.width * 0.05),
+              child: IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const CustomDialougue2();
+                    },
+                  );
+                },
+                icon: Badge(
+                  backgroundColor: const Color(0xffdf0b14),
+                  largeSize: allsize * 0.016,
+                  offset: Offset(allsize * 0.01, -allsize * 0.005),
+                  // isLabelVisible: cartdatalist.isEmpty?false:true,
+                  // position: BadgePosition.bottomRight(allsize * 0.01),
+                  label: Text(
+                    "4",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: allsize * 0.01),
+                  ),
+                  child: Icon(
+                    CupertinoIcons.cart_fill,
+                    color: Colors.white,
+                    size: allsize * 0.02,
+                  ),
+                ),
+              ),
+            )
                     ],
                   ),
                   SizedBox(
