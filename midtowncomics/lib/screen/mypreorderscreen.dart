@@ -30,15 +30,16 @@ class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
               children: [
                 SizedBox(height: size.height * 0.16),
                     Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "My Pre-Orders",
-                    style: TextStyle(fontSize:allsize*0.02, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: allsize * 0.02, fontWeight: FontWeight.bold),
                   ),
                 ),
                 //Order In Process
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: double.infinity,
                     child: Card(
@@ -48,11 +49,11 @@ class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                               Text(
+                            Text(
                               "Approved Data",
                               style: TextStyle(
-                                  color: Color(0xff006ccf),
-                                  fontSize: allsize*0.016,
+                                  color: const Color(0xff006ccf),
+                                  fontSize: allsize * 0.016,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(

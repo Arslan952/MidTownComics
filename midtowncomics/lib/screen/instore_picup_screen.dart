@@ -12,7 +12,6 @@ class InStorePickupScreen extends StatefulWidget {
 }
 
 class _InStorePickupScreenState extends State<InStorePickupScreen> {
-  @override
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -37,13 +36,13 @@ class _InStorePickupScreenState extends State<InStorePickupScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: SizedBox(
                     width: double.infinity,
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

@@ -27,12 +27,12 @@ class ViewMoreCustomDialugue extends StatelessWidget {
                       fontSize: allsize * 0.012, fontWeight: FontWeight.w500)),
             ),
             ListTile(
-              title: Text("Graphic Novel",
+              title: Text("Graphic Novels",
                   style: TextStyle(
                       fontSize: allsize * 0.012, fontWeight: FontWeight.w500)),
             ),
             ListTile(
-              title: Text("Action Figure",
+              title: Text("Action Figures",
                   style: TextStyle(
                       fontSize: allsize * 0.012, fontWeight: FontWeight.w500)),
             ),
@@ -42,7 +42,7 @@ class ViewMoreCustomDialugue extends StatelessWidget {
                       fontSize: allsize * 0.012, fontWeight: FontWeight.w500)),
             ),
             ListTile(
-              title: Text("Collectible",
+              title: Text("Collectibles",
                   style: TextStyle(
                       fontSize: allsize * 0.012, fontWeight: FontWeight.w500)),
             ),

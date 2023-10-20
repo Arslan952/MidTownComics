@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:midtowncomics/screen/account_setting.dart';
 import 'package:midtowncomics/screen/all_faq_screen.dart';
 import 'package:midtowncomics/screen/browsepulllist.dart';
@@ -39,8 +40,10 @@ class _FooterState extends State<Footer> {
               tilePadding: EdgeInsets.zero,
               title: Text(
                 "ABOUT US",
-                style: TextStyle(
-                    color: const Color(0xff006ccf), fontSize: allsize * 0.0113),
+                style: GoogleFonts.openSans(
+                    color: const Color(0xff006ccf),
+                    fontSize: allsize * 0.0113,
+                    fontWeight: FontWeight.w600),
               ),
               onExpansionChanged: (value) {
                 setState(() {
@@ -51,20 +54,30 @@ class _FooterState extends State<Footer> {
                 ListTile(
                   title: Text(
                     "CONTACT INFORMATION",
-                    style: TextStyle(fontSize: allsize * 0.0113),
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
                     Get.to(const ContactInformationScreen());
                   },
                 ),
                 ListTile(
-                  title: Text("CUSTOMER TESTIMONIAL",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "CUSTOMER TESTIMONIALS",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("SIGNING & EVENT",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "SIGNING & EVENTS",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 )
               ],
@@ -78,8 +91,10 @@ class _FooterState extends State<Footer> {
               tilePadding: EdgeInsets.zero,
               title: Text(
                 "OUR STORIES",
-                style: TextStyle(
-                    color: Color(0xff006ccf), fontSize: allsize * 0.0113),
+                style: GoogleFonts.openSans(
+                    color: Color(0xff006ccf),
+                    fontSize: allsize * 0.0113,
+                    fontWeight: FontWeight.w600),
               ),
               onExpansionChanged: (value) {
                 setState(() {
@@ -88,23 +103,39 @@ class _FooterState extends State<Footer> {
               },
               children: <Widget>[
                 ListTile(
-                  title: Text("DOWNTOWN",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "DOWNTOWN",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("GRAND CENTRAL",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "GRAND CENTRAL",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("TIMES SQUARE",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "TIMES SQUARE",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("ASTORIA OUTLET",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "ASTORIA OUTLET",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 )
               ],
@@ -118,8 +149,10 @@ class _FooterState extends State<Footer> {
               tilePadding: EdgeInsets.zero,
               title: Text(
                 "COMMUNITY",
-                style: TextStyle(
-                    color: Color(0xff006ccf), fontSize: allsize * 0.0113),
+                style: GoogleFonts.openSans(
+                    color: Color(0xff006ccf),
+                    fontSize: allsize * 0.0113,
+                    fontWeight: FontWeight.w600),
               ),
               onExpansionChanged: (value) {
                 setState(() {
@@ -128,33 +161,57 @@ class _FooterState extends State<Footer> {
               },
               children: <Widget>[
                 ListTile(
-                  title: Text("BLOG",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "BLOG",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("FACEBOOK",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "FACEBOOK",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("INSTAGRAM",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "INSTAGRAM",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("TUMBLR",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "TUMBLR",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("TWITTER",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "TWITTER",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("YOUTUBE",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "YOUTUBE",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 )
               ],
@@ -168,8 +225,10 @@ class _FooterState extends State<Footer> {
               tilePadding: EdgeInsets.zero,
               title: Text(
                 "MY ACCOUNT",
-                style: TextStyle(
-                    color: Color(0xff006ccf), fontSize: allsize * 0.0113),
+                style: GoogleFonts.openSans(
+                    color: Color(0xff006ccf),
+                    fontSize: allsize * 0.0113,
+                    fontWeight: FontWeight.w600),
               ),
               onExpansionChanged: (value) {
                 setState(() {
@@ -178,55 +237,87 @@ class _FooterState extends State<Footer> {
               },
               children: <Widget>[
                 ListTile(
-                  title: Text("ORDER STATUS",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "ORDER STATUS",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.to(const MyOrderScreen());
                   },
                 ),
                 ListTile(
-                  title: Text("ACCOUNT SETTINGS",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "ACCOUNT SETTINGS",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.to(const MyAccountSetting());
                   },
                 ),
                 ListTile(
-                  title: Text("SUBSCRIPTION SETTINGS",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "SUBSCRIPTION SETTINGS",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.to(const NewsLetterScreen());
                   },
                 ),
                 ListTile(
-                  title: Text("CHECK GIFT CARD BALANCE",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "CHECK GIFT CARD BALANCE",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.to(const ManageGiftCards());
                   },
                 ),
                 ListTile(
-                  title: Text("PULL LIST FAQ",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "PULL LIST FAQ",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.to(const FaqSacreen());
                   },
                 ),
                 ListTile(
-                  title: Text("PULL LIST",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "PULL LIST",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.to(const BrowsePullList());
                   },
                 ),
                 ListTile(
-                  title: Text("PREVIEWS FAQ",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "PREVIEWS FAQ",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("PREVIEWS",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "PREVIEWS",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 )
               ],
@@ -240,8 +331,10 @@ class _FooterState extends State<Footer> {
               tilePadding: EdgeInsets.zero,
               title: Text(
                 "CUSTOMER SERVICE",
-                style: TextStyle(
-                    color: const Color(0xff006ccf), fontSize: allsize * 0.0113),
+                style: GoogleFonts.openSans(
+                    color: Color(0xff006ccf),
+                    fontSize: allsize * 0.0113,
+                    fontWeight: FontWeight.w600),
               ),
               onExpansionChanged: (value) {
                 setState(() {
@@ -250,46 +343,74 @@ class _FooterState extends State<Footer> {
               },
               children: <Widget>[
                 ListTile(
-                  title: Text("IN-STORE PICK-UP",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "IN-STORE PICK-UP",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.to(const InStorePickupScreen());
                   },
                 ),
                 ListTile(
-                  title: Text("SITEMAP",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "SITEMAP",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title:
-                      Text("FAQ", style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "FAQ",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.off(const AllFaqScreen());
                   },
                 ),
                 ListTile(
-                  title: Text("PRIVACY POLICY",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "PRIVACY POLICY",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.to(const PrivacyPolicy());
                   },
                 ),
                 ListTile(
-                  title: Text("UNSUBSCRIBE NEWSLETTER",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "UNSUBSCRIBE NEWSLETTER",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.to(const NewsLetterScreen());
                   },
                 ),
                 ListTile(
-                  title: Text("TERMS & CONDITIONS",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "TERMS & CONDITIONS",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {},
                 ),
                 ListTile(
-                  title: Text("SHIPPING INFORMATION",
-                      style: TextStyle(fontSize: allsize * 0.0113)),
+                  title: Text(
+                    "SHIPPING INFORMATION",
+                    style: GoogleFonts.openSans(
+                        fontSize: allsize * 0.0113,
+                        fontWeight: FontWeight.w600),
+                  ),
                   onTap: () {
                     Get.to(const ShippingFaqScreen());
                   },
@@ -320,10 +441,10 @@ class _FooterState extends State<Footer> {
             height: size.height * 0.01,
           ),
           Text(
-            "All Site Content and 2018 Midtown Comics, unless otherwise noted All Right Reserved",
+            "All Site Content and 2018 Midtown Comics, unless otherwise noted\n All Right Reserved",
             textAlign: TextAlign.center,
-            style:
-                TextStyle(color: const Color(0xff006ccf), fontSize: allsize * 0.01),
+            style: TextStyle(
+                color: const Color(0xff006ccf), fontSize: allsize * 0.01),
           )
         ],
       ),

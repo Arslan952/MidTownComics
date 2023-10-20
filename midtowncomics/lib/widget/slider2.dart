@@ -26,7 +26,7 @@ class _Slider2State extends State<Slider2> {
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Consumer<StreamedDataProvider>(builder: (context, provider, child) {
       List<dynamic> data = [
-        'FREE SHIPPING',
+        'FREE SHIPPING!',
         'FREE BAG AND BOARD',
         'FREE IN-STORE PICK UP'
       ];

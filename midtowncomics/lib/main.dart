@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:midtowncomics/provider/filterprovider.dart';
 import 'package:midtowncomics/provider/streamdataprovider.dart';
 import 'package:midtowncomics/screen/splashscreen.dart';
+import 'package:midtowncomics/services/navigationserice.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -25,8 +27,11 @@ void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown]);
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => StreamedDataProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => StreamedDataProvider()),
+        ChangeNotifierProvider(create: (_) => FilterProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -40,6 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return GetMaterialApp(
+      navigatorKey: NavigationService.navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Midtown Comics',
       theme: ThemeData(

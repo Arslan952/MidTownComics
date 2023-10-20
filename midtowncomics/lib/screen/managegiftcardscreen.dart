@@ -67,7 +67,7 @@ class _ManageGiftCardsState extends State<ManageGiftCards> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: size.width * 0.5,
                                 child: TextFormField(
                                   decoration: InputDecoration(
@@ -76,7 +76,7 @@ class _ManageGiftCardsState extends State<ManageGiftCards> {
                                           TextStyle(color: Colors.grey[500],fontSize: allsize*0.013)),
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 width: size.width * 0.3,
                                 child: TextFormField(
                                   decoration: InputDecoration(

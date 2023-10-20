@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:midtowncomics/services/apirequest.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/streamdataprovider.dart';
@@ -18,41 +19,15 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   List<dynamic> data = [];
 
-  Future<List<dynamic>> fetchData() async {
+  Future<void> fetchData() async {
     final streamedDataProvider =
         Provider.of<StreamedDataProvider>(context, listen: false);
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'https://www.midtowncomics.com/wcfmt/services/midtownprocess.svc/load-page-data-vr1?apiKey=ProductApiKey@8879kiop!&mtUser=AppUserMT@123!&mtPass=MTC007@8847!&sh_id=76367&pgn=home&rvl=1000,1002,1003&app_id='));
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      await Future.delayed(const Duration(seconds: 2));
-      Get.off(const HomeScreen());
-      final data = await response.stream.bytesToString();
-      streamedDataProvider.updateData(jsonDecode(data));
-    } else {
-      print(response.reasonPhrase);
-    }
-    return data;
+    Map<String,dynamic>data=await ApiRequests().fetchData();
+      streamedDataProvider.updateData(data);
   }
-  Future<void>cartdata()async{
-    final streamedDataProvider =
-    Provider.of<StreamedDataProvider>(context, listen: false);
-    var request = http.Request('GET', Uri.parse('https://www.midtowncomics.com/wcfmt/services/cart.svc/load-by-shopper?apiKey=&mtUser=&mtPass=&sh_id=76367&app_id='));
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      final data = await response.stream.bytesToString();
-      print(data);
-      streamedDataProvider.updateCartData(jsonDecode(data));
-    }
-    else {
-      print(response.reasonPhrase);
-    }
-  }
+
   void initState() {
     fetchData();
-    cartdata();
     // TODO: implement initState
     super.initState();
   }

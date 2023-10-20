@@ -124,7 +124,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                     ),
                     const SubcribeWidget(),
                     SizedBox(height: size.height*0.02,),
-                    Footer(),
+                    const Footer(),
                     SizedBox(
                       height: size.height * 0.05,
                     )

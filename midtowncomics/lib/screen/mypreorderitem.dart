@@ -32,7 +32,7 @@ class _MyPreOrderState extends State<MyPreOrder> {
               children: [
                 SizedBox(height: size.height * 0.16),
                 Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "My Pre-Order Item",
                       style: TextStyle(
@@ -41,20 +41,20 @@ class _MyPreOrderState extends State<MyPreOrder> {
                     )),
                 //Pending Item
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: double.infinity,
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Pending Items",
                               style: TextStyle(
-                                  color: Color(0xff006ccf),
+                                  color: const Color(0xff006ccf),
                                   fontSize: allsize * 0.016,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -101,20 +101,20 @@ class _MyPreOrderState extends State<MyPreOrder> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: double.infinity,
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Processed Item",
                               style: TextStyle(
-                                  color: Color(0xff006ccf),
+                                  color: const Color(0xff006ccf),
                                   fontSize: allsize * 0.016,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -173,20 +173,20 @@ class _MyPreOrderState extends State<MyPreOrder> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: double.infinity,
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Cancelled Item",
                               style: TextStyle(
-                                  color: Color(0xff006ccf),
+                                  color: const Color(0xff006ccf),
                                   fontSize: allsize * 0.016,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -251,7 +251,7 @@ class _MyPreOrderState extends State<MyPreOrder> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )

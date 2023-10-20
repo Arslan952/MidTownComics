@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:midtowncomics/screen/newsletterscreen.dart';
 class SubcribeWidget extends StatelessWidget {
   const SubcribeWidget({super.key});
@@ -30,10 +31,10 @@ class SubcribeWidget extends StatelessWidget {
             children: [
                  Text(
                 "Get The Latest Scoop!",
-                style: TextStyle(
+                style: GoogleFonts.openSans(
                     color: const Color(0xff006ccf),
-                    fontSize: allsize*0.024,
-                    fontWeight: FontWeight.w500),
+                    fontSize: allsize*0.027,
+                    fontWeight: FontWeight.w600),
               ),
                   Text(
                 "Subscribe To Our NewsLetter For Special Saving And Offers!",
@@ -49,27 +50,24 @@ class SubcribeWidget extends StatelessWidget {
                   child: Container(
                     height: size.height * 0.045,
                     width: size.width * 0.3,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff006ccf),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2), // Shadow color
-                          spreadRadius: 1, // Spread radius
-                          blurRadius: 2, // Blur radius
-                          offset: const Offset(0, 2), // Offset from the top-left corner
-                        ),
-                      ],
+                    decoration: const BoxDecoration(
+                      color: Color(0xff006ccf),
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Colors.black.withOpacity(0.2), // Shadow color
+                      //     spreadRadius: 1, // Spread radius
+                      //     blurRadius: 2, // Blur radius
+                      //     offset: const Offset(0, 2), // Offset from the top-left corner
+                      //   ),
+                      // ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Text(
-                          "SUBSCRIBE",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: allsize * 0.015,
-                            fontWeight: FontWeight.w500,
-                          ),
+                    child: Center(
+                      child: Text(
+                        "SUBSCRIBE",
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontSize: allsize * 0.016,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -81,9 +79,9 @@ class SubcribeWidget extends StatelessWidget {
                Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text("Weekly",style: TextStyle(color: Colors.grey,fontSize: allsize*0.0113),),
-                  Text('Daily Deals',style: TextStyle(color: Colors.grey,fontSize: allsize*0.0113)),
-                  Text("Back Issue",style: TextStyle(color: Colors.grey,fontSize: allsize*0.0113))
+                  Text("Weekly",style: TextStyle(color: Colors.grey[600],fontSize: allsize*0.0113),),
+                  Text('Daily Deals',style: TextStyle(color: Colors.grey[600],fontSize: allsize*0.0113)),
+                  Text("Back Issue",style: TextStyle(color: Colors.grey[600],fontSize: allsize*0.0113))
                 ],
               )
             ],

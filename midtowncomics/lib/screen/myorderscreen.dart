@@ -102,7 +102,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

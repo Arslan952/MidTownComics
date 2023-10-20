@@ -38,11 +38,11 @@ class _BrowsePullListState extends State<BrowsePullList> {
                       style:
                           TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                     )),
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
+                const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: SizedBox(
                       width: double.infinity,
-                      child: const Card(
+                      child: Card(
                         elevation: 3,
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
@@ -94,7 +94,7 @@ class _BrowsePullListState extends State<BrowsePullList> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )

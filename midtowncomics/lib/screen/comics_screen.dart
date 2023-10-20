@@ -38,7 +38,7 @@ class _ComicScreenState extends State<ComicScreen> {
                           TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                     )),
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
                       height: size.height * 0.03,
                       width: size.width * 0.6,
@@ -62,13 +62,13 @@ class _ComicScreenState extends State<ComicScreen> {
                       ),
                     )),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: SizedBox(
                     width: double.infinity,
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -212,7 +212,7 @@ class _ComicScreenState extends State<ComicScreen> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )

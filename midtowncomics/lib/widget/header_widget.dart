@@ -1,8 +1,13 @@
-import 'dart:convert';
+// ignore_for_file: must_be_immutable, camel_case_types
 
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:midtowncomics/screen/loginscreen.dart';
+import 'package:midtowncomics/screen/seachpage.dart';
+import 'package:midtowncomics/services/apirequest.dart';
 import 'package:midtowncomics/widget/customdialouge1.dart';
 import 'package:midtowncomics/widget/searchcustomdialaugue.dart';
 import 'package:provider/provider.dart';
@@ -10,14 +15,15 @@ import 'package:provider/provider.dart';
 import '../provider/streamdataprovider.dart';
 import 'customdialaugue2.dart';
 import 'customdialugue3.dart';
-import 'package:http/http.dart'as http;
 
 class Header_Widget extends StatefulWidget {
+  TextEditingController?searchcontroller;
   Function() ontap;
 
   Header_Widget({
     super.key,
     required this.ontap,
+    this.searchcontroller
   });
 
   @override
@@ -25,14 +31,21 @@ class Header_Widget extends StatefulWidget {
 }
 
 class _Header_WidgetState extends State<Header_Widget> {
-  String select = "All";
   final FocusNode _focusNode = FocusNode();
-  TextEditingController searchcontroller = TextEditingController();
   bool _showIcon = true;
-
   @override
   void initState() {
     super.initState();
+    widget.searchcontroller?.addListener(() {
+      final provider=Provider.of<StreamedDataProvider>(context,listen: false);
+      provider.updatesearchselextion(widget.searchcontroller!.text);
+      provider.searchlist(true);
+      if (widget.searchcontroller!.text.isEmpty) {
+        Provider.of<StreamedDataProvider>(context, listen: false).removesearchdata();
+      } else {
+        ApiRequests().SearchApi(widget.searchcontroller!.text,provider.title=="All"?"":provider.title,'10','0','0'," "," ","","",""," ","","","","","", false,"",context);
+      }
+    });
     _focusNode.addListener(() {
       setState(() {
         _showIcon = !_focusNode.hasFocus;
@@ -89,19 +102,11 @@ class _Header_WidgetState extends State<Header_Widget> {
                         ),
                         onTap: () async {
                           final streamedDataProvider =
-                          Provider.of<StreamedDataProvider>(context, listen: false);
-                          var request = http.Request(
-                              'GET',
-                              Uri.parse(
-                                  'https://www.midtowncomics.com/wcfmt/services/midtownprocess.svc/load-page-data-vr1?apiKey=ProductApiKey@8879kiop!&mtUser=AppUserMT@123!&mtPass=MTC007@8847!&sh_id=76367&pgn=home&rvl=1000,1002,1003&app_id='));
-                          http.StreamedResponse response = await request.send();
-                          if (response.statusCode == 200) {
-                            await Future.delayed(const Duration(seconds: 2));
-                            final data = await response.stream.bytesToString();
-                            streamedDataProvider.updateData(jsonDecode(data));
-                          } else {
-                            print(response.reasonPhrase);
-                          }
+                              Provider.of<StreamedDataProvider>(context,
+                                  listen: false);
+                          Map<String, dynamic> data =
+                              await ApiRequests().fetchData1(provider.loginuserdata.isEmpty?"":provider.loginuserdata['sh_id']);
+                          streamedDataProvider.updateData(data);
                         },
                       ),
                       IconButton(
@@ -121,6 +126,7 @@ class _Header_WidgetState extends State<Header_Widget> {
                       ),
                       IconButton(
                         onPressed: () {
+                          provider.loginuserdata.isEmpty?Get.to(const SignInScreen()):
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -128,59 +134,107 @@ class _Header_WidgetState extends State<Header_Widget> {
                             },
                           );
                         },
-                        icon: Badge(
-                            backgroundColor: const Color(0xffdf0b14),
-                            largeSize: allsize * 0.016,
-                            offset: Offset(allsize * 0.01, -allsize * 0.005),
-                            // position: BadgePosition.bottomRight(allsize * 0.01),
-                            label: Text(
-                              "2",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: allsize * 0.01),
-                            ),
-                            child: Icon(
-                              Icons.book,
-                              color: Colors.white,
-                              size: allsize * 0.02,
-                            )),
+                        icon: badges.Badge(
+                          showBadge: provider.cartdata['DATA'] == null || provider.loginuserdata.isEmpty
+                              ? false
+                              : true,
+                          onTap: () {
+                          },
+                          badgeAnimation: const badges.BadgeAnimation.scale(
+                            animationDuration: Duration(seconds: 1),
+                            colorChangeAnimationDuration: Duration(seconds: 1),
+                            loopAnimation: false,
+                            curve: Curves.fastOutSlowIn,
+                            colorChangeAnimationCurve: Curves.easeInCubic,
+                          ),
+                          badgeContent: Text(
+                            "2",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: allsize * 0.01),
+                          ),
+                          child: Icon(
+                            Icons.book,
+                            color: Colors.white,
+                            size: allsize * 0.02,
+                          ),
+                        ),
                       ),
-                            // Consumer<StreamedDataProvider>(builder: (context, provider, child) {
-                            //   List<dynamic>cartdatalist=provider.cartdata['DATA']['cartList'];
-                            //   String totalnumber=cartdatalist.isEmpty?"":cartdatalist[0]['cart_total_qty'];
-                            //   return
-                            // })
-                       Padding(
-              padding: EdgeInsets.only(right: size.width * 0.05),
-              child: IconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const CustomDialougue2();
-                    },
-                  );
-                },
-                icon: Badge(
-                  backgroundColor: const Color(0xffdf0b14),
-                  largeSize: allsize * 0.016,
-                  offset: Offset(allsize * 0.01, -allsize * 0.005),
-                  // isLabelVisible: cartdatalist.isEmpty?false:true,
-                  // position: BadgePosition.bottomRight(allsize * 0.01),
-                  label: Text(
-                    "4",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: allsize * 0.01),
-                  ),
-                  child: Icon(
-                    CupertinoIcons.cart_fill,
-                    color: Colors.white,
-                    size: allsize * 0.02,
-                  ),
-                ),
-              ),
-            )
+                      Consumer<StreamedDataProvider>(
+                          builder: (context, provider, child) {
+                            // if (provider.searchselection != "") {
+                            //   searchcontroller.text = provider.searchselection;
+                            // }
+                        List<dynamic> cartdatalist =
+                            provider.cartdata['DATA'] == null
+                                ? []
+                                : provider.cartdata['DATA']['cartList'];
+                        double totalprice = double.parse(
+                            provider.cartdata['DATA'] == null
+                                ? "0"
+                                : cartdatalist[0]['cart_total']);
+                        int convert = totalprice.toInt();
+                        String totalnumber = provider.cartdata['DATA'] == null
+                            ? ""
+                            : cartdatalist[0]['cart_total_qty'];
+                        double badgeSize;
+                        if (totalnumber.length == 1) {
+                          badgeSize =
+                              allsize * 0.013; // Adjust badge size for 1 digit
+                        } else if (totalnumber.length == 2) {
+                          badgeSize =
+                              allsize * 0.008; // Adjust badge size for 2 digits
+                        } else if (totalnumber.length == 3) {
+                          badgeSize =
+                              allsize * 0.007; // Adjust badge size for 3 digits
+                        } else {
+                          badgeSize = allsize * 0.01; // Default badge size
+                        }
+                        return Padding(
+                          padding: EdgeInsets.only(right: size.width * 0.05),
+                          child: IconButton(
+                              onPressed: () {
+                                provider.loginuserdata.isEmpty?Get.to(const SignInScreen()):
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const CustomDialougue2();
+                                  },
+                                );
+                              },
+                              icon: badges.Badge(
+                                showBadge: provider.cartdata['DATA'] == null || provider.loginuserdata.isEmpty
+                                    ? false
+                                    : true,
+                                position: badges.BadgePosition.topEnd(),
+                                badgeAnimation:
+                                    const badges.BadgeAnimation.scale(
+                                  animationDuration: Duration(seconds: 1),
+                                  colorChangeAnimationDuration:
+                                      Duration(seconds: 1),
+                                  loopAnimation: false,
+                                  curve: Curves.fastOutSlowIn,
+                                  colorChangeAnimationCurve: Curves.easeInCubic,
+                                ),
+                                badgeStyle: badges.BadgeStyle(
+                                  badgeColor: totalprice > 89
+                                      ? Colors.green
+                                      : Colors.red,
+                                  padding: const EdgeInsets.all(5),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                badgeContent: Text(
+                                  totalnumber,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: badgeSize),
+                                ),
+                                child: Icon(
+                                  CupertinoIcons.cart_fill,
+                                  color: Colors.white,
+                                  size: allsize * 0.02,
+                                ),
+                              )),
+                        );
+                      }),
                     ],
                   ),
                   SizedBox(
@@ -201,7 +255,7 @@ class _Header_WidgetState extends State<Header_Widget> {
                             )),
                         Container(
                           color: Colors.white,
-                          height: size.height * 0.052,
+                          // height: size.height * 0.052,
                           child: Row(
                             children: [
                               InkWell(
@@ -216,19 +270,19 @@ class _Header_WidgetState extends State<Header_Widget> {
                                 child: Container(
                                     width: size.width * 0.22,
                                     color: const Color(0xffefefef),
-                                    height: size.height * 0.052,
+                                    height: size.height * 0.06,
                                     child: Padding(
                                       padding: EdgeInsets.all(
                                           MediaQuery.of(context)
                                                       .size
                                                       .shortestSide <
                                                   550
-                                              ? allsize * 0.01
+                                              ? allsize * 0.013
                                               : allsize * 0.007),
                                       child: Text(
                                         provider.title,
                                         style: TextStyle(
-                                            fontSize: allsize * 0.0125),
+                                            fontSize: allsize * 0.013),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     )),
@@ -237,37 +291,52 @@ class _Header_WidgetState extends State<Header_Widget> {
                                 width: size.width * 0.59,
                                 child: TextFormField(
                                   focusNode: _focusNode,
-                                  controller: searchcontroller,
+                                  controller: widget.searchcontroller,
+                                  textInputAction: TextInputAction.search,
+                                  onEditingComplete: () {
+                                    provider.searchlist(false);
+                                    FocusScope.of(context).unfocus();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const SearchPage()),
+                                    );
+                                  },
                                   style: TextStyle(
-                                      fontSize: allsize * 0.018,
-                                      fontWeight: FontWeight.w300),
+                                    fontSize: allsize * 0.017,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                  maxLines: 1,
+                                  textAlignVertical: TextAlignVertical.center,
                                   decoration: InputDecoration(
                                     prefixIcon: _showIcon
                                         ? Icon(
-                                            Icons.search,
-                                            size: allsize * 0.02,
-                                          )
+                                      Icons.search,
+                                      size: allsize * 0.02,
+                                    )
                                         : null,
                                     filled: true,
                                     fillColor: Colors.white,
-                                    // contentPadding: const EdgeInsets.all(0.1),
                                     border: InputBorder.none,
                                     suffixIcon: _focusNode.hasFocus
                                         ? IconButton(
-                                            onPressed: () {
-                                              _focusNode.unfocus();
-                                              searchcontroller.clear();
-                                            },
-                                            icon: Icon(
-                                              CupertinoIcons.clear,
-                                              size: allsize * 0.02,
-                                              color: Colors.grey[500],
-                                            ),
-                                          )
+                                      onPressed: () {
+                                        provider.searchlist(false);
+                                        widget.searchcontroller!.clear();
+                                        provider.removesearchdata();
+                                        provider.updatesearchselextion("");
+                                        _focusNode.unfocus();
+                                      },
+                                      icon: Icon(
+                                        CupertinoIcons.clear,
+                                        size: allsize * 0.02,
+                                        color: Colors.grey[500],
+                                      ),
+                                    )
                                         : const SizedBox.shrink(),
                                   ),
                                 ),
                               ),
+
                             ],
                           ),
                         )

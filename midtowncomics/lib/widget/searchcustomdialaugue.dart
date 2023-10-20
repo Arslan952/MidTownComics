@@ -31,10 +31,10 @@ class SearchDialugue extends StatelessWidget {
                 },
               ),
               ListTile(
-                title:  Text("All Comics",  style: TextStyle(fontSize: allsize*0.011),),
+                title:  Text("Comics",  style: TextStyle(fontSize: allsize*0.011),),
                 onTap: () {
                   Provider.of<StreamedDataProvider>(context, listen: false)
-                      .changetitle("All Comics");
+                      .changetitle("Comics");
                   Navigator.pop(context);
                 },
               ),
@@ -42,7 +42,7 @@ class SearchDialugue extends StatelessWidget {
                 title:  Text("Back Issue",  style: TextStyle(fontSize: allsize*0.011),),
                 onTap: () {
                   Provider.of<StreamedDataProvider>(context, listen: false)
-                      .changetitle("Back Issue");
+                      .changetitle("Back Issues");
                   Navigator.pop(context);
                 },
               ),

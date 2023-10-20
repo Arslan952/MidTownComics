@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 import '../widget/footer.dart';
@@ -78,7 +80,7 @@ class _AllFaqScreenState extends State<AllFaqScreen> {
                 Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: data.length,
                       itemBuilder: (context, index) {
@@ -92,7 +94,7 @@ class _AllFaqScreenState extends State<AllFaqScreen> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )
@@ -118,7 +120,7 @@ class QuestionAnswer {
 class QuestionAnswerTile extends StatefulWidget {
   final QuestionAnswer questionAnswer;
 
-  QuestionAnswerTile({required this.questionAnswer});
+  const QuestionAnswerTile({super.key, required this.questionAnswer});
 
   @override
   _QuestionAnswerTileState createState() => _QuestionAnswerTileState();
@@ -142,7 +144,7 @@ class _QuestionAnswerTileState extends State<QuestionAnswerTile> {
         },
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Text(widget.questionAnswer.answer),
           ),
         ],

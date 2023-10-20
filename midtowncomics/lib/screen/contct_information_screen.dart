@@ -32,14 +32,14 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
               children: [
                 SizedBox(height: size.height * 0.16),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "About Us",
                       style:
                           TextStyle(fontSize:allsize*0.02, fontWeight: FontWeight.bold),
                     )),
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
                       height: size.height * 0.03,
                       width: size.width * 0.6,
@@ -63,13 +63,13 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                       ),
                     )),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: SizedBox(
                     width: double.infinity,
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -151,7 +151,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                                 onPressed: () {},
                                 child:  Text(
                                   'Times Square',
-                                  style: TextStyle(color: Color(0xff006ccf),fontSize: allsize*0.011),
+                                  style: TextStyle(color: const Color(0xff006ccf),fontSize: allsize*0.011),
                                 ),
                               ),
                             ),
@@ -170,7 +170,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                                 onPressed: () {},
                                 child:  Text(
                                   'Grand Central',
-                                  style: TextStyle(color: Color(0xff006ccf),fontSize: allsize*0.011),
+                                  style: TextStyle(color: const Color(0xff006ccf),fontSize: allsize*0.011),
                                 ),
                               ),
                             ),
@@ -208,7 +208,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )

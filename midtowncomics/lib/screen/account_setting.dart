@@ -54,7 +54,7 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
                         ),
                         Icon(
                           Icons.edit,
-                          color: Color(0xff006ccf),
+                          color: const Color(0xff006ccf),
                           size: allsize * 0.02,
                         )
                       ],
@@ -67,17 +67,17 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
                   height: size.height * 0.02,
                 ),
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       "My Orders",
                       style: TextStyle(
-                          color: Color(0xff006ccf),
+                          color: const Color(0xff006ccf),
                           fontSize: allsize * 0.016,
                           fontWeight: FontWeight.bold),
                     )),
                 // Pending Orders
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
                       Text(
@@ -92,14 +92,14 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
                           child: Text(
                             "(VIEW ALL)",
                             style: TextStyle(
-                                color: Color(0xff006ccf),
+                                color: const Color(0xff006ccf),
                                 fontSize: allsize * 0.012),
                           ))
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Container(
                     color: Colors.grey[300],
                     child: Table(
@@ -123,7 +123,7 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
                 ),
                 //Shipped
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
                       Text(
@@ -136,14 +136,14 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
                           child: Text(
                             "(VIEW ALL)",
                             style: TextStyle(
-                                color: Color(0xff006ccf),
+                                color: const Color(0xff006ccf),
                                 fontSize: allsize * 0.012),
                           ))
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Container(
                     color: Colors.grey[300],
                     child: Table(
@@ -268,7 +268,7 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
                     height: size.height * 0.04,
                     color: Colors.grey[300],
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Row(
                         children: [
                           Text("Subscription Type",
