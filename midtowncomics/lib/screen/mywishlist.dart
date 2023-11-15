@@ -1,10 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
-import '../widget/subcribeWidget.dart';
+import 'package:midtowncomics/export.dart';
 
 class MyWishListScreen extends StatefulWidget {
   const MyWishListScreen({super.key});
@@ -45,6 +40,7 @@ class _MyWishListScreenState extends State<MyWishListScreen> {
                         Text(
                           "My Wish List",
                           style: TextStyle(
+                              fontFamily: 'oswald_bold',
                               fontSize: allsize * 0.02,
                               fontWeight: FontWeight.bold),
                         ),
@@ -112,7 +108,7 @@ class _MyWishListScreenState extends State<MyWishListScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
+                  child: SizedBox(
                     height: size.height * 0.15,
                     width: double.infinity,
                     child: Card(
@@ -164,7 +160,7 @@ class _MyWishListScreenState extends State<MyWishListScreen> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )

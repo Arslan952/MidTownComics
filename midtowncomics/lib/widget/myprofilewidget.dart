@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: must_be_immutable
+import 'package:midtowncomics/export.dart';
+
 class MyProfileRow extends StatelessWidget {
   String title,value;
   MyProfileRow({super.key,required this.title,required this.value});

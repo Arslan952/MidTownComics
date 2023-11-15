@@ -1,13 +1,5 @@
-import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:midtowncomics/services/apirequest.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/streamdataprovider.dart';
-import 'homescreen.dart';
+import 'package:midtowncomics/export.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -26,8 +18,11 @@ class _SplashScreenState extends State<SplashScreen> {
       streamedDataProvider.updateData(data);
   }
 
+  @override
   void initState() {
-    fetchData();
+    Future.delayed(Duration.zero, () async {
+      fetchData();
+    });
     // TODO: implement initState
     super.initState();
   }
@@ -69,9 +64,12 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: size.height * 0.05,
             ),
-            const Center(
-              child: CircularProgressIndicator(
-                color: Color(0xff016fdf),
+               Center(
+              child: Transform.scale(
+                scale: allsize*0.0007,
+                child: const CircularProgressIndicator(
+                  color: Color(0xff016fdf),
+                ),
               ),
             )
         ],

@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
 
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
-import '../widget/subcribeWidget.dart';
+import 'package:midtowncomics/export.dart';
 
 class PushNotificationSetting extends StatefulWidget {
   const PushNotificationSetting({super.key});
@@ -34,7 +30,7 @@ class _PushNotificationSettingState extends State<PushNotificationSetting> {
                 ),
                 const SubcribeWidget(),
                 SizedBox(height: size.height*0.02,),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )

@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:midtowncomics/provider/filterprovider.dart';
-import 'package:midtowncomics/provider/streamdataprovider.dart';
-import 'package:midtowncomics/screen/splashscreen.dart';
-import 'package:midtowncomics/services/navigationserice.dart';
-import 'package:provider/provider.dart';
+
+import 'package:midtowncomics/provider/addressprovider.dart';
+import 'package:midtowncomics/provider/creditcardprovider.dart';
+import 'package:midtowncomics/provider/orderprovider.dart';
+import 'package:midtowncomics/provider/settingProvider.dart';
+
+import 'export.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +30,11 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => StreamedDataProvider()),
         ChangeNotifierProvider(create: (_) => FilterProvider()),
+        ChangeNotifierProvider(create: (_) => WeeklyReleaseProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
+        ChangeNotifierProvider(create: (_) => CreditCardProvider()),
+        ChangeNotifierProvider(create: (_) => AddressProvider()),
+        ChangeNotifierProvider(create: (_) => AccountSettingProvider()),
       ],
       child: const MyApp(),
     ),
@@ -50,6 +54,7 @@ class MyApp extends StatelessWidget {
       title: 'Midtown Comics',
       theme: ThemeData(
           // useMaterial3: true,
+          fontFamily: GoogleFonts.openSans().fontFamily,
           colorSchemeSeed: const Color(0xff006ccf),
           scrollbarTheme: const ScrollbarThemeData().copyWith(
             thumbColor: MaterialStateProperty.all(const Color(0xff006ccf)),

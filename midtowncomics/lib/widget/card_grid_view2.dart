@@ -1,14 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../provider/streamdataprovider.dart';
+import 'package:midtowncomics/export.dart';
 
 class CardGridView2 extends StatelessWidget {
   const CardGridView2({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Consumer<StreamedDataProvider>(builder: (context, provider, child) {
@@ -39,19 +36,20 @@ class CardGridView2 extends StatelessWidget {
                 color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.all(allsize * 0.01),
-                  child: Column(
+                  child:provider.featurenewreleasegrid.isEmpty?const Center(child: CircularProgressIndicator(),):
+                  Column(
                     children: [
                       Text(
                         "Action Figures",
                         style: TextStyle(
-                            color: Color(0xff1569b4),
+                            color: const Color(0xff1569b4),
                             fontSize: allsize * 0.016,
                             fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
                       Flexible(
                         child: Image.network(
-                          "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['featureNewAdditionSection1']['pr_id']}_ful.jpg",
+                          "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.featurenewrelease1['pr_id']}_ful.jpg",
                           fit: BoxFit.contain,
                           loadingBuilder: (BuildContext context, Widget child,
                               ImageChunkEvent? loadingProgress) {
@@ -84,7 +82,9 @@ class CardGridView2 extends StatelessWidget {
                 color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.all(allsize * 0.01),
-                  child: Column(
+                  child:
+                      provider.featurenewrelease2.isEmpty?const Center(child: CircularProgressIndicator(),):
+                  Column(
                     children: [
                       Text(
                         "Japanese Import",
@@ -129,7 +129,9 @@ class CardGridView2 extends StatelessWidget {
                 color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.all(allsize * 0.01),
-                  child: Column(
+                  child:
+                      provider.featurenewrelease2.isEmpty?const Center(child: CircularProgressIndicator(),):
+                  Column(
                     children: [
                       Text(
                         "Funko",
@@ -174,7 +176,9 @@ class CardGridView2 extends StatelessWidget {
                 color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.all(allsize * 0.01),
-                  child: Column(
+                  child:
+                      provider.featurenewrelease4.isEmpty?const Center(child:CircularProgressIndicator(),):
+                  Column(
                     children: [
                       Text(
                         "Apparel",

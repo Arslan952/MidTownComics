@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:midtowncomics/provider/streamdataprovider.dart';
-import 'package:provider/provider.dart';
+
+import 'package:midtowncomics/export.dart';
 
 class SearchDialugue extends StatelessWidget {
   const SearchDialugue({super.key});
@@ -10,7 +9,7 @@ class SearchDialugue extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
-    return Container(
+    return SizedBox(
       width: size.width*0.3,
       child: Dialog(
           // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)), //this right here

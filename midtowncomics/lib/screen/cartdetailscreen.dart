@@ -1,17 +1,9 @@
 // ignore_for_file: must_be_immutable, depend_on_referenced_packages, use_build_context_synchronously
 
-import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
-import '../provider/streamdataprovider.dart';
-import '../services/apirequest.dart';
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
-import '../widget/subcribeWidget.dart';
+import 'package:midtowncomics/export.dart';
 
 class CartDetail extends StatefulWidget {
   const CartDetail({super.key});
@@ -25,9 +17,11 @@ class _CartDetailState extends State<CartDetail> {
   bool inactive = false;
   TextEditingController searchcontroller = TextEditingController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  String countryValue="-SELECT COUNTRY-";
 
   @override
   Widget build(BuildContext context) {
+    ApiRequests().GetCountries(context);
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
@@ -370,46 +364,125 @@ class _CartDetailState extends State<CartDetail> {
                                 fontWeight: FontWeight.w300,
                                 fontSize: allsize * 0.012),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 7),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: size.height * 0.06,
-                                  width: size.width * 0.7,
-                                  decoration:
-                                      BoxDecoration(color: Colors.grey[300]),
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "-SELECT COUNTRY-",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.014),
+                          //Dropdown
+                          InkWell(
+                            onTap: () {
+                              provider.loginuserdata.isEmpty?
+                              Get.to(const SignInScreen()):
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Dialog(
+                                    insetPadding: EdgeInsets.symmetric(
+                                        horizontal: allsize * 0.016,
+                                        vertical: allsize * 0.04),
+                                    child: Scrollbar(
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: provider.countries.map<Widget>((dynamic item) {
+                                            return ListTile(
+                                              title: Text(item['ct_name']),
+                                              onTap: () async {
+                                                setState(() {
+                                                  countryValue=item['ct_name'];
+                                                });
+                                                Navigator.of(context).pop();
+                                              },
+                                            );
+                                          }).toList(),
+                                        ),
                                       ),
-                                      Icon(
-                                        Icons.arrow_drop_down,
-                                        size: allsize * 0.02,
-                                      ),
-                                    ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 7),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: size.height * 0.06,
+                                    width: size.width * 0.7,
+                                    decoration:
+                                    BoxDecoration(color: Colors.grey[300]),
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            countryValue,
+                                            style: TextStyle(
+                                                fontSize: allsize * 0.014),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.arrow_drop_down,
+                                          size: allsize * 0.02,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: size.width * 0.05,
-                                ),
-                                TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "APPLY",
-                                      style: TextStyle(
-                                          fontSize: allsize * 0.016,
-                                          fontWeight: FontWeight.bold),
-                                    ))
-                              ],
+                                  SizedBox(
+                                    width: size.width * 0.05,
+                                  ),
+                                  TextButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        "APPLY",
+                                        style: TextStyle(
+                                            fontSize: allsize * 0.016,
+                                            fontWeight: FontWeight.bold),
+                                      ))
+                                ],
+                              ),
                             ),
                           ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 7),
+                          //   child: Row(
+                          //     children: [
+                          //       Container(
+                          //         height: size.height * 0.06,
+                          //         width: size.width * 0.7,
+                          //         decoration:
+                          //             BoxDecoration(color: Colors.grey[300]),
+                          //         padding: const EdgeInsets.all(8.0),
+                          //         child: Row(
+                          //           mainAxisAlignment:
+                          //               MainAxisAlignment.spaceBetween,
+                          //           children: [
+                          //             Text(
+                          //               countryValue,
+                          //               style: TextStyle(
+                          //                   fontSize: allsize * 0.014),
+                          //             ),
+                          //             Icon(
+                          //               Icons.arrow_drop_down,
+                          //               size: allsize * 0.02,
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       SizedBox(
+                          //         width: size.width * 0.05,
+                          //       ),
+                          //       TextButton(
+                          //           onPressed: () {},
+                          //           child: Text(
+                          //             "APPLY",
+                          //             style: TextStyle(
+                          //                 fontSize: allsize * 0.016,
+                          //                 fontWeight: FontWeight.bold),
+                          //           ))
+                          //     ],
+                          //   ),
+                          // ),
                           SizedBox(
                             height: size.height * 0.01,
                           ),
@@ -549,7 +622,7 @@ class _DetailPageListViewWidgetState extends State<DetailPageListViewWidget> {
                 ],
               ),
               child: Container(
-                height: widget.size.height * 0.25,
+                height: widget.size.height * 0.27,
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -661,7 +734,7 @@ class _DetailPageListViewWidgetState extends State<DetailPageListViewWidget> {
                                     );
                                   },
                                   child: Container(
-                                    height: widget.size.height * 0.035,
+                                    height: widget.size.height * 0.0365,
                                     width: widget.size.width * 0.22,
                                     decoration:
                                     BoxDecoration(color: Colors.grey[300]),

@@ -1,18 +1,8 @@
 // ignore_for_file: must_be_immutable, depend_on_referenced_packages
 
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/streamdataprovider.dart';
-import '../screen/loginscreen.dart';
-import '../screen/seachpage.dart';
-import '../services/apirequest.dart';
-import '../services/functions.dart';
+import 'package:midtowncomics/export.dart';
 
 class GridViewWidget extends StatefulWidget {
   GridViewWidget(
@@ -67,13 +57,19 @@ class _GridViewWidgetState extends State<GridViewWidget> {
             children: [
               Flexible(
                 child: Image.network(
-                  "https://www.midtowncomics.com/images/PRODUCT/FUL/${Provider.of<StreamedDataProvider>(context,listen: false).manageimage[widget.index]}_ful.jpg",
+                  Provider.of<StreamedDataProvider>(context,listen: false).returnproduct[widget.index]['hideadultimage'] == '0'
+                      ?   "https://www.midtowncomics.com/images/PRODUCT/FUL/${Provider.of<StreamedDataProvider>(context,listen: false).manageimage[widget.index]}_ful.jpg"
+                      : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
+
                   loadingBuilder: (BuildContext context, Widget child,
                   ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) {
                   return child;
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  return  Center(
+                      child: Image.asset('assets/images/imagecomingsoon_ful.jpg')
+                  // CircularProgressIndicator()
+                  );
                 }
                   },
                   // fit: BoxFit.fill,
@@ -120,8 +116,8 @@ class _GridViewWidgetState extends State<GridViewWidget> {
                             child: ClipPath(
                               clipper: CustomClipPath(),
                               child: Container(
-                                height: widget.size.height * 0.02,
-                                width: widget.size.width * 0.33,
+                                height: widget.size.height * 0.025,
+                                width: widget.size.width * 0.35,
                                 color: const Color(0xff006ccf),
                                 child: Padding(
                                   padding: const EdgeInsets.all(2.0),
@@ -156,28 +152,28 @@ class _GridViewWidgetState extends State<GridViewWidget> {
                     ),
                     Row(
                       children: [
-                        const Text(
+                         Text(
                           "By ",
-                          style: TextStyle(color: Colors.grey),
+                          style: TextStyle(color: Colors.grey,fontSize: widget.allsize*0.011),
                         ),
                         Flexible(
                           child: Text(
                             provider.returnproduct[widget.index]['mn_name'],
-                            style: const TextStyle(color: Colors.blue),
+                            style: TextStyle(color: Colors.blue,fontSize: widget.allsize*0.011),
                           ),
                         )
                       ],
                     ),
                     Row(
                       children: [
-                        const Text(
+                          Text(
                           "Release Date ",
-                          style: TextStyle(color: Colors.grey),
+                          style: TextStyle(color: Colors.grey,fontSize: widget.allsize*0.011),
                         ),
                         Flexible(
                           child: Text(
                             "${dateOnly.day}-${dateOnly.month}-${dateOnly.year}",
-                            style: const TextStyle(color: Colors.blue),
+                            style:  TextStyle(color: Colors.blue,fontSize: widget.allsize*0.011),
                           ),
                         )
                       ],
@@ -229,7 +225,7 @@ class _GridViewWidgetState extends State<GridViewWidget> {
                               );
                             },
                             child: Container(
-                              height: widget.size.height * 0.04,
+                              height: widget.size.height * 0.047,
                               decoration:
                                   BoxDecoration(color: Colors.grey[300]),
                               padding: const EdgeInsets.all(8.0),
@@ -380,7 +376,7 @@ class _GridViewWidgetState extends State<GridViewWidget> {
                                                               http.Request(
                                                                   'GET',
                                                                   Uri.parse(
-                                                                      'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${provider.returnproduct[widget.index]['pr_id']}&sc_qty=${item == "-Remove-" ? "0" : value1}&app_id='));
+                                                                      'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=${ streamedDataProvider.loginuserdata['sh_id']}&pr_id=${provider.returnproduct[widget.index]['pr_id']}&sc_qty=${item == "-Remove-" ? "0" : value1}&app_id='));
                                                           http.StreamedResponse
                                                               response =
                                                               await request
@@ -474,6 +470,7 @@ class _GridViewWidgetState extends State<GridViewWidget> {
                                                 listen: false);
                                         Map<String, dynamic> data =
                                             await ApiRequests().Savedata(
+                                                streamedDataProvider.loginuserdata['sh_id'],
                                                 provider.returnproduct[
                                                     widget.index]['pr_id'],
                                                 1,
@@ -552,7 +549,7 @@ class _GridViewWidgetState extends State<GridViewWidget> {
                                                 var request = http.Request(
                                                     'GET',
                                                     Uri.parse(
-                                                        'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${provider.returnproduct[widget.index]['pr_id']}&sc_qty=${item == "-Remove-" ? "0" : value1}&app_id='));
+                                                        'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=${ streamedDataProvider.loginuserdata['sh_id']}&pr_id=${provider.returnproduct[widget.index]['pr_id']}&sc_qty=${item == "-Remove-" ? "0" : value1}&app_id='));
                                                 http.StreamedResponse response =
                                                     await request.send();
                                                 if (response.statusCode ==
@@ -601,20 +598,86 @@ class _GridViewWidgetState extends State<GridViewWidget> {
                       height: widget.size.height * 0.01,
                     ),
                     provider.returnproduct[widget.index]["su_id"] == "0"
-                        ? Container()
-                        : Container(
-                            height: widget.size.height * 0.06,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: const Color(0xff006ccf),
-                                    width: widget.allsize * 0.002)),
-                            child: const Center(
-                              child: Text(
-                                "ADD TO PULL LIST",
-                                style: TextStyle(color: Color(0xff006ccf)),
+                        ? Container() :
+                    provider.returnproduct[widget.index]['issubscribe'] == "0"?
+                    InkWell(
+                          child: Container(
+                              height: widget.size.height * 0.06,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: const Color(0xff006ccf),
+                                      width: widget.allsize * 0.002)),
+                              child:  Center(
+                                child: Text(
+                                  "ADD TO PULL LIST",
+                                  style: TextStyle(color: const Color(0xff006ccf),fontSize: widget.allsize*0.014,fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
-                          )
+                      onTap: (){
+                        final streamedDataProvider =
+                        Provider.of<
+                            StreamedDataProvider>(
+                            context,
+                            listen:
+                            false);
+                        if (provider
+                            .loginuserdata
+                            .isEmpty) {
+                          Get.to(
+                              const SignInScreen());
+                        } else {
+                          ApiRequests().SavePullList(
+                              streamedDataProvider
+                                  .loginuserdata[
+                              'sh_id'],
+                              provider.returnproduct[widget.index]['su_id'],
+                              "1",
+                              "0",
+                              provider.returnproduct[widget.index]['pr_id'],
+                              context);
+                          print(provider.returnproduct[widget.index]['su_id']);
+                        }
+                      },
+                        ):
+                    InkWell(
+                      child: Container(
+                        height: widget.size.height * 0.06,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: const Color(0xff006ccf),
+                                width: widget.allsize * 0.002)),
+                        child:  Center(
+                          child: Text(
+                            "ADDED TO PULL LIST",
+                            style: TextStyle(color: const Color(0xff006ccf),fontSize: widget.allsize*0.014,fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      onTap: (){
+                        // final streamedDataProvider =
+                        // Provider.of<
+                        //     StreamedDataProvider>(
+                        //     context,
+                        //     listen:
+                        //     false);
+                        // if (provider
+                        //     .loginuserdata
+                        //     .isEmpty) {
+                        //   Get.to(
+                        //       const SignInScreen());
+                        // } else {
+                        //   ApiRequests().SavePullList(
+                        //       streamedDataProvider
+                        //           .loginuserdata[
+                        //       'sh_id'],
+                        //       provider.returnproduct[widget.index],
+                        //       "1",
+                        //       "0",
+                        //       context);
+                        // }
+                      },
+                    )
                   ],
                 );
               })

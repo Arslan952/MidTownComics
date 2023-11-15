@@ -1,7 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:midtowncomics/screen/comics_screen.dart';
-import 'package:midtowncomics/screen/weekly_release.dart';
+// ignore_for_file: camel_case_types
+
+import 'package:midtowncomics/screen/weeklyreleasepage.dart';
+import '../screen/dealoftheday.dart';
+import '../screen/preorder_screen.dart';
+import 'package:midtowncomics/export.dart';
+
 
 class Custom_drawer extends StatefulWidget {
   const Custom_drawer({Key? key}) : super(key: key);
@@ -37,69 +40,109 @@ class _Custom_drawerState extends State<Custom_drawer> {
             ListTile(
               title:  Text("Weekly Release",style: TextStyle(fontSize: allsize*0.013),),
               onTap: (){
-                // Get.off(const WeeklyReleaseScreen());
+                Navigator.pop(context);
+                Get.to(const WeeklyReleasePage());
               },
             ),
             ListTile(
               title:  Text("Comics",style: TextStyle(fontSize: allsize*0.013)),
               onTap: (){
-                Get.off(ComicScreen());
+                Navigator.pop(context);
+                Get.to(const ComicScreen());
               },
             ),
             ListTile(
               title:  Text("Varient/Incentive",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+
+              },
             ),
             ListTile(
               title: Text("Back Issues",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const BackIssueScreen());
+              },
             ),
             ListTile(
               title: Text("Graphic Novels",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const GraphicNovels());
+              },
             ),
             ListTile(
               title: Text("Books",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const Books());
+              },
             ),
             ListTile(
               title: Text("Magazines",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const Magazines());
+              },
             ),
             ListTile(
               title: Text("Manga",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const MangaScreen());
+              },
             ),
             ListTile(
               title: Text("Apparel",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const ApparelScreen());
+              },
             ),
             ListTile(
-              title: Text("Status",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              title: Text("Statues",style: TextStyle(fontSize: allsize*0.013)),
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const StatuesScreen());
+              },
             ),
             ListTile(
               title: Text("Action Figure",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const ActionFigureScreen());
+              },
             ),
             ListTile(
               title: Text("Collectibles",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const CollectibleScreen());
+              },
             ),
             ListTile(
               title: Text("Gaming and Cards",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const GamingAndCardScreen());
+              },
             ),
             ListTile(
               title: Text("DVD'S",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const DVDS_Screen());
+              },
             ),
             ListTile(
               title: Text("Supplies",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const SuppliesScreen());
+              },
             ),
             ListTile(
-              title: Text("Clearence",style: TextStyle(fontSize: allsize*0.013)),
+              title: Text("Clearance",style: TextStyle(fontSize: allsize*0.013)),
               onTap: (){},
             ),
             ListTile(
@@ -108,11 +151,16 @@ class _Custom_drawerState extends State<Custom_drawer> {
             ),
             ListTile(
               title: Text("Pre Orders",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Get.to(const PreOrderScreen());
+              },
             ),
             ListTile(
               title: Text("Deal of the Day",style: TextStyle(fontSize: allsize*0.013)),
-              onTap: (){},
+              onTap: (){
+                Navigator.pop(context);
+                Get.to(const DealOfTheDay());
+              },
             ),
             ListTile(
               title: Text("Gift Card",style: TextStyle(fontSize: allsize*0.013)),

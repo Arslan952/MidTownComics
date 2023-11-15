@@ -1,14 +1,8 @@
-import 'dart:convert';
+// ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:midtowncomics/services/apirequest.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/streamdataprovider.dart';
-import '../screen/cartdetailscreen.dart';
+import 'package:midtowncomics/export.dart';
 
 class CustomDialougue2 extends StatelessWidget {
   const CustomDialougue2({super.key,});
@@ -170,7 +164,7 @@ class CustomDialougue2 extends StatelessWidget {
                                                   var request = http.Request(
                                                       'GET',
                                                       Uri.parse(
-                                                          'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${cartdatalist[index]['pr_id']}&sc_qty=0&app_id='));
+                                                          'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=${streamedDataProvider.loginuserdata['sh_id']}&pr_id=${cartdatalist[index]['pr_id']}&sc_qty=0&app_id='));
                                                   http.StreamedResponse
                                                       response =
                                                       await request.send();
@@ -185,12 +179,10 @@ class CustomDialougue2 extends StatelessWidget {
                                                     Map<String, dynamic>
                                                         datache =
                                                         jsonDecode(data);
-                                                    print(datache['DATA']
-                                                        ['cartList']);
                                                     // Map<String,dynamic>refresh=await ApiRequests().fetchData1(context);
                                                     // streamedDataProvider.updateData(refresh);
                                                   } else {
-                                                    print(
+                                                    debugPrint(
                                                         response.reasonPhrase);
                                                   }
                                                 },
@@ -259,6 +251,7 @@ class CustomDialougue2 extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: (){
+                        Navigator.pop(context);
                         Get.to(const CartDetail());
                       },
                       child: Container(

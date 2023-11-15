@@ -1,17 +1,8 @@
-// ignore_for_file: must_be_immutable
-
-import 'dart:convert';
+// ignore_for_file: must_be_immutable, depend_on_referenced_packages
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:midtowncomics/services/apirequest.dart';
-import 'package:midtowncomics/services/functions.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/streamdataprovider.dart';
-import '../screen/loginscreen.dart';
+import 'package:midtowncomics/export.dart';
 
 class CustomPrdoductDiallugue extends StatefulWidget {
   String productid;
@@ -45,11 +36,12 @@ class _CustomPrdoductDiallugueState extends State<CustomPrdoductDiallugue> {
     final streamedDataProvider =
         Provider.of<StreamedDataProvider>(context, listen: false);
     Map<String, dynamic> data =
-        await ApiRequests().ProductDetail(widget.productid, context);
+        await ApiRequests().ProductDetail(streamedDataProvider.loginuserdata['sh_id'],widget.productid, context);
     streamedDataProvider.updateProductDetail(data);
-    print(data);
+    debugPrint(data.toString());
   }
 
+  @override
   void initState() {
     image = widget.productid;
     // TODO: implement initState
@@ -378,7 +370,7 @@ class _CustomPrdoductDiallugueState extends State<CustomPrdoductDiallugue> {
                                     );
                                   },
                                   child: Container(
-                                    height: size.height * 0.04,
+                                    height: size.height * 0.047,
                                     decoration:
                                         BoxDecoration(color: Colors.grey[300]),
                                     padding: const EdgeInsets.all(8.0),
@@ -449,7 +441,7 @@ class _CustomPrdoductDiallugueState extends State<CustomPrdoductDiallugue> {
                                                 var request = http.Request(
                                                     'GET',
                                                     Uri.parse(
-                                                        'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${widget.productid}&sc_qty=${item == "-Remove-" ? "0" : value1.toString()}&app_id='));
+                                                        'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=${ streamedDataProvider.loginuserdata['sh_id']}&pr_id=${widget.productid}&sc_qty=${item == "-Remove-" ? "0" : value1.toString()}&app_id='));
                                                 http.StreamedResponse response =
                                                 await request.send();
                                                 if (response.statusCode ==
@@ -460,13 +452,10 @@ class _CustomPrdoductDiallugueState extends State<CustomPrdoductDiallugue> {
                                                   streamedDataProvider
                                                       .updateCartData(
                                                       jsonDecode(data));
-                                                  print(data);
                                                   Map<String, dynamic> datache =
                                                   jsonDecode(data);
-                                                  print(datache['DATA']
-                                                  ['cartList']);
                                                 } else {
-                                                  print(response.reasonPhrase);
+                                                  // debugPrint(response.reasonPhrase);
                                                 }
                                                 provider.updatedetail(
                                                     item == "-Remove-"
@@ -527,6 +516,7 @@ class _CustomPrdoductDiallugueState extends State<CustomPrdoductDiallugue> {
                                             listen: false);
                                         Map<String, dynamic> data =
                                         await ApiRequests().Savedata(
+                                            streamedDataProvider.loginuserdata['sh_id'],
                                             provider.detail['pr_id'],
                                             1,
                                             context);
@@ -585,7 +575,7 @@ class _CustomPrdoductDiallugueState extends State<CustomPrdoductDiallugue> {
                                                 var request = http.Request(
                                                     'GET',
                                                     Uri.parse(
-                                                        'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${widget.productid}&sc_qty=${item == "-Remove-" ? "0" : value1.toString()}&app_id='));
+                                                        'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=${ streamedDataProvider.loginuserdata['sh_id']}&pr_id=${widget.productid}&sc_qty=${item == "-Remove-" ? "0" : value1.toString()}&app_id='));
                                                 http.StreamedResponse response =
                                                     await request.send();
                                                 if (response.statusCode ==
@@ -596,13 +586,13 @@ class _CustomPrdoductDiallugueState extends State<CustomPrdoductDiallugue> {
                                                   streamedDataProvider
                                                       .updateCartData(
                                                           jsonDecode(data));
-                                                  print(data);
+                                                  // debugPrint(data);
                                                   Map<String, dynamic> datache =
                                                       jsonDecode(data);
-                                                  print(datache['DATA']
-                                                      ['cartList']);
+                                                  // debugPrint(datache['DATA']
+                                                  //     ['cartList']);
                                                 } else {
-                                                  print(response.reasonPhrase);
+                                                  // debugPrint(response.reasonPhrase);
                                                 }
                                                 provider.updatedetail(
                                                     item == "-Remove-"
@@ -646,22 +636,79 @@ class _CustomPrdoductDiallugueState extends State<CustomPrdoductDiallugue> {
                           ),
                           provider.detail['su_id'] == "0"
                               ? Container()
-                              : Container(
-                                  height: size.height * 0.06,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: const Color(0xff006ccf),
-                                          width: allsize * 0.003)),
-                                  child: Center(
-                                    child: Text(
-                                      'ADD TO PULL LIST',
-                                      style: TextStyle(
-                                          color: Color(0xff006ccf),
-                                          fontSize: allsize * 0.012,
-                                          fontWeight: FontWeight.bold),
+                              : provider.detail['issubscribe'] == "0"?
+                          InkWell(
+                                child: Container(
+                                    height: size.height * 0.06,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: const Color(0xff006ccf),
+                                            width: allsize * 0.003)),
+                                    child: Center(
+                                      child: Text(
+                                        'ADD TO PULL LIST',
+                                        style: TextStyle(
+                                            color: const Color(0xff006ccf),
+                                            fontSize: allsize * 0.012,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
-                                )
+                            onTap: (){
+                           final streamedDataProvider=   Provider.of<
+                                  StreamedDataProvider>(
+                                  context,
+                                  listen: false);
+                                    if (provider.loginuserdata.isEmpty) {
+                                      Get.to(const SignInScreen());
+                                    } else {
+                                      ApiRequests().SavePullList(
+                                          streamedDataProvider
+                                              .loginuserdata['sh_id'],
+                                          provider.detail['su_id'],
+                                          "1",
+                                          "0",
+                                          provider.detail['pr_id'],
+                                          context);
+                                    }
+                                  },
+                              )
+                              :
+                          InkWell(
+                            child: Container(
+                              height: size.height * 0.06,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: const Color(0xff006ccf),
+                                      width: allsize * 0.003)),
+                              child: Center(
+                                child: Text(
+                                  'ADDED TO PULL LIST',
+                                  style: TextStyle(
+                                      color: const Color(0xff006ccf),
+                                      fontSize: allsize * 0.012,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            onTap: (){
+                              // final streamedDataProvider=   Provider.of<
+                              //     StreamedDataProvider>(
+                              //     context,
+                              //     listen: false);
+                              // if (provider.loginuserdata.isEmpty) {
+                              //   Get.to(const SignInScreen());
+                              // } else {
+                              //   ApiRequests().SavePullList(
+                              //       streamedDataProvider
+                              //           .loginuserdata['sh_id'],
+                              //       provider.detail['su_id'],
+                              //       "1",
+                              //       "0",
+                              //       context);
+                              // }
+                            },
+                          )
                         ],
                       );
                     })));
@@ -684,7 +731,7 @@ class CustomDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: size.height * 0.06,
+      height: size.height * 0.07,
       // Set the desired width of the custom dropdown button
       decoration:
       BoxDecoration(color: Colors.grey[300]),

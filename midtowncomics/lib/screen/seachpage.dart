@@ -1,17 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:flutter/material.dart';
-import 'package:midtowncomics/widget/filterdialugue.dart';
-import 'package:midtowncomics/widget/header_widget.dart';
-import 'package:midtowncomics/widget/sidebar.dart';
-import 'package:midtowncomics/widget/sortbydialugue.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/filterprovider.dart';
-import '../provider/streamdataprovider.dart';
-import '../services/apirequest.dart';
 import '../widget/searchListViewbuilderWidget.dart';
-import '../widget/searchgridviewbuilder.dart';
+import 'package:midtowncomics/export.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -75,11 +65,11 @@ class _SearchPageState extends State<SearchPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: size.height * 0.153),
-                                provider.returnproduct.isEmpty
-                                    ? Container()
-                                    : SizedBox(
-                                        height: size.height * 0.02,
-                                      ),
+                                // provider.returnproduct.isEmpty
+                                //     ? Container()
+                                //     : SizedBox(
+                                //         height: size.height * 0.02,
+                                //       ),
                                 provider.showsearchlist == true
                                     ? provider.returnproduct.isEmpty
                                         ? Container()
@@ -349,7 +339,11 @@ class _SearchPageState extends State<SearchPage> {
                                                   Provider.of<FilterProvider>(
                                                       context,
                                                       listen: false);
+                                              final streamedDataProvider =
+                                              Provider.of<StreamedDataProvider>(context,
+                                                  listen: false);
                                               ApiRequests().SearchApi(
+                                                  streamedDataProvider.loginuserdata['sh_id']??" ",
                                                   provider.searchselection,
                                                   provider.title == "All"
                                                       ? ""

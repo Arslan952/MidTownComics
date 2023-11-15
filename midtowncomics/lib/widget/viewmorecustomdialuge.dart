@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+import 'package:midtowncomics/export.dart';
 class ViewMoreCustomDialugue extends StatelessWidget {
   const ViewMoreCustomDialugue({super.key});
 
@@ -9,7 +8,7 @@ class ViewMoreCustomDialugue extends StatelessWidget {
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Dialog(
-        child: Container(
+        child: SizedBox(
       height: size.height * 0.43,
       child: Center(
         child: Column(

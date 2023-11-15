@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:midtowncomics/widget/textformfieldwidget.dart';
-
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
+// ignore_for_file: non_constant_identifier_names
+import 'package:flutter/cupertino.dart';
+import 'package:midtowncomics/export.dart';
+import 'package:intl/intl.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -27,6 +26,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController password = TextEditingController();
   TextEditingController c_password = TextEditingController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  Future<void> _showDatePicker() async {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    ).then((value) => {
+      setState(() {
+        // _date = value!;
+        dob.text = DateFormat('MM/dd/yyyy').format(value!);
+      })
+    });
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -57,73 +69,81 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     TextFormFieldWidget(
                       title: "Email Address",
                       textEditingController: email,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title: "Reenter Email Address",
                       textEditingController: r_email,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title: "Address Name",
                       textEditingController: address,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title: "First Name",
                       textEditingController: firstname,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title: "Last Name",
                       textEditingController: lastname,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
-                    TextFormFieldWidget(
-                      title: "Date of Birth",
-                      textEditingController: dob,
-                      optional: false,
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: size.width*0.77,
+                          child: TextFormFieldWidget(
+                            title: "Date of Birth",
+                            textEditingController: dob,
+                            optional: false, readOnly: true,
+                          ),
+                        ),
+                        IconButton(onPressed:_showDatePicker, icon:Icon(Icons.calendar_today,size: allsize*0.02,))
+                      ],
                     ),
                     TextFormFieldWidget(
                       title: "Care of/Company Name(Optional)",
                       textEditingController: companyname,
-                      optional: true,
+                      optional: true, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title: "Address 1 (Street address,P.O. Box)",
                       textEditingController: address1,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title:
                           "Address 2 (Apartment suite,unit,building,floor,etc. Optional)",
                       textEditingController: address2,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title: "City",
                       textEditingController: city,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title: "Zip/Postal Code",
                       textEditingController: zip,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title: "Phone",
                       textEditingController: phone,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title: "Password",
                       textEditingController: password,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     TextFormFieldWidget(
                       title: "Reenter Password",
                       textEditingController: c_password,
-                      optional: false,
+                      optional: false, readOnly: false,
                     ),
                     SizedBox(
                       height: size.height * 0.03,
@@ -131,7 +151,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
+                        SizedBox(
                           height: size.height * 0.07,
                           width: size.width * 0.4,
                           child: Center(
@@ -144,17 +164,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
                         ),
-                        Container(
-                          height: size.height * 0.07,
-                          width: size.width * 0.4,
-                          color: const Color(0xff006ccf),
-                          child:  Center(
-                            child: Text(
-                              "REGISTER",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize:allsize*0.016),
+                        InkWell(
+                          onTap: (){
+                            ApiRequests().RegisterUser(email.text,r_email.text,address.text,firstname.text,lastname.text,dob.text,companyname.text,address1.text,address2.text,city.text,zip.text,phone.text,password.text,c_password.text,"840","NY", context);
+                          },
+                          child: Container(
+                            height: size.height * 0.07,
+                            width: size.width * 0.4,
+                            color: const Color(0xff006ccf),
+                            child:  Center(
+                              child: Text(
+                                "REGISTER",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize:allsize*0.016),
+                              ),
                             ),
                           ),
                         )

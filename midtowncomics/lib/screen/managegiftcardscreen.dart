@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
 
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
-import '../widget/subcribeWidget.dart';
+import 'package:midtowncomics/export.dart';
 
 class ManageGiftCards extends StatefulWidget {
   const ManageGiftCards({super.key});
@@ -36,6 +32,7 @@ class _ManageGiftCardsState extends State<ManageGiftCards> {
                         Text(
                           "Manage Gift Cards",
                           style: TextStyle(
+                              fontFamily: 'oswald_bold',
                               fontSize:allsize*0.02, fontWeight: FontWeight.bold),
                         ),
                       ],

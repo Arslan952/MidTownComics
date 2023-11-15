@@ -1,8 +1,7 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// ignore_for_file: must_be_immutable
 
-import '../provider/streamdataprovider.dart';
+import 'package:midtowncomics/export.dart';
+
 
 class Slider3 extends StatefulWidget {
   List<dynamic>data;

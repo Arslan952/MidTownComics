@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../provider/streamdataprovider.dart';
+import 'package:midtowncomics/export.dart';
 
 class HomeScreenBanner extends StatelessWidget {
-  HomeScreenBanner({super.key,});
+  const HomeScreenBanner({super.key,});
 
   @override
   Widget build(BuildContext context) {

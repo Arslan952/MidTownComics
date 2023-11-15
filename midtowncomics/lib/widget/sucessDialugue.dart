@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: must_be_immutable
+import 'package:midtowncomics/export.dart';
+
 
 class CustomSucessDialugue extends StatelessWidget {
   String message;
@@ -11,7 +13,7 @@ class CustomSucessDialugue extends StatelessWidget {
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return AlertDialog(
-      content: Container(
+      content: SizedBox(
         height: MediaQuery.of(context).orientation == Orientation.portrait?size.height*0.4:size.width*0.4,
         child: Column(
           children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:html/parser.dart';
 
 class FunctionClass{
   List<String> generateStringListFromInteger(int count) {
@@ -49,5 +50,17 @@ class FunctionClass{
       }
     }
     return value;
+  }
+
+  String parseHtmlString(String htmlString) {
+    final document = parse(htmlString);
+    final String parsedString =
+        parse(document.body!.text).documentElement!.text;
+
+    // Remove extra spaces
+    String spaceRemove="";
+    spaceRemove = parsedString.replaceAll(RegExp(r'\s+'), ' ');
+
+    return spaceRemove;
   }
 }

@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
 
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
-import '../widget/subcribeWidget.dart';
+import 'package:midtowncomics/export.dart';
 
 class MyPreOrderScreen extends StatefulWidget {
   const MyPreOrderScreen({super.key});
@@ -45,7 +41,7 @@ class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -79,20 +75,20 @@ class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
                 ),
                 //Order Process
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: double.infinity,
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                                Text(
                               "Shipped Order",
                               style: TextStyle(
-                                  color: Color(0xff006ccf),
+                                  color: const Color(0xff006ccf),
                                   fontSize:  allsize*0.016,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -119,20 +115,20 @@ class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
                 ),
                 //Order Declined
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: double.infinity,
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                                Text(
                               "Pending Order",
                               style: TextStyle(
-                                  color: Color(0xff006ccf),
+                                  color: const Color(0xff006ccf),
                                   fontSize: allsize*0.016,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -159,20 +155,20 @@ class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
                 ),
                 //Order Cancelled
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: double.infinity,
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                                Text(
                               "Cancelled Order",
                               style: TextStyle(
-                                  color: Color(0xff006ccf),
+                                  color: const Color(0xff006ccf),
                                   fontSize:  allsize*0.016,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -199,20 +195,20 @@ class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
                 ),
                 //Arcieve Orders
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: double.infinity,
                     child: Card(
                       elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                                Text(
                               "Declined Order",
                               style: TextStyle(
-                                  color: Color(0xff006ccf),
+                                  color: const Color(0xff006ccf),
                                   fontSize: allsize*0.016,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -242,7 +238,7 @@ class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
                 ),
                 const SubcribeWidget(),
                 SizedBox(height: size.height*0.02,),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )

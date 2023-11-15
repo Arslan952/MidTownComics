@@ -1,19 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:midtowncomics/screen/account_setting.dart';
-import 'package:midtowncomics/screen/all_faq_screen.dart';
-import 'package:midtowncomics/screen/browsepulllist.dart';
-import 'package:midtowncomics/screen/contct_information_screen.dart';
-import 'package:midtowncomics/screen/faqscreen.dart';
-import 'package:midtowncomics/screen/instore_picup_screen.dart';
-import 'package:midtowncomics/screen/managegiftcardscreen.dart';
-import 'package:midtowncomics/screen/newsletterscreen.dart';
-import 'package:midtowncomics/screen/privacypolicy.dart';
-import 'package:midtowncomics/screen/shippingFaq.dart';
 
-import '../screen/myorderscreen.dart';
+
+import 'package:midtowncomics/screen/shippingFaq.dart';
+import 'package:midtowncomics/export.dart';
+
+import '../screen/faqscreen.dart';
 
 class Footer extends StatefulWidget {
   const Footer({super.key});
@@ -92,7 +82,7 @@ class _FooterState extends State<Footer> {
               title: Text(
                 "OUR STORIES",
                 style: GoogleFonts.openSans(
-                    color: Color(0xff006ccf),
+                    color: const Color(0xff006ccf),
                     fontSize: allsize * 0.0113,
                     fontWeight: FontWeight.w600),
               ),
@@ -150,7 +140,7 @@ class _FooterState extends State<Footer> {
               title: Text(
                 "COMMUNITY",
                 style: GoogleFonts.openSans(
-                    color: Color(0xff006ccf),
+                    color: const Color(0xff006ccf),
                     fontSize: allsize * 0.0113,
                     fontWeight: FontWeight.w600),
               ),
@@ -226,7 +216,7 @@ class _FooterState extends State<Footer> {
               title: Text(
                 "MY ACCOUNT",
                 style: GoogleFonts.openSans(
-                    color: Color(0xff006ccf),
+                    color: const Color(0xff006ccf),
                     fontSize: allsize * 0.0113,
                     fontWeight: FontWeight.w600),
               ),
@@ -332,7 +322,7 @@ class _FooterState extends State<Footer> {
               title: Text(
                 "CUSTOMER SERVICE",
                 style: GoogleFonts.openSans(
-                    color: Color(0xff006ccf),
+                    color: const Color(0xff006ccf),
                     fontSize: allsize * 0.0113,
                     fontWeight: FontWeight.w600),
               ),

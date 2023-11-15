@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
 
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
-import '../widget/subcribeWidget.dart';
+import 'package:midtowncomics/export.dart';
 
 class MyPreOrder extends StatefulWidget {
   const MyPreOrder({super.key});

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import 'package:midtowncomics/screen/weeklyreleasepage.dart';
+import 'package:midtowncomics/export.dart';
 
 class WeeklyReleaseButton extends StatelessWidget {
   const WeeklyReleaseButton({super.key});
@@ -24,10 +25,12 @@ class WeeklyReleaseButton extends StatelessWidget {
                 children: [
                   Text(
                     "WEEKLY RELEASE",
-                    style: GoogleFonts.poppins(
+                    style: TextStyle(
                         color: const Color(0xff006ccf),
+                        fontFamily: 'oswald_light',
                         fontSize: allsize*0.019,
-                        fontWeight: FontWeight.w500),
+                        letterSpacing: 1,
+                        fontWeight: FontWeight.bold),
                   ),
                       Padding(
                         padding: EdgeInsets.only(left: size.width*0.14),
@@ -45,7 +48,10 @@ class WeeklyReleaseButton extends StatelessWidget {
                   )),
                   backgroundColor: MaterialStatePropertyAll(Colors.white)
                 ),
-                  onPressed: () {},
+                  onPressed: () {
+                  Provider.of<WeeklyReleaseProvider>(context,listen: false). updatesortby("TITLE");
+                  Get.to(const WeeklyReleasePage());
+                  },
                   child:  Center(
                       child: Text(
                     "VIEW ALL",

@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:midtowncomics/screen/newsletterscreen.dart';
+
+import 'package:midtowncomics/export.dart';
+
 class SubcribeWidget extends StatelessWidget {
   const SubcribeWidget({super.key});
 
@@ -31,14 +30,14 @@ class SubcribeWidget extends StatelessWidget {
             children: [
                  Text(
                 "Get The Latest Scoop!",
-                style: GoogleFonts.openSans(
+                style: TextStyle(
                     color: const Color(0xff006ccf),
-                    fontSize: allsize*0.027,
+                    fontSize: allsize*0.025,
                     fontWeight: FontWeight.w600),
               ),
                   Text(
                 "Subscribe To Our NewsLetter For Special Saving And Offers!",
-                style: TextStyle(color: Colors.grey[700],fontSize: allsize*0.0126,fontWeight: FontWeight.w500),
+                style: TextStyle(color: Colors.grey[700],fontSize: allsize*0.0124,fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: size.height*0.007,),
@@ -52,22 +51,17 @@ class SubcribeWidget extends StatelessWidget {
                     width: size.width * 0.3,
                     decoration: const BoxDecoration(
                       color: Color(0xff006ccf),
-                      // boxShadow: [
-                      //   BoxShadow(
-                      //     color: Colors.black.withOpacity(0.2), // Shadow color
-                      //     spreadRadius: 1, // Spread radius
-                      //     blurRadius: 2, // Blur radius
-                      //     offset: const Offset(0, 2), // Offset from the top-left corner
-                      //   ),
-                      // ],
                     ),
                     child: Center(
-                      child: Text(
-                        "SUBSCRIBE",
-                        style: GoogleFonts.openSans(
-                          color: Colors.white,
-                          fontSize: allsize * 0.016,
-                          fontWeight: FontWeight.w600,
+                      child: Padding(
+                        padding: EdgeInsets.all(allsize*0.001),
+                        child: Text(
+                          "SUBSCRIBE",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: allsize * 0.015,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),

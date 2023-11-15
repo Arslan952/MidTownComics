@@ -1,14 +1,6 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:midtowncomics/provider/filterprovider.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/streamdataprovider.dart';
-import '../screen/cartdetailscreen.dart';
-import '../services/apirequest.dart';
+import 'package:midtowncomics/export.dart';
 
 class SortByDialaugue extends StatefulWidget {
   const SortByDialaugue({super.key,});
@@ -40,44 +32,49 @@ class _SortByDialaugueState extends State<SortByDialaugue> {
         radioButtonData.forEach((key, value) {
           widgets.add(Row(
             children: [
-              Radio(
-                activeColor: const Color(0xff006ccf),
-                value: key,
-                groupValue: provider.selectedValue,
-                onChanged: (value) async{
-                  final provider= Provider.of<StreamedDataProvider>(context,listen: false);
-                  final datam=Provider.of<FilterProvider>(context,listen: false);
-                 provider.sorby(value as int );
-                  Navigator.pop(context);
-                  ApiRequests().SearchApi(
-                      provider.searchselection,
-                      provider.title == "All"
-                          ? ""
-                          : provider.title,
-                      (provider.returnproduct.length)
-                          .toString(),
-                      provider.selectedValue.toString(),
-                      datam.showoutofstock == true
-                          ? "1"
-                          : '0',
-                      datam.releaseweaks,
-                      datam.releaseyears,
-                      datam.related,
-                      datam.startdiscounts,
-                      datam.enddiscounts,
-                      datam.manufacturers,
-                      datam.artists,
-                      datam.writers,
-                      datam.startprice,
-                      datam.endprice,
-                      datam.seriesfilter,
-                      false,
-                      datam.newtitle,
-                      context);
+              Transform.scale(
+                scale:
+                allsize * 0.0007,
+                child: Radio(
+                  activeColor: const Color(0xff006ccf),
+                  value: key,
+                  groupValue: provider.selectedValue,
+                  onChanged: (value) async{
+                    final provider= Provider.of<StreamedDataProvider>(context,listen: false);
+                    final datam=Provider.of<FilterProvider>(context,listen: false);
+                   provider.sorby(value as int );
+                    Navigator.pop(context);
+                    ApiRequests().SearchApi(
+                        provider.loginuserdata['sh_id']??"",
+                        provider.searchselection,
+                        provider.title == "All"
+                            ? ""
+                            : provider.title,
+                        (provider.returnproduct.length)
+                            .toString(),
+                        provider.selectedValue.toString(),
+                        datam.showoutofstock == true
+                            ? "1"
+                            : '0',
+                        datam.releaseweaks,
+                        datam.releaseyears,
+                        datam.related,
+                        datam.startdiscounts,
+                        datam.enddiscounts,
+                        datam.manufacturers,
+                        datam.artists,
+                        datam.writers,
+                        datam.startprice,
+                        datam.endprice,
+                        datam.seriesfilter,
+                        false,
+                        datam.newtitle,
+                        context);
 
-                },
+                  },
+                ),
               ),
-              Text(value),
+              Text(value,style: TextStyle(fontSize: allsize*0.012),),
             ],
           ));
         });
@@ -105,7 +102,7 @@ class _SortByDialaugueState extends State<SortByDialaugue> {
                             onTap: (){
                               Navigator.pop(context);
                             },
-                            child: const Icon(CupertinoIcons.clear,color: Colors.white,))
+                            child:  Icon(CupertinoIcons.clear,color: Colors.white,size: allsize*0.02,))
                       ],
                     ),
                   ),

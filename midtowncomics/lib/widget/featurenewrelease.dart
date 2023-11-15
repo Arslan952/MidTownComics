@@ -1,18 +1,9 @@
-// ignore_for_file: must_be_immutable
-
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+// ignore_for_file: must_be_immutable, depend_on_referenced_packages
 import 'package:midtowncomics/screen/ProductDetailPage.dart';
-import 'package:midtowncomics/screen/loginscreen.dart';
-import 'package:midtowncomics/services/apirequest.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/streamdataprovider.dart';
-import '../services/functions.dart';
 import 'CustomProductDialugue.dart';
 import 'package:http/http.dart'as http;
+import 'package:midtowncomics/export.dart';
+
 class FeatureNewRelease extends StatefulWidget {
   // String title;
   Map<String, dynamic> data;
@@ -104,8 +95,10 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                           if (loadingProgress == null) {
                             return child;
                           } else {
-                            return const Center(
-                                child: CircularProgressIndicator());
+                            return  Center(
+                                child: Image.asset('assets/images/imagecomingsoon_ful.jpg')
+                                // CircularProgressIndicator()
+                            );
                           }
                         },
                         // fit: BoxFit.fill,
@@ -118,6 +111,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                     child: InkWell(
                       onTap: () {
                         provider.chanddetai({});
+                        print(widget.image!);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -131,7 +125,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                       child: Text(
                         widget.title!.isNotEmpty
                             ? widget.title!
-                            : "Magneto Vol 4 #2 Cover a regular To",
+                            : "----------",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: allsize * 0.013),
@@ -247,10 +241,8 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                           Map<String, dynamic>
                                           datache =
                                           jsonDecode(data);
-                                          print(datache['DATA']
-                                          ['cartList']);
                                         } else {
-                                          print(
+                                          debugPrint(
                                               response.reasonPhrase);
                                         }
                                         provider.call(widget.image!, "1",value1.toString());
@@ -303,7 +295,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                             listen: false);
                                         Map<String, dynamic> data =
                                         await ApiRequests()
-                                            .Savedata(widget.image, 1, context);
+                                            .Savedata( streamedDataProvider.loginuserdata['sh_id'],widget.image, 1, context);
                                         setState(() {
                                           change =
                                           false; // Set the loading flag to false when the API request is done
@@ -356,7 +348,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                         var request = http.Request(
                                             'GET',
                                             Uri.parse(
-                                                'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${widget.image}&sc_qty=${ item == "-Remove-"
+                                                'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=${ streamedDataProvider.loginuserdata['sh_id']}&pr_id=${widget.image}&sc_qty=${ item == "-Remove-"
                                                     ? "0"
                                                     : value1}&app_id='));
                                         http.StreamedResponse
@@ -373,10 +365,8 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                           Map<String, dynamic>
                                           datache =
                                           jsonDecode(data);
-                                          print(datache['DATA']
-                                          ['cartList']);
                                         } else {
-                                          print(
+                                          debugPrint(
                                               response.reasonPhrase);
                                         }
                                         provider.call(widget.image!, "1",value1.toString());
@@ -420,14 +410,17 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                     clipper: CustomClipPath(),
                     child: Container(
                       height: size.height * 0.028,
-                      width: size.width * 0.38,
+                      width: size.width * 0.4,
                       color: const Color(0xff006ccf),
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Text(
-                          "Available for pull list!",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: allsize * 0.011),
+                        child: Padding(
+                          padding: EdgeInsets.only(left:size.width*0.01),
+                          child: Text(
+                            "Available for pull list!",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: allsize * 0.011),
+                          ),
                         ),
                       ),
                     ),

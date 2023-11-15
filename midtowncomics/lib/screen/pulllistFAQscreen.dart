@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: library_private_types_in_public_api
 
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
-import '../widget/subcribeWidget.dart';
+import 'package:midtowncomics/export.dart';
 
 class PullListFAQScreen extends StatefulWidget {
   const PullListFAQScreen({super.key});
@@ -76,7 +73,7 @@ class _PullListFAQScreenState extends State<PullListFAQScreen> {
               children: [
                 SizedBox(height: size.height * 0.16),
                     Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "FAQ",
                       style:
@@ -85,7 +82,7 @@ class _PullListFAQScreenState extends State<PullListFAQScreen> {
                 Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: data.length,
                       itemBuilder: (context, index) {
@@ -97,7 +94,7 @@ class _PullListFAQScreenState extends State<PullListFAQScreen> {
                 ),
                 const SubcribeWidget(),
                 SizedBox(height: size.height*0.02,),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )
@@ -121,7 +118,7 @@ class QuestionAnswer {
 class QuestionAnswerTile extends StatefulWidget {
   final QuestionAnswer questionAnswer;
 
-  QuestionAnswerTile({required this.questionAnswer});
+  const QuestionAnswerTile({super.key, required this.questionAnswer});
 
   @override
   _QuestionAnswerTileState createState() => _QuestionAnswerTileState();
@@ -134,7 +131,7 @@ class _QuestionAnswerTileState extends State<QuestionAnswerTile> {
   Widget build(BuildContext context) {
     var allsize=MediaQuery.of(context).size.height+MediaQuery.of(context).size.width;
     return Card(
-      margin: EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(8.0),
       child: ExpansionTile(
         title: Text(widget.questionAnswer.question,style: TextStyle(fontSize:allsize*0.012),),
         onExpansionChanged: (value) {
@@ -144,7 +141,7 @@ class _QuestionAnswerTileState extends State<QuestionAnswerTile> {
         },
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Text(widget.questionAnswer.answer,style: TextStyle(fontSize:allsize*0.012)),
           ),
         ],

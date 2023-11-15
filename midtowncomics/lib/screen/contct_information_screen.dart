@@ -1,10 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
-import '../widget/subcribeWidget.dart';
+import 'package:midtowncomics/export.dart';
 
 class ContactInformationScreen extends StatefulWidget {
   const ContactInformationScreen({super.key});
@@ -30,7 +25,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: size.height * 0.16),
+                SizedBox(height: size.height * 0.17),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -137,14 +132,17 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                               "Store Hours,info & Direction",
                               style: TextStyle(color: Colors.black54,fontSize: allsize*0.011),
                             ),
-                            Container(
-                              height: size.height * 0.2,
-                              width: size.width * 0.8,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: const DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/TS-a_300.jpg'))),
+                            SizedBox(height: size.height*0.01,),
+                            Center(
+                              child: Container(
+                                height: size.height * 0.2,
+                                width: size.width * 0.8,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: const DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/TS-a_300.jpg'),fit: BoxFit.fill)),
+                              ),
                             ),
                             Center(
                               child: TextButton(
@@ -156,14 +154,16 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                               ),
                             ),
                             SizedBox(height: size.height*0.02,),
-                            Container(
-                              height: size.height * 0.2,
-                              width: size.width * 0.8,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: const DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/GC-a_300.jpg'))),
+                            Center(
+                              child: Container(
+                                height: size.height * 0.2,
+                                width: size.width * 0.8,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: const DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/GC-a_300.jpg'),fit: BoxFit.fill)),
+                              ),
                             ),
                             Center(
                               child: TextButton(
@@ -175,14 +175,16 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                               ),
                             ),
                             SizedBox(height: size.height*0.02,),
-                            Container(
-                              height: size.height * 0.2,
-                              width: size.width * 0.8,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: const DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/DT-0_300.jpg'))),
+                            Center(
+                              child: Container(
+                                height: size.height * 0.2,
+                                width: size.width * 0.8,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: const DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/DT-0_300.jpg'),fit: BoxFit.fill)),
+                              ),
                             ),
                             Center(
                               child: TextButton(

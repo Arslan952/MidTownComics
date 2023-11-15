@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
 
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
+import 'package:midtowncomics/export.dart';
 
 class InStorePickupScreen extends StatefulWidget {
   const InStorePickupScreen({super.key});

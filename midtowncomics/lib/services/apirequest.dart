@@ -1,14 +1,12 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, depend_on_referenced_packages
-
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:midtowncomics/provider/streamdataprovider.dart';
-import 'package:provider/provider.dart';
-
+import 'package:midtowncomics/provider/creditcardprovider.dart';
+import 'package:midtowncomics/provider/orderprovider.dart';
+import '../provider/addressprovider.dart';
+import '../provider/settingProvider.dart';
 import '../screen/homescreen.dart';
+import 'package:midtowncomics/export.dart';
 
 class ApiRequests {
   //Get All Data First Time
@@ -20,7 +18,7 @@ class ApiRequests {
             'https://www.midtowncomics.com/wcfmt/services/midtownprocess.svc/load-page-data-vr1?apiKey=ProductApiKey@8879kiop!&mtUser=AppUserMT@123!&mtPass=MTC007@8847!&sh_id=&pgn=home&rvl=1000,1002,1003&app_id='));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
-      await Future.delayed(const Duration(seconds: 2));
+      // await Future.delayed(const Duration(seconds: 3));
       Get.off(const HomeScreen());
       final data = await response.stream.bytesToString();
       datai = jsonDecode(data);
@@ -68,7 +66,7 @@ class ApiRequests {
   }
 
   //Save To Cart
-  Future<Map<String, dynamic>> Savedata(
+  Future<Map<String, dynamic>> Savedata(sh_id,
       productid, quantity, BuildContext context) async {
     Map<String, dynamic> datai = {};
     final streamedDataProvider =
@@ -77,7 +75,7 @@ class ApiRequests {
     var request = http.Request(
         'GET',
         Uri.parse(
-            'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=$productid&sc_qty=$quantity&app_id='));
+            'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=$sh_id&pr_id=$productid&sc_qty=$quantity&app_id='));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       streamedDataProvider.change(false);
@@ -92,6 +90,7 @@ class ApiRequests {
 
   //Product Detail Page
   Future<Map<String, dynamic>> ProductDetail(
+      sh_id,
       poductid, BuildContext context) async {
     Map<String, dynamic> datai = {};
     final streamedDataProvider =
@@ -100,7 +99,7 @@ class ApiRequests {
     var request = http.Request(
         'GET',
         Uri.parse(
-            "https://www.midtowncomics.com/wcfmt/services/product.svc/load-detail-by-parent-vr1?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=$poductid&app_id="));
+            "https://www.midtowncomics.com/wcfmt/services/product.svc/load-detail-by-parent-vr1?apiKey=&mtUser=&mtPass=&sh_id=$sh_id&pr_id=$poductid&app_id="));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       streamedDataProvider.changedetailind(false);
@@ -131,8 +130,14 @@ class ApiRequests {
       Map<String, dynamic> datache = jsonDecode(data);
       datai = datache;
       streamedDataProvider.updateLogingData(datache);
+      if(datai['CODE']=="1")
+        {
 
-      Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+      else{
+        Navigator.pop(context);
+      }
+      // Navigator.of(context).popUntil((route) => route.isFirst);
       // // Obtain shared preferences.
       // final SharedPreferences prefs = await SharedPreferences.getInstance();
       // await prefs.setStringList('items', <String>['Earth', 'Moon', 'Sun']);
@@ -145,6 +150,7 @@ class ApiRequests {
 
 //Search Api
   Future<Map<String, dynamic>> SearchApi(
+      String sh_id,
       String query,
       String categorie,
       String pp,
@@ -173,7 +179,7 @@ class ApiRequests {
     var request = http.Request(
         'GET',
         Uri.parse(
-            "https://www.midtowncomics.com/wcfmt/services/search.svc/load-search?apiKey=&mtUser=&mtPass=&sh_id=76367&q=$query&pp=$pp&pj=1&cat=$categorie&scat=&mn$manufacturer=&sp=$startprice&ep$endprice=&rel=&art$artist=&wrt$writer=&os=$outofstock&sb=$sb&sd=$startdate&ed=&sdisc$startdiscountvalue=&edisc$enddiscountvalue=&di$releaseyear=&si=$series&genre=&cfr=&nt$seriestitle=&rt$relatedttle=&clr=&ustmp=&prids=&pr_condition=&app_id="));
+            "https://www.midtowncomics.com/wcfmt/services/search.svc/load-search?apiKey=&mtUser=&mtPass=&sh_id=$sh_id&q=$query&pp=$pp&pj=1&cat=$categorie&scat=&mn$manufacturer=&sp=$startprice&ep$endprice=&rel=&art$artist=&wrt$writer=&os=$outofstock&sb=$sb&sd=$startdate&ed=&sdisc$startdiscountvalue=&edisc$enddiscountvalue=&di$releaseyear=&si=$series&genre=&cfr=&nt$seriestitle=&rt$relatedttle=&clr=&ustmp=&prids=&pr_condition=&app_id="));
     http.StreamedResponse response = await request.send();
     streamedDataProvider.changesearchind(false);
     streamedDataProvider.changebutton(false);
@@ -190,4 +196,632 @@ class ApiRequests {
     }
     return datai;
   }
+
+  Future<Map<String, dynamic>>GetDates(BuildContext context) async {
+    Map<String, dynamic> datai = {};
+    final streamedDataProvider =
+    Provider.of<WeeklyReleaseProvider>(context, listen: false);
+    streamedDataProvider.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/comicsdate.svc/load-dates?apiKey=&mtUser=&mtPass=&app_id="));
+    http.StreamedResponse response = await request.send();
+    // streamedDataProvider.change(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      print(datache);
+      streamedDataProvider.getdates(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+  Future<Map<String, dynamic>>GetProductFilters(BuildContext context,String date,sh_id) async {
+    print(date);
+    Map<String, dynamic> datai = {};
+    final streamedDataProvider =
+    Provider.of<WeeklyReleaseProvider>(context, listen: false);
+    streamedDataProvider.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/weeklyrelease.svc/load-filters?apiKey=&mtUser=&mtPass=&wdate=$date&sh_id=$sh_id&app_id="));
+    http.StreamedResponse response = await request.send();
+    // streamedDataProvider.change(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      print(datache);
+      streamedDataProvider.getfilters(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+  Future<Map<String, dynamic>>GetWeeklyReleaseData(BuildContext context,String date,cg_id,sortby,pagesize,bool button,String sha1) async {
+    Map<String, dynamic> datai = {};
+    final streamedDataProvider =
+    Provider.of<WeeklyReleaseProvider>(context, listen: false);
+    streamedDataProvider.updateloadmore(button==true?true:false);
+    streamedDataProvider.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/weeklyrelease.svc/load-body?apiKey=&mtUser=&mtPass=&cg_id=$cg_id&wdate=$date&sh_id=$sha1&sortby=$sortby&currentPage=1&pageSize=$pagesize&app_id="));
+    http.StreamedResponse response = await request.send();
+    streamedDataProvider.changeindicator(false);
+   streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      print(datache);
+      streamedDataProvider.getWeeklyReleaseData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  //Get Account Setting
+  Future<Map<String, dynamic>>GetAccountSettings(String sha1,BuildContext context) async {
+    Map<String, dynamic> datai = {};
+    final accountsettinprovider =
+    Provider.of<AccountSettingProvider>(context, listen: false);
+    // streamedDataProvider.updateloadmore(button==true?true:false);
+    // streamedDataProvider.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/accountsettings.svc/load-my-account-settings?apiKey=&mtUser=&mtPass=&sh_id=$sha1&app_id="));
+    http.StreamedResponse response = await request.send();
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      accountsettinprovider.getAccountSetting(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  Future<Map<String, dynamic>>GetOrder(String sha1,BuildContext context) async {
+    Map<String, dynamic> datai = {};
+    final accountsettinprovider =
+    Provider.of<OrderProvider>(context, listen: false);
+    // streamedDataProvider.updateloadmore(button==true?true:false);
+    // streamedDataProvider.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/orders.svc/load-by-shopper?apiKey=&mtUser=&mtPass=&sh_id=$sha1&app_id="));
+    http.StreamedResponse response = await request.send();
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      accountsettinprovider.getOrder(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  Future<Map<String, dynamic>>LoadCreditCard(String sha1,BuildContext context) async {
+    Map<String, dynamic> datai = {};
+    final credit =
+    Provider.of<CreditCardProvider>(context, listen: false);
+    credit.searchlist(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/cc.svc/load-by-shopper?apiKey=&mtUser=&mtPass=&sh_id=$sha1&app_id="));
+    http.StreamedResponse response = await request.send();
+    credit.searchlist(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      credit.LoadCreditCard(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  Future<Map<String, dynamic>>LoadAdress(String sha1,BuildContext context) async {
+    Map<String, dynamic> datai = {};
+    final address =
+    Provider.of<AddressProvider>(context, listen: false);
+    address.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/address.svc/load-by-shopper?apiKey=&mtUser=&mtPass=&sh_id=$sha1&sa_type=&app_id="));
+    http.StreamedResponse response = await request.send();
+    address.changeindicator(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      // print(datache);
+      address.LoadAddressData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  Future<Map<String, dynamic>>SaveProfileData(String sha1,fname,lname,dob,email,cemail,password,cpassword,beemail,meemail,teemail,oldemail,BuildContext context) async {
+    Map<String, dynamic> datai = {};
+    final address =
+    Provider.of<AddressProvider>(context, listen: false);
+    address.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/accountsettings.svc/save-profile?apiKey=&mtUser=&mtPass=&sh_id=$sha1&sh_fname=$fname&sh_lname=$lname&sh_dob=$dob&email=$email&cemail=$cemail&password=$password&cpassword=$cpassword&bemail=$beemail&memail=$meemail&temail=$teemail&oemail=$oldemail&opt=set&app_id="));
+    http.StreamedResponse response = await request.send();
+    address.changeindicator(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      if(datache['CODE']=="0")
+        {
+          await GetAccountSettings(sha1,context);
+        }
+      Navigator.pop(context);
+      Fluttertoast.showToast(
+          msg: datache['DESCRIPTION'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.black,
+          fontSize: 16.0,
+        backgroundColor: Colors.white,
+      );
+      print(datai);
+      // address.LoadAddressData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  Future<Map<String, dynamic>>SaveCardData(String sha1,fname,lname,pm_id,pm_cardtype,pm_cardnum,pm_expmnth,pm_expyear,BuildContext context) async {
+    Map<String, dynamic> datai = {};
+    String lastTwoDigits =  pm_expyear.substring(pm_expyear.length - 2);
+    print(lastTwoDigits); // This will print '27'
+    print(pm_expmnth);
+    final address =
+    Provider.of<AddressProvider>(context, listen: false);
+    address.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+          "https://www.midtowncomics.com/wcfmt/services/cc.svc/save?apiKey=&mtUser=&mtPass=&sh_id=$sha1&pm_id=$pm_id&first_name=$fname&last_name=$lname&pm_cardtype=$pm_cardtype&pm_cardnum=$pm_cardnum&pm_expmnth=$pm_expmnth&pm_expyear=${ pm_expyear.substring(pm_expyear.length - 2)}&app_id="
+          //   "https://www.midtowncomics.com/wcfmt/services/cc.svc/save?apiKey=&mtUser=&mtPass=&sh_id=$sha1&pm_id=&first_name=$fname&last_name=$lname&pm_cardtype=$pm_cardtype&pm_cardnum=$pm_cardnum&pm_expmnth=06&pm_expyear=28,&app_id="
+        ));
+    http.StreamedResponse response = await request.send();
+    address.changeindicator(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      if(datache['CODE']=="0")
+        {
+          Navigator.pop(context);
+        }
+      print(datache);
+      Fluttertoast.showToast(
+          msg: datache['DESCRIPTION'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.black,
+          fontSize: 16.0,
+        backgroundColor: Colors.white,
+      );
+      print(datai);
+      // address.LoadAddressData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  Future<Map<String, dynamic>>SaveAddress(String sha1,fname,lname,sa_id,sa_type,sa_desc,sa_cmpny,sa_addr1,sa_addr2,sa_city,sa_state,sa_zip ,sa_cntry,sa_verify,phone,BuildContext context) async {
+    Map<String, dynamic> datai = {};
+    final address =
+    Provider.of<AddressProvider>(context, listen: false);
+    address.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/address.svc/save?apiKey=&mtUser=&mtPass=&sh_id=$sha1&sa_id=$sa_id&sa_type=$sa_type&sa_desc=$sa_desc&sa_fname=$fname&sa_lname=$lname&sa_cmpny=$sa_cmpny&sa_addr1=$sa_addr1&sa_addr2=&sa_city=$sa_city&sa_state=$sa_state&sa_zip=$sa_zip&sa_cntry=$sa_cntry&sa_phone=$phone&sa_verify=&sa_di=&app_id="));
+    http.StreamedResponse response = await request.send();
+    address.changeindicator(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      if(datache['CODE']=="0")
+        {
+          Navigator.pop(context);
+          ApiRequests().LoadAdress(sha1, context);
+        }
+      print(datache);
+      Fluttertoast.showToast(
+          msg: datache['DESCRIPTION'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.black,
+          fontSize: 16.0,
+        backgroundColor: Colors.white,
+      );
+      print(datai);
+      // address.LoadAddressData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+  Future<Map<String, dynamic>>ProceedCard(String sha1,pm_id,action,BuildContext context) async {
+    Map<String, dynamic> datai = {};
+    final address =
+    Provider.of<AddressProvider>(context, listen: false);
+    address.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/cc.svc/process-cc?apiKey=&mtUser=&mtPass=&sh_id=$sha1&pm_id=$pm_id&action=$action&app_id="));
+    http.StreamedResponse response = await request.send();
+    address.changeindicator(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      await LoadCreditCard(sha1, context);
+      print(datache);
+      Fluttertoast.showToast(
+          msg: datache['DESCRIPTION'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.black,
+          fontSize: 16.0,
+        backgroundColor: Colors.white,
+      );
+      print(datai);
+      // address.LoadAddressData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+  Future<Map<String, dynamic>>ProceedAddress(String sha1,sa_id,sa_type,action,BuildContext context) async {
+    Map<String, dynamic> datai = {};
+    final address =
+    Provider.of<AddressProvider>(context, listen: false);
+    address.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/address.svc/process-address?apiKey=&mtUser=&mtPass=&sh_id=76367&sa_id=530773&sa_type=B&action=df&app_id="));
+    http.StreamedResponse response = await request.send();
+    address.changeindicator(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      await LoadAdress(sha1, context);
+      Fluttertoast.showToast(
+          msg: datache['DESCRIPTION'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.black,
+          fontSize: 16.0,
+        backgroundColor: Colors.white,
+      );
+      print(datai);
+      // address.LoadAddressData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  Future<Map<String, dynamic>>SavePullListSetting(String sha1,sub_type,ss_billcycle,sm_id,sa_id,ba_id,pm_id,ss_location,sub_status,BuildContext context) async {
+    print(sub_status);
+    Map<String, dynamic> datai = {};
+    final address =
+    Provider.of<AddressProvider>(context, listen: false);
+    address.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/pulllist.svc/confirm-save?apiKey=&mtUser=&mtPass=&sh_id=$sha1&sub_type=$sub_type&ss_billcycle=$ss_billcycle&sm_id=$sm_id&sa_id=$sa_id&ba_id=$ba_id&pm_id=$pm_id&ss_location=$ss_location&sub_status=$sub_status&app_id={app_id}"));
+    http.StreamedResponse response = await request.send();
+    address.changeindicator(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      Fluttertoast.showToast(
+          msg: datache['DESCRIPTION'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.black,
+          fontSize: 16.0,
+        backgroundColor: Colors.white,
+      );
+      print(datai);
+      // address.LoadAddressData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  Future<Map<String, dynamic>>SavePreviewSetting(String sh_id,pm_id,sa_id_bill,ss_bill_cycle,sa_id_ship,sm_id,BuildContext context) async {
+
+    Map<String, dynamic> datai = {};
+    final address =
+    Provider.of<AddressProvider>(context, listen: false);
+    address.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/accountsettings.svc/save-previews-setting?apiKey=&mtUser=&mtPass=&sh_id=$sh_id&pm_id=$pm_id&sa_id_bill=$sa_id_bill&ss_bill_cycle=$ss_bill_cycle&sa_id_ship=$sa_id_ship&sm_id=$sm_id&app=_id="));
+    http.StreamedResponse response = await request.send();
+    address.changeindicator(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      Fluttertoast.showToast(
+          msg: datache['DESCRIPTION'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.black,
+          fontSize: 16.0,
+        backgroundColor: Colors.white,
+      );
+      print(datai);
+      // address.LoadAddressData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  Future<Map<String, dynamic>>RegisterUser(String sh_lgid,sh_lgid_confirm,sa_desc,sh_fname,sh_lname,sh_dob,sa_cmpny,sa_addr1,sa_addr2,sa_city,sa_zip,sa_phone1,sh_pass,sh_pass_confirm,sa_cntry,sa_state,BuildContext context) async {
+
+    Map<String, dynamic> datai = {};
+    final address =
+    Provider.of<AddressProvider>(context, listen: false);
+    address.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/midtownprocess.svc/register-shopper?apiKey=&mtUser=&mtPass=&sh_lgid=$sh_lgid&sh_lgid_confirm=$sh_lgid_confirm&sa_desc=$sa_desc&sh_fname=$sh_fname&sh_lname=$sh_lname&sh_dob=$sh_dob&sa_cmpny=$sa_cmpny&sa_addr1=$sa_addr1&sa_addr2=$sa_addr2&sa_city=$sa_city&sa_zip=$sa_zip&sa_phone1=$sa_phone1&sh_pass=$sh_pass&sh_pass_confirm=$sh_pass_confirm&sa_cntry=$sa_cntry&sa_state=$sa_state&app_id="));
+    http.StreamedResponse response = await request.send();
+    address.changeindicator(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      Fluttertoast.showToast(
+          msg: datache['DESCRIPTION'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.black,
+          fontSize: 16.0,
+        backgroundColor: Colors.white,
+      );
+      Navigator.pop(context);
+      print(datai);
+      // address.LoadAddressData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+  //Upcoming pULL lIST
+  Future<Map<String, dynamic>>upcomingPullList(String sh_id,pr_id,fetch_type,su_id,susp,BuildContext context) async {
+
+    Map<String, dynamic> datai = {};
+    final address =
+    Provider.of<AddressProvider>(context, listen: false);
+    address.changeindicator(true);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/accountsettings.svc/manage-upcoming-title?apiKey=&mtUser=&mtPass=&sh_id=$sh_id&pr_id=$pr_id&fetch_type=$fetch_type&su_id=$su_id&susp=$susp&app_id="));
+    http.StreamedResponse response = await request.send();
+    address.changeindicator(false);
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      ApiRequests().GetAccountSettings(sh_id, context);
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      Fluttertoast.showToast(
+          msg: datache['DESCRIPTION'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.black,
+          fontSize: 16.0,
+        backgroundColor: Colors.white,
+      );
+      print(datai);
+      // address.LoadAddressData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+  //Get All Countries
+  Future<Map<String, dynamic>>GetCountries(BuildContext context) async {
+
+    Map<String, dynamic> datai = {};
+    final provider =
+    Provider.of<StreamedDataProvider>(context, listen: false);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/country.svc/load-all?apiKey=&mtUser=&mtPass=&app_id="));
+    http.StreamedResponse response = await request.send();
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      print(datai);
+      provider.updateCountriesData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+  //Get State
+  Future<Map<String, dynamic>>GetState(BuildContext context) async {
+
+    Map<String, dynamic> datai = {};
+    final provider =
+    Provider.of<StreamedDataProvider>(context, listen: false);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/state.svc/load-by-country?apiKey=&mtUser=&mtPass=&sa_cntry=840&app_id="));
+    http.StreamedResponse response = await request.send();
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      provider.updateStateData(datache);
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+  Future<Map<String, dynamic>>SavePullList(String sh_id,su_id,sd_qty,isRemove,pr_id,BuildContext context) async {
+    print(sh_id);
+    print(su_id);
+    print(sd_qty);
+    Map<String, dynamic> datai = {};
+    final provider =
+    Provider.of<StreamedDataProvider>(context, listen: false);
+    final provider2=
+    Provider.of<WeeklyReleaseProvider>(context, listen: false);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "https://www.midtowncomics.com/wcfmt/services/pulllist.svc/save?apiKey=&mtUser=&mtPass=&sh_id=$sh_id&su_id=$su_id&sd_qty=$sd_qty&isRemove=$isRemove&app_id="));
+    http.StreamedResponse response = await request.send();
+    // streamedDataProvider.changeindicator(false);
+    // streamedDataProvider.updateloadmore(false);
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+      print(datache);
+      Map<String,dynamic>pullListData=await loadPullList(sh_id);
+      provider.updatePullListData(pullListData);
+      if(provider.detail.isNotEmpty)
+        {
+         provider.updateDetailIsSubscriber();
+        }
+      if(provider2.dataweekly.isNotEmpty)
+        {
+          provider2.updateIsSubscribe(pr_id);
+        }
+      if(provider.returnproduct.isNotEmpty)
+        {
+          provider.updateIsSubscribe(pr_id);
+        }
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+  Future<Map<String, dynamic>> loadPullList(shid) async {
+    Map<String, dynamic> datai = {};
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://www.midtowncomics.com/wcfmt/services/pulllist.svc/load-quick-list?apiKey=&mtUser=&mtPass=&sh_id=$shid&app_id='));
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      final data = await response.stream.bytesToString();
+
+      Map<String, dynamic> datache = jsonDecode(data);
+      datai = datache;
+    } else {
+      debugPrint(response.reasonPhrase.toString());
+    }
+    return datai;
+  }
+
+
+
+
+
 }

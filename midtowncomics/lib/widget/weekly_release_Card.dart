@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:midtowncomics/export.dart';
 
 class WeeklyReleaseCard extends StatefulWidget {
   const WeeklyReleaseCard({super.key});
@@ -11,13 +11,13 @@ class _WeeklyReleaseCardState extends State<WeeklyReleaseCard> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Card(
         color: Colors.white,
         elevation: 3,
         child: Padding(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

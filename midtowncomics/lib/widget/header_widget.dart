@@ -2,19 +2,9 @@
 
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:midtowncomics/screen/loginscreen.dart';
-import 'package:midtowncomics/screen/seachpage.dart';
-import 'package:midtowncomics/services/apirequest.dart';
-import 'package:midtowncomics/widget/customdialouge1.dart';
-import 'package:midtowncomics/widget/searchcustomdialaugue.dart';
-import 'package:provider/provider.dart';
+import 'package:midtowncomics/export.dart';
 
-import '../provider/streamdataprovider.dart';
-import 'customdialaugue2.dart';
-import 'customdialugue3.dart';
+import '../screen/homescreen.dart';
 
 class Header_Widget extends StatefulWidget {
   TextEditingController?searchcontroller;
@@ -33,17 +23,47 @@ class Header_Widget extends StatefulWidget {
 class _Header_WidgetState extends State<Header_Widget> {
   final FocusNode _focusNode = FocusNode();
   bool _showIcon = true;
+
+  bool get isTablet {
+    final firstView = WidgetsBinding.instance.platformDispatcher.views.first;
+    final logicalShortestSide =
+        firstView.physicalSize.shortestSide / firstView.devicePixelRatio;
+    return logicalShortestSide > 600;
+  }
+
   @override
   void initState() {
     super.initState();
     widget.searchcontroller?.addListener(() {
-      final provider=Provider.of<StreamedDataProvider>(context,listen: false);
+      final provider =
+      Provider.of<StreamedDataProvider>(context, listen: false);
       provider.updatesearchselextion(widget.searchcontroller!.text);
       provider.searchlist(true);
       if (widget.searchcontroller!.text.isEmpty) {
-        Provider.of<StreamedDataProvider>(context, listen: false).removesearchdata();
+        Provider.of<StreamedDataProvider>(context, listen: false)
+            .removesearchdata();
       } else {
-        ApiRequests().SearchApi(widget.searchcontroller!.text,provider.title=="All"?"":provider.title,'10','0','0'," "," ","","",""," ","","","","","", false,"",context);
+        ApiRequests().SearchApi(
+            provider.loginuserdata['sh_id']??"",
+            widget.searchcontroller!.text,
+            provider.title == "All" ? "" : provider.title,
+            '10',
+            '0',
+            '0',
+            " ",
+            " ",
+            "",
+            "",
+            "",
+            " ",
+            "",
+            "",
+            "",
+            "",
+            "",
+            false,
+            "",
+            context);
       }
     });
     _focusNode.addListener(() {
@@ -86,74 +106,49 @@ class _Header_WidgetState extends State<Header_Widget> {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
                         child: Text(
                           "MIDTOWN COMICS",
-                          style: GoogleFonts.oswald(
-                              color: Colors.white,
-                              fontStyle: FontStyle.italic,
-                              fontSize: allsize * 0.020,
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "oswald_bold",
+                            fontStyle: FontStyle.italic,
+                            fontSize: allsize * 0.021,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         onTap: () async {
                           final streamedDataProvider =
-                              Provider.of<StreamedDataProvider>(context,
-                                  listen: false);
-                          Map<String, dynamic> data =
-                              await ApiRequests().fetchData1(provider.loginuserdata.isEmpty?"":provider.loginuserdata['sh_id']);
+                          Provider.of<StreamedDataProvider>(context,
+                              listen: false);
+                          Map<String, dynamic> data = await ApiRequests()
+                              .fetchData1(provider.loginuserdata.isEmpty
+                              ? ""
+                              : provider.loginuserdata['sh_id']);
                           streamedDataProvider.updateData(data);
+                          Get.to(const HomeScreen());
                         },
                       ),
-                      IconButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const CustomDialugue1();
-                            },
-                          );
-                        },
-                        icon: Icon(
-                          Icons.person,
-                          color: Colors.white,
-                          size: allsize * 0.02,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          provider.loginuserdata.isEmpty?Get.to(const SignInScreen()):
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const CustomDialugue3();
-                            },
-                          );
-                        },
-                        icon: badges.Badge(
-                          showBadge: provider.cartdata['DATA'] == null || provider.loginuserdata.isEmpty
-                              ? false
-                              : true,
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: InkWell(
                           onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const CustomDialugue1();
+                              },
+                            );
                           },
-                          badgeAnimation: const badges.BadgeAnimation.scale(
-                            animationDuration: Duration(seconds: 1),
-                            colorChangeAnimationDuration: Duration(seconds: 1),
-                            loopAnimation: false,
-                            curve: Curves.fastOutSlowIn,
-                            colorChangeAnimationCurve: Curves.easeInCubic,
-                          ),
-                          badgeContent: Text(
-                            "2",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: allsize * 0.01),
-                          ),
                           child: Icon(
-                            Icons.book,
+                            Icons.person,
                             color: Colors.white,
                             size: allsize * 0.02,
                           ),
@@ -161,80 +156,161 @@ class _Header_WidgetState extends State<Header_Widget> {
                       ),
                       Consumer<StreamedDataProvider>(
                           builder: (context, provider, child) {
-                            // if (provider.searchselection != "") {
-                            //   searchcontroller.text = provider.searchselection;
-                            // }
-                        List<dynamic> cartdatalist =
-                            provider.cartdata['DATA'] == null
+                            List<dynamic> pullListDataList =
+                            provider.pullListData['DATA'] == null
                                 ? []
-                                : provider.cartdata['DATA']['cartList'];
-                        double totalprice = double.parse(
-                            provider.cartdata['DATA'] == null
-                                ? "0"
-                                : cartdatalist[0]['cart_total']);
-                        int convert = totalprice.toInt();
-                        String totalnumber = provider.cartdata['DATA'] == null
-                            ? ""
-                            : cartdatalist[0]['cart_total_qty'];
-                        double badgeSize;
-                        if (totalnumber.length == 1) {
-                          badgeSize =
-                              allsize * 0.013; // Adjust badge size for 1 digit
-                        } else if (totalnumber.length == 2) {
-                          badgeSize =
-                              allsize * 0.008; // Adjust badge size for 2 digits
-                        } else if (totalnumber.length == 3) {
-                          badgeSize =
-                              allsize * 0.007; // Adjust badge size for 3 digits
-                        } else {
-                          badgeSize = allsize * 0.01; // Default badge size
-                        }
-                        return Padding(
-                          padding: EdgeInsets.only(right: size.width * 0.05),
-                          child: IconButton(
-                              onPressed: () {
-                                provider.loginuserdata.isEmpty?Get.to(const SignInScreen()):
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const CustomDialougue2();
-                                  },
-                                );
-                              },
-                              icon: badges.Badge(
-                                showBadge: provider.cartdata['DATA'] == null || provider.loginuserdata.isEmpty
-                                    ? false
-                                    : true,
-                                position: badges.BadgePosition.topEnd(),
-                                badgeAnimation:
-                                    const badges.BadgeAnimation.scale(
-                                  animationDuration: Duration(seconds: 1),
-                                  colorChangeAnimationDuration:
-                                      Duration(seconds: 1),
-                                  loopAnimation: false,
-                                  curve: Curves.fastOutSlowIn,
-                                  colorChangeAnimationCurve: Curves.easeInCubic,
+                                : provider.pullListData['DATA']['SubscribedPullList'];
+                            List<dynamic>regular= pullListDataList
+                                .where((element) => element['su_count']== "1")
+                                .toList();
+                            String totalnumber = pullListDataList.length.toString();
+                            double badgeSize;
+                            if (totalnumber.length == 1) {
+                              badgeSize = allsize *
+                                  0.013; // Adjust badge size for 1 digit
+                            } else if (totalnumber.length == 2) {
+                              badgeSize = allsize *
+                                  0.008; // Adjust badge size for 2 digits
+                            } else if (totalnumber.length == 3) {
+                              badgeSize = allsize *
+                                  0.007; // Adjust badge size for 3 digits
+                            } else {
+                              badgeSize = allsize * 0.01; // Default badge size
+                            }
+                            return Align(
+                              alignment: Alignment.bottomCenter,
+                              child: InkWell(
+                                onTap: () {
+                                  provider.loginuserdata.isEmpty
+                                      ? Get.to(const SignInScreen())
+                                      : showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const CustomDialugue3();
+                                    },
+                                  );
+                                },
+                                child: badges.Badge(
+                                  position: badges.BadgePosition.topEnd(),
+                                  showBadge:
+                                  provider.loginuserdata.isEmpty || pullListDataList.isEmpty ? false : true,
+                                  badgeAnimation: const badges.BadgeAnimation
+                                      .scale(
+                                    animationDuration: Duration(seconds: 1),
+                                    colorChangeAnimationDuration:
+                                    Duration(seconds: 1),
+                                    loopAnimation: false,
+                                    curve: Curves.fastOutSlowIn,
+                                    colorChangeAnimationCurve: Curves
+                                        .easeInCubic,
+                                  ),
+                                  badgeStyle:badges.BadgeStyle(
+                                    badgeColor: regular.length >=10
+                                        ? Colors.green
+                                        : Colors.red,
+                                    padding: const EdgeInsets.all(5),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  badgeContent: Text(
+                                    totalnumber,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: badgeSize,
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    Icons.book,
+                                    color: Colors.white,
+                                    size: allsize * 0.02,
+                                  ),
                                 ),
-                                badgeStyle: badges.BadgeStyle(
-                                  badgeColor: totalprice > 89
-                                      ? Colors.green
-                                      : Colors.red,
-                                  padding: const EdgeInsets.all(5),
-                                  borderRadius: BorderRadius.circular(4),
+                              ),
+                            );
+                          }),
+
+                      Consumer<StreamedDataProvider>(
+                        builder: (context, provider, child) {
+                          List<dynamic> cartdatalist =
+                          provider.cartdata['DATA'] == null
+                              ? []
+                              : provider.cartdata['DATA']['cartList'];
+                          double totalprice = double.parse(
+                              provider.cartdata['DATA'] == null
+                                  ? "0"
+                                  : cartdatalist[0]['cart_total']);
+                          String totalnumber = provider.cartdata['DATA'] == null
+                              ? ""
+                              : cartdatalist[0]['cart_total_qty'];
+                          double badgeSize;
+                          if (totalnumber.length == 1) {
+                            badgeSize = allsize *
+                                0.013; // Adjust badge size for 1 digit
+                          } else if (totalnumber.length == 2) {
+                            badgeSize = allsize *
+                                0.008; // Adjust badge size for 2 digits
+                          } else if (totalnumber.length == 3) {
+                            badgeSize = allsize *
+                                0.007; // Adjust badge size for 3 digits
+                          } else {
+                            badgeSize = allsize * 0.01; // Default badge size
+                          }
+                          return Padding(
+                            padding: EdgeInsets.only(right: size.width * 0.05),
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: InkWell(
+                                onTap: () {
+                                  provider.loginuserdata.isEmpty
+                                      ? Get.to(const SignInScreen())
+                                      : showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const CustomDialougue2();
+                                    },
+                                  );
+                                },
+                                child: badges.Badge(
+                                  showBadge:
+                                  provider.cartdata['DATA'] == null ||
+                                      provider.loginuserdata.isEmpty
+                                      ? false
+                                      : true,
+                                  position: badges.BadgePosition.topEnd(),
+                                  badgeAnimation:
+                                  const badges.BadgeAnimation.scale(
+                                    animationDuration: Duration(seconds: 1),
+                                    colorChangeAnimationDuration:
+                                    Duration(seconds: 1),
+                                    loopAnimation: false,
+                                    curve: Curves.fastOutSlowIn,
+                                    colorChangeAnimationCurve:
+                                    Curves.easeInCubic,
+                                  ),
+                                  badgeStyle: badges.BadgeStyle(
+                                    badgeColor: totalprice > 89
+                                        ? Colors.green
+                                        : Colors.red,
+                                    padding: const EdgeInsets.all(5),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  badgeContent: Text(
+                                    totalnumber,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: badgeSize,
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    CupertinoIcons.cart_fill,
+                                    color: Colors.white,
+                                    size: allsize * 0.02,
+                                  ),
                                 ),
-                                badgeContent: Text(
-                                  totalnumber,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: badgeSize),
-                                ),
-                                child: Icon(
-                                  CupertinoIcons.cart_fill,
-                                  color: Colors.white,
-                                  size: allsize * 0.02,
-                                ),
-                              )),
-                        );
-                      }),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -255,7 +331,7 @@ class _Header_WidgetState extends State<Header_Widget> {
                             )),
                         Container(
                           color: Colors.white,
-                          // height: size.height * 0.052,
+                          height: size.height * 0.052,
                           child: Row(
                             children: [
                               InkWell(
@@ -270,14 +346,15 @@ class _Header_WidgetState extends State<Header_Widget> {
                                 child: Container(
                                     width: size.width * 0.22,
                                     color: const Color(0xffefefef),
-                                    height: size.height * 0.06,
+                                    height: size.height * 0.052,
                                     child: Padding(
                                       padding: EdgeInsets.all(
-                                          MediaQuery.of(context)
-                                                      .size
-                                                      .shortestSide <
-                                                  550
-                                              ? allsize * 0.013
+                                          MediaQuery
+                                              .of(context)
+                                              .size
+                                              .shortestSide <
+                                              550
+                                              ? allsize * 0.01
                                               : allsize * 0.007),
                                       child: Text(
                                         provider.title,
@@ -297,9 +374,10 @@ class _Header_WidgetState extends State<Header_Widget> {
                                     provider.searchlist(false);
                                     FocusScope.of(context).unfocus();
                                     Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => const SearchPage()),
-                                    );
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                            const SearchPage()));
                                   },
                                   style: TextStyle(
                                     fontSize: allsize * 0.017,
@@ -308,6 +386,8 @@ class _Header_WidgetState extends State<Header_Widget> {
                                   maxLines: 1,
                                   textAlignVertical: TextAlignVertical.center,
                                   decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.only(
+                                        top: 0, bottom: 0, left: 8, right: 8),
                                     prefixIcon: _showIcon
                                         ? Icon(
                                       Icons.search,
@@ -319,11 +399,13 @@ class _Header_WidgetState extends State<Header_Widget> {
                                     border: InputBorder.none,
                                     suffixIcon: _focusNode.hasFocus
                                         ? IconButton(
+                                      padding: EdgeInsets.zero,
                                       onPressed: () {
                                         provider.searchlist(false);
                                         widget.searchcontroller!.clear();
                                         provider.removesearchdata();
-                                        provider.updatesearchselextion("");
+                                        provider
+                                            .updatesearchselextion("");
                                         _focusNode.unfocus();
                                       },
                                       icon: Icon(

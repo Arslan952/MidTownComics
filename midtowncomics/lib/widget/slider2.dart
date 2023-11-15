@@ -1,11 +1,10 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+// ignore_for_file: non_constant_identifier_names
 
-import '../provider/streamdataprovider.dart';
+import 'package:midtowncomics/export.dart';
 
 class Slider2 extends StatefulWidget {
+  const Slider2({super.key});
+
   @override
   State<Slider2> createState() => _Slider2State();
 }
@@ -86,7 +85,7 @@ class _Slider2State extends State<Slider2> {
               return Container(
                 width: allsize * 0.013,
                 height: allsize * 0.012,
-                margin: EdgeInsets.symmetric(horizontal: 4.0),
+                margin: const EdgeInsets.symmetric(horizontal: 4.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(

@@ -1,21 +1,11 @@
-import 'dart:convert';
+// ignore_for_file: must_be_immutable, deprecated_member_use, depend_on_referenced_packages
 
-import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:midtowncomics/screen/loginscreen.dart';
-import 'package:midtowncomics/services/functions.dart';
-import 'package:midtowncomics/widget/featurenewrelease.dart';
-import 'package:midtowncomics/widget/footer.dart';
-import 'package:midtowncomics/widget/header_widget.dart';
-import 'package:midtowncomics/widget/sidebar.dart';
-import 'package:midtowncomics/widget/subcribeWidget.dart';
-import 'package:provider/provider.dart';
+import 'package:midtowncomics/export.dart';
 
-import '../provider/streamdataprovider.dart';
-import '../services/apirequest.dart';
+import '../widget/featurenewrelease.dart';
 
 class ProductDetialPage extends StatefulWidget {
   String productid;
@@ -48,10 +38,10 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
     });
     final streamedDataProvider =
         Provider.of<StreamedDataProvider>(context, listen: false);
-    Map<String, dynamic> data =
-        await ApiRequests().ProductDetail(widget.productid, context);
+    Map<String, dynamic> data = await ApiRequests().ProductDetail(
+        streamedDataProvider.loginuserdata['sh_id'], widget.productid, context);
     streamedDataProvider.updateProductDetail(data);
-    print(data);
+    debugPrint(data.toString());
     setState(() {
       wait = false;
     });
@@ -254,6 +244,8 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                             data =
                                                             await ApiRequests()
                                                                 .ProductDetail(
+                                                                provider.loginuserdata[
+                                                                        'sh_id'],
                                                                     widget
                                                                         .productid,
                                                                     context);
@@ -300,6 +292,8 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                             data =
                                                             await ApiRequests()
                                                                 .ProductDetail(
+                                                                provider.loginuserdata[
+                                                                        'sh_id'],
                                                                     widget
                                                                         .productid,
                                                                     context);
@@ -975,16 +969,15 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                                         final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
                                                                                         int value1 = FunctionClass().extractIntegerBeforeSpace(item);
                                                                                         // ApiRequests().Savedata(widget.productid,item == "-Remove-" ? "0" : value1.toString(), context);
-                                                                                        var request = http.Request('GET', Uri.parse('https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${widget.productid}&sc_qty=${item == "-Remove-" ? "0" : value1}&app_id='));
+                                                                                        var request = http.Request('GET', Uri.parse('https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=${streamedDataProvider.loginuserdata['sh_id']}&pr_id=${widget.productid}&sc_qty=${item == "-Remove-" ? "0" : value1}&app_id='));
                                                                                         http.StreamedResponse response = await request.send();
                                                                                         if (response.statusCode == 200) {
                                                                                           final data = await response.stream.bytesToString();
                                                                                           streamedDataProvider.updateCartData(jsonDecode(data));
-                                                                                          print(data);
+                                                                                          debugPrint(data.toString());
                                                                                           Map<String, dynamic> datache = jsonDecode(data);
-                                                                                          print(datache['DATA']['cartList']);
                                                                                         } else {
-                                                                                          print(response.reasonPhrase);
+                                                                                          debugPrint(response.reasonPhrase);
                                                                                         }
                                                                                         provider.updatedetail("1", value1.toString());
                                                                                         provider.call(widget.productid, "1", value1.toString());
@@ -1027,20 +1020,19 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                       change =
                                                                           true; // Set the loading flag to true
                                                                     });
-
                                                                     // Make your API request
                                                                     final streamedDataProvider = Provider.of<
                                                                             StreamedDataProvider>(
                                                                         context,
                                                                         listen:
                                                                             false);
-                                                                    Map<String,
-                                                                            dynamic>
-                                                                        data =
-                                                                        await ApiRequests().Savedata(
-                                                                            provider.detail['pr_id'],
-                                                                            1,
-                                                                            context);
+                                                                    Map<String, dynamic> data = await ApiRequests().Savedata(
+                                                                        streamedDataProvider.loginuserdata[
+                                                                            'sh_id'],
+                                                                        provider
+                                                                            .detail['pr_id'],
+                                                                        1,
+                                                                        context);
 
                                                                     setState(
                                                                         () {
@@ -1113,16 +1105,14 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                               final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
                                                                               int value1 = FunctionClass().extractIntegerBeforeSpace(item);
                                                                               // ApiRequests().Savedata(widget.productid,item == "-Remove-" ? "0" : value1.toString(), context);
-                                                                              var request = http.Request('GET', Uri.parse('https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${widget.productid}&sc_qty=${item == "-Remove-" ? "0" : value1}&app_id='));
+                                                                              var request = http.Request('GET', Uri.parse('https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=${streamedDataProvider.loginuserdata['sh_id']}&pr_id=${widget.productid}&sc_qty=${item == "-Remove-" ? "0" : value1}&app_id='));
                                                                               http.StreamedResponse response = await request.send();
                                                                               if (response.statusCode == 200) {
                                                                                 final data = await response.stream.bytesToString();
                                                                                 streamedDataProvider.updateCartData(jsonDecode(data));
-                                                                                print(data);
                                                                                 Map<String, dynamic> datache = jsonDecode(data);
-                                                                                print(datache['DATA']['cartList']);
                                                                               } else {
-                                                                                print(response.reasonPhrase);
+                                                                                debugPrint(response.reasonPhrase);
                                                                               }
                                                                               provider.updatedetail("1", value1.toString());
                                                                               provider.call(widget.productid, "1", value1.toString());
@@ -1159,36 +1149,81 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                   SizedBox(
                                                     height: size.height * 0.01,
                                                   ),
-                                                  provider.detail['su_id'] ==
-                                                          "0"
+                                                  provider.detail['su_id'] == "0"
                                                       ? Container()
-                                                      : InkWell(
-                                                          child: Container(
-                                                            height:
-                                                                size.height *
-                                                                    0.06,
-                                                            decoration: BoxDecoration(
-                                                                border: Border.all(
-                                                                    color: const Color(
-                                                                        0xff006ccf),
-                                                                    width: allsize *
-                                                                        0.003)),
-                                                            child: Center(
-                                                              child: Text(
-                                                                'ADD TO PULL LIST',
-                                                                style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff006ccf),
-                                                                    fontSize:
-                                                                        allsize *
-                                                                            0.012,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          onTap: () {}),
+                                                      : provider.detail['issubscribe'] == "0"?
+                                                  InkWell(
+                                                    child: Container(
+                                                      height: size.height * 0.06,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color: const Color(0xff006ccf),
+                                                              width: allsize * 0.003)),
+                                                      child: Center(
+                                                        child: Text(
+                                                          'ADD TO PULL LIST',
+                                                          style: TextStyle(
+                                                              color: const Color(0xff006ccf),
+                                                              fontSize: allsize * 0.012,
+                                                              fontWeight: FontWeight.bold),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    onTap: (){
+                                                      final streamedDataProvider=   Provider.of<
+                                                          StreamedDataProvider>(
+                                                          context,
+                                                          listen: false);
+                                                      if (provider.loginuserdata.isEmpty) {
+                                                        Get.to(const SignInScreen());
+                                                      } else {
+                                                        ApiRequests().SavePullList(
+                                                            streamedDataProvider
+                                                                .loginuserdata['sh_id'],
+                                                            provider.detail['su_id'],
+                                                            "1",
+                                                            "0",
+                                                            provider.detail['pr_id'],
+                                                            context);
+                                                      }
+                                                    },
+                                                  )
+                                                      :
+                                                  InkWell(
+                                                    child: Container(
+                                                      height: size.height * 0.06,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color: const Color(0xff006ccf),
+                                                              width: allsize * 0.003)),
+                                                      child: Center(
+                                                        child: Text(
+                                                          'ADDED TO PULL LIST',
+                                                          style: TextStyle(
+                                                              color: const Color(0xff006ccf),
+                                                              fontSize: allsize * 0.012,
+                                                              fontWeight: FontWeight.bold),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    onTap: (){
+                                                      // final streamedDataProvider=   Provider.of<
+                                                      //     StreamedDataProvider>(
+                                                      //     context,
+                                                      //     listen: false);
+                                                      // if (provider.loginuserdata.isEmpty) {
+                                                      //   Get.to(const SignInScreen());
+                                                      // } else {
+                                                      //   ApiRequests().SavePullList(
+                                                      //       streamedDataProvider
+                                                      //           .loginuserdata['sh_id'],
+                                                      //       provider.detail['su_id'],
+                                                      //       "1",
+                                                      //       "0",
+                                                      //       context);
+                                                      // }
+                                                    },
+                                                  )
                                                 ],
                                               ),
                                             ),

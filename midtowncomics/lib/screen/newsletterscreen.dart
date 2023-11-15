@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:midtowncomics/widget/textformfieldwidget.dart';
+// ignore_for_file: non_constant_identifier_names
 
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
-import '../widget/subcribeWidget.dart';
+import 'package:midtowncomics/export.dart';
 
 class NewsLetterScreen extends StatefulWidget {
   const NewsLetterScreen({super.key});
@@ -42,7 +38,9 @@ class _NewsLetterScreenState extends State<NewsLetterScreen> {
                     child: Text(
                       "Subscribe to our newsletter!",
                       style:
-                          TextStyle(fontSize: allsize*0.02, fontWeight: FontWeight.bold),
+                          TextStyle(
+                              fontFamily: 'oswald_bold',
+                              fontSize: allsize*0.02, fontWeight: FontWeight.bold),
                     )),
                 SizedBox(
                   height: size.height * 0.02,
@@ -54,19 +52,19 @@ class _NewsLetterScreenState extends State<NewsLetterScreen> {
                       TextFormFieldWidget(
                           title: "First Name",
                           textEditingController: name,
-                          optional: true),
+                          optional: true, readOnly: false,),
                       TextFormFieldWidget(
                           title: "Last Name",
                           textEditingController: name,
-                          optional: true),
+                          optional: true, readOnly: false,),
                       TextFormFieldWidget(
                           title: "Email Address",
                           textEditingController: name,
-                          optional: true),
+                          optional: true, readOnly: false,),
                       TextFormFieldWidget(
                           title: "Confirm Email Address",
                           textEditingController: name,
-                          optional: true),
+                          optional: true, readOnly: false,),
                     ],
                   ),
                 ),
@@ -231,7 +229,7 @@ class _NewsLetterScreenState extends State<NewsLetterScreen> {
                 ),
                 const SubcribeWidget(),
                 SizedBox(height: size.height*0.02,),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )

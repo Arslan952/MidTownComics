@@ -1,10 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/streamdataprovider.dart';
+import 'package:midtowncomics/export.dart';
 
 class Slider1 extends StatefulWidget {
   const Slider1({super.key});
@@ -34,45 +30,46 @@ class _Slider1State extends State<Slider1> {
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Consumer<StreamedDataProvider>(
       builder: (context, provider, child) {
-        List<dynamic> data = provider.streamedData['DATA']['sliderList'];
         // Precache the images in the slider
-        _precacheImages(provider.streamedData['DATA']['sliderList']);
+        if(provider.slider1.isNotEmpty)
+          {
+            _precacheImages(provider.slider1);
+          }
         return SizedBox(
-          height: size.height * 0.34,
-          child: Column(
+          // height: size.height * 0.34,
+          child:
+              provider.slider1.isEmpty?const Center(child: CircularProgressIndicator()):
+          Column(
             children: [
               Stack(
                 children: [
                   CarouselSlider.builder(
-                    itemCount: data.length, // Use the length of your data list
+                    itemCount: provider.slider1.length, // Use the length of your data list
                     itemBuilder: (BuildContext context, int itemIndex,
                         int pageViewIndex) {
                       // Access the data from your list using itemIndex
-                      final item = data[itemIndex];
-                      return Container(
-                        // Create a widget using the data
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: size.height * 0.25,
-                              width: double.infinity,
-                              child: Image.network(
-                                  // Use the precached image instead of loading the image from the network directly
-                                  item['img_url'],
-                                  fit: BoxFit.fitHeight, loadingBuilder:
-                                      (BuildContext context, Widget child,
-                                          ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                } else {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                }
-                              }),
-                            ),
-                          ],
-                        ),
+                      final item = provider.slider1[itemIndex];
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: size.height * 0.25,
+                            width: double.infinity,
+                            child: Image.network(
+                                // Use the precached image instead of loading the image from the network directly
+                                item['img_url'],
+                                fit: BoxFit.fitHeight, loadingBuilder:
+                                    (BuildContext context, Widget child,
+                                        ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              } else {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            }),
+                          ),
+                        ],
                       );
                     },
                     options: CarouselOptions(
@@ -92,7 +89,7 @@ class _Slider1State extends State<Slider1> {
                     left: size.width * 0.4,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: data.asMap().entries.map((entry) {
+                      children:provider.slider1.asMap().entries.map((entry) {
                         return Container(
                           width: allsize * 0.012,
                           height: allsize * 0.012,
@@ -119,7 +116,7 @@ class _Slider1State extends State<Slider1> {
                       height: size.height * 0.01,
                     ),
                     Text(
-                      data[_currentIndex]['img_name'],
+                      provider.slider1[_currentIndex]['img_name'],
                       // Use the 'title' field from your data
                       style: TextStyle(
                         fontSize: allsize * 0.015,
@@ -128,7 +125,7 @@ class _Slider1State extends State<Slider1> {
                       textAlign: TextAlign.center,
                     ),
                     Text(
-                      data[_currentIndex]['img_name_sub'],
+                      provider.slider1[_currentIndex]['img_name_sub'],
                       // Use the 'title' field from your data
                       style: TextStyle(
                           fontSize: allsize * 0.012, color: Colors.grey),

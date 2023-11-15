@@ -1,32 +1,22 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:midtowncomics/screen/loginscreen.dart';
-import 'package:midtowncomics/widget/text_button.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/streamdataprovider.dart';
-import '../screen/account_setting.dart';
-import '../screen/addressbookscreen.dart';
-import '../screen/browsepulllist.dart';
 import '../screen/faqscreen.dart';
-import '../screen/managegiftcardscreen.dart';
-import '../screen/mycreditcard.dart';
-import '../screen/myorderscreen.dart';
-import '../screen/mypreorderitem.dart';
 import '../screen/mypreorderscreen.dart';
-import '../screen/mypullist.dart';
-import '../screen/mywishlist.dart';
-import '../screen/newsletterscreen.dart';
 import '../screen/pulllistFAQscreen.dart';
-import '../screen/pushnotificationsetting.dart';
-import '../screen/registrationscreen.dart';
+import 'package:midtowncomics/export.dart';
 
 class CustomDialugue1 extends StatelessWidget {
   const CustomDialugue1({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final streamedDataProvider =
+    Provider.of<StreamedDataProvider>(context,
+        listen: false);
+    if(streamedDataProvider.loginuserdata.isNotEmpty)
+      {
+        ApiRequests().GetAccountSettings(streamedDataProvider.loginuserdata['sh_id'], context);
+        ApiRequests().GetOrder(streamedDataProvider.loginuserdata['sh_id'], context);
+      }
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
@@ -53,6 +43,7 @@ class CustomDialugue1 extends StatelessWidget {
                   provider.loginuserdata.isEmpty?
                   InkWell(
                     onTap: (){
+                      Navigator.pop(context);
                       Get.to(const SignInScreen());
                     },
                     child: Padding(
@@ -71,7 +62,7 @@ class CustomDialugue1 extends StatelessWidget {
                       ),
                     ),
                   ):Center(child: Text("Hello, ${provider.loginuserdata['sh_fname']} ${provider.loginuserdata['sh_lname']}",
-                  style: TextStyle(color: Color(0xff196ebc),fontWeight:FontWeight.bold,fontSize: allsize*0.015 )),),
+                  style: TextStyle(color: const Color(0xff196ebc),fontWeight:FontWeight.bold,fontSize: allsize*0.015 )),),
                   SizedBox(
                     height: size.height * 0.01,
                   ),
@@ -147,8 +138,15 @@ class CustomDialugue1 extends StatelessWidget {
                         ),
                         TextButtonWidget(
                           ontap: () {
-                            Navigator.pop(context);
-                            Get.to(const MyAccountSetting());
+                                if(provider.loginuserdata.isEmpty)
+                                  {
+                                    Navigator.pop(context);
+                                    Get.to(const SignInScreen());
+                                  }
+                                else{
+                                  Navigator.pop(context);
+                                  Get.to(const MyAccountSetting());
+                                }
                           },
                           title: "Account Setting",
                         ),
@@ -157,8 +155,15 @@ class CustomDialugue1 extends StatelessWidget {
                         ),
                         TextButtonWidget(
                             ontap: () {
-                              Navigator.pop(context);
-                              Get.to(const MyOrderScreen());
+                              if(provider.loginuserdata.isEmpty)
+                              {
+                                Navigator.pop(context);
+                                Get.to(const SignInScreen());
+                              }
+                              else{
+                                Navigator.pop(context);
+                                Get.to(const MyOrderScreen());
+                              }
                             },
                             title: "My Orders"),
                         SizedBox(
@@ -184,8 +189,15 @@ class CustomDialugue1 extends StatelessWidget {
                         ),
                         TextButtonWidget(
                             ontap: () {
-                              Navigator.pop(context);
-                              Get.to(const AddressBookScreen());
+                              if(provider.loginuserdata.isEmpty)
+                              {
+                                Navigator.pop(context);
+                                Get.to(const SignInScreen());
+                              }
+                              else{
+                                Navigator.pop(context);
+                                Get.to(const AddressBookScreen());
+                              }
                             },
                             title: "My Address Book"),
                         SizedBox(
@@ -193,8 +205,15 @@ class CustomDialugue1 extends StatelessWidget {
                         ),
                         TextButtonWidget(
                             ontap: () {
-                              Navigator.pop(context);
-                              Get.to(const MyCreditCard());
+                              if(provider.loginuserdata.isEmpty)
+                              {
+                                Navigator.pop(context);
+                                Get.to(const SignInScreen());
+                              }
+                              else{
+                                Navigator.pop(context);
+                                Get.to(const MyCreditCard());
+                              }
                             },
                             title: "My Credit Card"),
                         SizedBox(

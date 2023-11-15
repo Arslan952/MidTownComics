@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../provider/streamdataprovider.dart';
-import '../services/apirequest.dart';
-import '../widget/header_widget.dart';
+import 'package:midtowncomics/export.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -16,6 +12,7 @@ class _SignInScreenState extends State<SignInScreen> {
   bool checked = false;
   TextEditingController email = TextEditingController(text: "acifjee@gmail.com");
   TextEditingController password = TextEditingController(text:"asdfgh");
+  TextEditingController searchcontroller=TextEditingController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -38,15 +35,80 @@ class _SignInScreenState extends State<SignInScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: size.height * 0.16,
+                        height: size.height * 0.157,
                       ),
-                      const Text(
-                        "Sign In",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      Consumer<StreamedDataProvider>(
+                          builder: (context, provider, child) {
+                            return Column(
+                              children: [
+                                provider.showsearchlist == true
+                                    ? provider.returnproduct.isEmpty
+                                    ? Container()
+                                    : ListView.builder(
+                                    physics:
+                                    const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount:
+                                    provider.returnproduct.length,
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            searchcontroller
+                                                .text = provider
+                                                .returnproduct[index]
+                                            ['pr_ttle'];
+                                          });
+                                          provider.updatesearchselextion(
+                                              provider.returnproduct[
+                                              index]['pr_ttle']);
+                                        },
+                                        child: Container(
+                                          color: index % 2 == 0
+                                              ? const Color(0xffececec)
+                                              : Colors.white,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(
+                                                allsize * 0.005),
+                                            child: RichText(
+                                              text: TextSpan(
+                                                style: TextStyle(
+                                                    fontSize:
+                                                    allsize * 0.012,
+                                                    color: Colors.black),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text:
+                                                      "${provider.returnproduct[index]['pr_ttle']}-",
+                                                      style: const TextStyle(
+                                                          color: Color(
+                                                              0xff818181))),
+                                                  TextSpan(
+                                                      text:
+                                                      provider.returnproduct[
+                                                      index]
+                                                      ['cg_name'],
+                                                      style: const TextStyle(
+                                                          color: Color(
+                                                              0xff217fda))),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    })
+                                    : Container(),
+                              ],
+                            );
+                          }),
+                      Text(
+                      "Sign In",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: allsize * 0.02,
+                          fontWeight: FontWeight.bold),
+                    ),
                       SizedBox(
                         height: size.height * 0.01,
                       ),
@@ -54,22 +116,29 @@ class _SignInScreenState extends State<SignInScreen> {
                       Text(provider.loindata['DESCRIPTION']=="OK"?"You have Login Successfully.Please wait.....":provider.loindata['DESCRIPTION'],style:
                         TextStyle(color: (provider.loindata['DESCRIPTION']=="OK"?Colors.green:Colors.red),fontSize:allsize*0.015,fontWeight: FontWeight.bold),),
                       TextFormField(
-                        controller: email,
-                        decoration: const InputDecoration(hintText: 'Email'),
-                      ),
+                        style: TextStyle(fontSize: allsize * 0.012),
+                      controller: email,
+                      decoration: const InputDecoration(hintText: 'Email'),
+                    ),
                       SizedBox(
                         height: size.height * 0.01,
                       ),
                       TextFormField(
-                        controller: password,
-                        decoration: const InputDecoration(hintText: 'Password'),
+                        style: TextStyle(fontSize: allsize * 0.012),
+                      controller: password,
+                      decoration: const InputDecoration(
+                        hintText: 'Password',
                       ),
+                    ),
                       SizedBox(
                         height: size.height * 0.01,
                       ),
                       Row(
                         children: [
-                          Checkbox(
+                        Transform.scale(
+                          scale: allsize * 0.0007,
+                          child: Checkbox(
+                            activeColor: const Color(0xff006ccf),
                             value: checked,
                             onChanged: (newValue) {
                               setState(() {
@@ -77,8 +146,12 @@ class _SignInScreenState extends State<SignInScreen> {
                               });
                             },
                           ),
-                          const Text("Remember Me")
-                        ],
+                        ),
+                        Text(
+                          "Remember Me",
+                          style: TextStyle(fontSize: allsize * 0.012),
+                        )
+                      ],
                       ),
                       SizedBox(
                         height: size.height * 0.01,
@@ -93,27 +166,27 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: Container(
                           height: size.height * 0.07,
                           color: const Color(0xff006ccf),
-                          child: const Center(
-                            child: Text(
-                              "LOGIN",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
+                          child: Center(
+                          child: Text(
+                            "LOGIN",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: allsize * 0.013),
                           ),
+                        ),
                         ),
                       ),
                       SizedBox(
                         height: size.height * 0.02,
                       ),
-                      const Text(
-                        "Login with your Social Account",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      Text(
+                      "Login with your Social Account",
+                      style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: allsize * 0.014,
+                          fontWeight: FontWeight.w700),
+                    ),
                       SizedBox(
                         height: size.height * 0.01,
                       ),
@@ -122,18 +195,19 @@ class _SignInScreenState extends State<SignInScreen> {
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.red, width: 4)),
                         child: Row(
-                          children: [
-                            Image.asset("assets/images/google.png"),
-                            SizedBox(
-                              width: size.width * 0.23,
-                            ),
-                            const Text(
-                              "Sign In",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
+                          mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset("assets/images/google.png"),
+                          SizedBox(
+                            width: size.width * 0.3,
+                          ),
+                          Text(
+                            "Sign In",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: allsize * 0.013),
+                          ),
                           ],
                         ),
                       ),
@@ -145,6 +219,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               Header_Widget(
                 ontap: () => scaffoldKey.currentState!.openDrawer(),
+                searchcontroller: searchcontroller,
               )
             ],
           );

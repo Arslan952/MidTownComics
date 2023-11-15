@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:midtowncomics/screen/weeklyreleasepage.dart';
 
 import '../services/apirequest.dart';
 
@@ -60,6 +61,11 @@ class StreamedDataProvider extends ChangeNotifier {
   Map<String, dynamic> _streamedData = {};
 
   Map<String, dynamic> get streamedData => _streamedData;
+  String Pagebanner3="";
+  String Pagebanner4="";
+  String Pagebanner5="";
+  String Pagebanner6="";
+  List<dynamic>slider1=[];
   List<dynamic> crossoverlist = [];
   List<dynamic> recommendedforyou = [];
   List<dynamic> featurenewrelease = [];
@@ -67,7 +73,19 @@ class StreamedDataProvider extends ChangeNotifier {
   List<dynamic> recomendedbackissue = [];
   List<dynamic> bestSeller = [];
   List<dynamic> exclusive = [];
-
+  List<dynamic>Pagebannerlist1=[];
+  List<dynamic>Pagebannerlist2=[];
+  Map<String,dynamic>DODSummary={};
+  Map<String,dynamic>shoppersummary={};
+  Map<String,dynamic>featurenewrelease1={};
+  Map<String,dynamic>weeklyReleasegrid={};
+  Map<String,dynamic>pulllistSummary={};
+  Map<String,dynamic>preorderSummary={};
+  Map<String,dynamic>whishlistSummary={};
+  Map<String,dynamic>featurenewreleasegrid={};
+  Map<String,dynamic>featurenewrelease2={};
+  Map<String,dynamic>featurenewrelease3={};
+  Map<String,dynamic>featurenewrelease4={};
   void updateData(Map<String, dynamic> data) {
     _streamedData = data;
     crossoverlist = _streamedData['DATA']['sCrossOversList'];
@@ -81,6 +99,25 @@ class StreamedDataProvider extends ChangeNotifier {
         _streamedData['DATA']['recommendedBISection']['productList'];
     bestSeller = _streamedData['DATA']['bestSellersSection']['productList'];
     exclusive = _streamedData['DATA']['mtExlusiveSection']['productList'];
+    Pagebanner3=_streamedData['DATA']['pageBanner3']['image_url'];
+    Pagebanner4=_streamedData['DATA']['pageBanner4']['image_url'];
+    Pagebanner5=_streamedData['DATA']['pageBanner5']['image_url'];
+    Pagebanner6=_streamedData['DATA']['pageBanner6']['image_url'];
+    slider1=_streamedData['DATA']['sliderList'];
+    Pagebannerlist1=_streamedData['DATA']['pageBanner1List'];
+    Pagebannerlist2=_streamedData['DATA']['pageBanner2List'];
+    DODSummary=_streamedData['DATA']['DODSummary'];
+    shoppersummary=_streamedData['DATA']['shopperSummary'];
+    print(_streamedData['DATA']['featureNewAdditionSection1']);
+    weeklyReleasegrid=_streamedData['DATA']['weeklyReleaseSummary'];
+    pulllistSummary=_streamedData['DATA']['pullListSummary'];
+    preorderSummary=_streamedData['DATA']['preOrdersSummary'];
+    whishlistSummary=_streamedData['DATA']['wishListSummary'];
+    DODSummary=_streamedData['DATA']['DODSummary'];
+    featurenewrelease2=_streamedData['DATA']['featureNewAdditionSection2'];
+    featurenewrelease3=_streamedData['DATA']['featureNewAdditionSection3'];
+    featurenewrelease4=_streamedData['DATA']['featureNewAdditionSection4'];
+    featurenewreleasegrid=_streamedData['DATA']['featureNewAdditionSection1'];
     notifyListeners();
   }
 
@@ -91,6 +128,16 @@ class StreamedDataProvider extends ChangeNotifier {
 
   void updateCartData(Map<String, dynamic> data) {
     _cartstream = data;
+    notifyListeners();
+  }
+
+
+  //Update Pull List Data
+  Map<String, dynamic> _pullListData = {};
+  Map<String, dynamic> get pullListData => _pullListData;
+
+  void updatePullListData(Map<String, dynamic> data) {
+    _pullListData = data;
     notifyListeners();
   }
 
@@ -135,6 +182,12 @@ class StreamedDataProvider extends ChangeNotifier {
       }
     }
 
+    notifyListeners();
+  }
+
+  void updateDetailIsSubscriber()
+  {
+    detail['issubscribe']="1";
     notifyListeners();
   }
 
@@ -254,6 +307,9 @@ class StreamedDataProvider extends ChangeNotifier {
     Map<String, dynamic> datacart = await ApiRequests()
         .loadcartdata(loginuserdata.isEmpty ? "" : loginuserdata['sh_id']);
     updateCartData(datacart);
+    Map<String, dynamic> dataPullList = await ApiRequests()
+        .loadPullList(loginuserdata.isEmpty ? "" : loginuserdata['sh_id']);
+    updatePullListData(dataPullList);
     Map<String, dynamic> datahome = await ApiRequests()
         .fetchData1(loginuserdata.isEmpty ? "" : loginuserdata['sh_id']);
     updateData(datahome);
@@ -343,4 +399,39 @@ class StreamedDataProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+
+  //Countries
+Map<String,dynamic>countriesData={};
+  List<dynamic>countries=[];
+  void updateCountriesData(Map<String,dynamic>data) {
+   countriesData=data;
+   countries=data['DATA']['countryList'];
+   notifyListeners();
+  }
+
+
+  Map<String,dynamic>stateData={};
+  List<dynamic>state=[];
+  void updateStateData(Map<String,dynamic>data)
+  {
+    stateData=data;
+    state=data['DATA']['statesList'];
+    notifyListeners();
+  }
+
+  updateIsSubscribe(String id)
+  {
+    for( var product in returnproduct)
+    {
+      if(product['pr_id']==id)
+      {
+        product['issubscribe']="1";
+      }
+    }
+
+    notifyListeners();
+  }
+
+
 }

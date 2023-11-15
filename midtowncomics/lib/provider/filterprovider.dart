@@ -160,4 +160,25 @@ class FilterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+//Weekly Rlease Work
+  int department = -1;
+  void updatedepartmet(int data){
+    releaseweak=data;
+    notifyListeners();
+  }
+
+  String departmentvalue="";
+  void updatedepartentvalue(String data)
+  {
+    departmentvalue=data;
+    notifyListeners();
+  }
+
+  String departmentname="";
+  void updatedepartentnamevalue(String data)
+  {
+    departmentname=data;
+    notifyListeners();
+  }
+
 }

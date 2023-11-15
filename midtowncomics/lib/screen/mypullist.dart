@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import '../widget/footer.dart';
-import '../widget/header_widget.dart';
-import '../widget/sidebar.dart';
-import '../widget/subcribeWidget.dart';
+
+import 'package:midtowncomics/export.dart';
 
 class MyPullList extends StatefulWidget {
   const MyPullList({super.key});
@@ -33,7 +30,7 @@ class _MyPullListState extends State<MyPullList> {
               children: [
                 SizedBox(height: size.height * 0.16),
                 Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "My Pull List",
                       style: TextStyle(
@@ -42,7 +39,7 @@ class _MyPullListState extends State<MyPullList> {
                     )),
                 Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: Container(
+                    child: SizedBox(
                       width: double.infinity,
                       child: Container(
                         decoration: const BoxDecoration(
@@ -126,7 +123,7 @@ class _MyPullListState extends State<MyPullList> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                Footer(),
+                const Footer(),
                 SizedBox(
                   height: size.height * 0.05,
                 )

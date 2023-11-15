@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
-import 'package:provider/provider.dart';
+
+import 'package:midtowncomics/screen/weeklyreleasepage.dart';
 import 'package:intl/intl.dart';
-import '../provider/streamdataprovider.dart';
 import 'CustomProductDialugue.dart';
+import 'package:midtowncomics/export.dart';
 
 class CardGridView extends StatelessWidget {
   const CardGridView({super.key});
@@ -14,8 +13,12 @@ class CardGridView extends StatelessWidget {
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Consumer<StreamedDataProvider>(builder: (context, provider, child) {
-      DateTime dateTime = DateFormat("MM/dd/yyyy hh:mm a").parse(provider.streamedData['DATA']['DODSummary']['dealdate']);
-      int endTime = dateTime.millisecondsSinceEpoch;
+      int endTime=0;
+      if(provider.DODSummary.isNotEmpty)
+        {
+          DateTime dateTime = DateFormat("MM/dd/yyyy hh:mm a").parse(provider.streamedData['DATA']['DODSummary']['dealdate']);
+           endTime = dateTime.millisecondsSinceEpoch;
+        }
       return Padding(
         padding: EdgeInsets.all(allsize * 0.005),
         child: GridView.count(
@@ -55,7 +58,9 @@ class CardGridView extends StatelessWidget {
                   color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
-                    child: Column(
+
+                    child: provider.shoppersummary.isEmpty?const Center(child: CircularProgressIndicator(),):
+                    Column(
                       children: [
                         Text(
                           provider.loginuserdata.isEmpty?
@@ -69,10 +74,10 @@ class CardGridView extends StatelessWidget {
                         ),
                         Flexible(
                           child: Image.network(
-                            provider.streamedData['DATA']['shopperSummary']
+                            provider.shoppersummary
                                         ['hideadultimage'] ==
                                     "0"
-                                ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['shopperSummary']['pr_id']}_ful.jpg"
+                                ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.shoppersummary['pr_id']}_ful.jpg"
                                 : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
                             fit: BoxFit.contain,
                             loadingBuilder: (BuildContext context, Widget child,
@@ -123,6 +128,7 @@ class CardGridView extends StatelessWidget {
                     );
                   },
                 );
+                print(provider.weeklyReleasegrid);
               },
               child: Container(
                 decoration: const BoxDecoration(
@@ -138,7 +144,8 @@ class CardGridView extends StatelessWidget {
                   color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
-                    child: Column(
+                    child: provider.weeklyReleasegrid.isEmpty?const Center(child: CircularProgressIndicator(),):
+                    Column(
                       children: [
                         Text(
                           'New Release',
@@ -175,17 +182,22 @@ class CardGridView extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: allsize * 0.0125),
                         ),
-                        Text(
-                          "${provider.streamedData['DATA']['weeklyReleaseSummary']['comicsDatesList'][0]['display_text']}/"
-                          "${provider.streamedData['DATA']['weeklyReleaseSummary']['comicsDatesList'][1]['display_text']}/"
-                          "${provider.streamedData['DATA']['weeklyReleaseSummary']['comicsDatesList'][2]['display_text']}/"
-                          "${provider.streamedData['DATA']['weeklyReleaseSummary']['comicsDatesList'][3]['display_text']}/"
-                          "${provider.streamedData['DATA']['weeklyReleaseSummary']['comicsDatesList'][4]['display_text']}",
-                          style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontWeight: FontWeight.bold,
-                              fontSize: allsize * 0.0115),
-                          textAlign: TextAlign.center,
+                        InkWell(
+                          onTap: (){
+                            Get.to(const WeeklyReleasePage());
+                          },
+                          child: Text(
+                            "${provider.streamedData['DATA']['weeklyReleaseSummary']['comicsDatesList'][0]['display_text']}/"
+                            "${provider.streamedData['DATA']['weeklyReleaseSummary']['comicsDatesList'][1]['display_text']}/"
+                            "${provider.streamedData['DATA']['weeklyReleaseSummary']['comicsDatesList'][2]['display_text']}/"
+                            "${provider.streamedData['DATA']['weeklyReleaseSummary']['comicsDatesList'][3]['display_text']}/"
+                            "${provider.streamedData['DATA']['weeklyReleaseSummary']['comicsDatesList'][4]['display_text']}",
+                            style: TextStyle(
+                                color: const Color(0xff1569b4),
+                                fontWeight: FontWeight.bold,
+                                fontSize: allsize * 0.0115),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ],
                     ),
@@ -220,7 +232,9 @@ class CardGridView extends StatelessWidget {
                   color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
-                    child: Column(
+                    child:
+                        provider.pulllistSummary.isEmpty?const Center(child: CircularProgressIndicator(),):
+                    Column(
                       children: [
                         Text(
                           "My Pull List",
@@ -291,7 +305,8 @@ class CardGridView extends StatelessWidget {
                   color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
-                    child: Column(
+                    child: provider.preorderSummary.isEmpty?const Center(child: CircularProgressIndicator(),):
+                    Column(
                       children: [
                         Text(
                           "Pre Order",
@@ -362,7 +377,8 @@ class CardGridView extends StatelessWidget {
                   color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
-                    child: Column(
+                    child:provider.whishlistSummary.isEmpty?const Center(child: CircularProgressIndicator(),):
+                    Column(
                       children: [
                         Text(
                           "My Wish List",
@@ -432,7 +448,9 @@ class CardGridView extends StatelessWidget {
                   color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
-                    child: Column(
+                    child:
+                        provider.DODSummary.isEmpty?const Center(child: CircularProgressIndicator(),):
+                    Column(
                       children: [
                         Text(
                           "Deals of the Day",
