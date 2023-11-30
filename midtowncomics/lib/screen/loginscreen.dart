@@ -1,5 +1,6 @@
 
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -10,8 +11,8 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   bool checked = false;
-  TextEditingController email = TextEditingController(text: "acifjee@gmail.com");
-  TextEditingController password = TextEditingController(text:"asdfgh");
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
   TextEditingController searchcontroller=TextEditingController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -35,77 +36,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: size.height * 0.157,
+                        height: size.height * 0.125,
                       ),
-                      Consumer<StreamedDataProvider>(
-                          builder: (context, provider, child) {
-                            return Column(
-                              children: [
-                                provider.showsearchlist == true
-                                    ? provider.returnproduct.isEmpty
-                                    ? Container()
-                                    : ListView.builder(
-                                    physics:
-                                    const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount:
-                                    provider.returnproduct.length,
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            searchcontroller
-                                                .text = provider
-                                                .returnproduct[index]
-                                            ['pr_ttle'];
-                                          });
-                                          provider.updatesearchselextion(
-                                              provider.returnproduct[
-                                              index]['pr_ttle']);
-                                        },
-                                        child: Container(
-                                          color: index % 2 == 0
-                                              ? const Color(0xffececec)
-                                              : Colors.white,
-                                          child: Padding(
-                                            padding: EdgeInsets.all(
-                                                allsize * 0.005),
-                                            child: RichText(
-                                              text: TextSpan(
-                                                style: TextStyle(
-                                                    fontSize:
-                                                    allsize * 0.012,
-                                                    color: Colors.black),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text:
-                                                      "${provider.returnproduct[index]['pr_ttle']}-",
-                                                      style: const TextStyle(
-                                                          color: Color(
-                                                              0xff818181))),
-                                                  TextSpan(
-                                                      text:
-                                                      provider.returnproduct[
-                                                      index]
-                                                      ['cg_name'],
-                                                      style: const TextStyle(
-                                                          color: Color(
-                                                              0xff217fda))),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    })
-                                    : Container(),
-                              ],
-                            );
-                          }),
+                      SearchList(searchcontroller: searchcontroller),
                       Text(
                       "Sign In",
                       style: TextStyle(
-                          color: Colors.grey,
+                          color: Colors.grey[600],
                           fontSize: allsize * 0.02,
                           fontWeight: FontWeight.bold),
                     ),
@@ -120,9 +57,9 @@ class _SignInScreenState extends State<SignInScreen> {
                       controller: email,
                       decoration: const InputDecoration(hintText: 'Email'),
                     ),
-                      SizedBox(
-                        height: size.height * 0.01,
-                      ),
+                      // SizedBox(
+                      //   height: size.height * 0.01,
+                      // ),
                       TextFormField(
                         style: TextStyle(fontSize: allsize * 0.012),
                       controller: password,
@@ -160,7 +97,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         onTap: ()async{
                           final streamedDataProvider =
                           Provider.of<StreamedDataProvider>(context, listen: false);
-                          Map<String,dynamic>data=await ApiRequests().LoginUser(email.text,password.text, context);
+                          Map<String,dynamic>data=await ApiRequests().LoginUser(email.text,password.text,checked,context);
                           // streamedDataProvider.updateData(data);
                         },
                         child: Container(

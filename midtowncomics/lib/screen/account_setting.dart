@@ -1,7 +1,8 @@
 import 'package:midtowncomics/export.dart';
-import 'package:midtowncomics/widget/editProfileDialugue.dart';
 
 import '../provider/settingProvider.dart';
+import '../widget/dialagueBox/editProfileDialugue.dart';
+import '../widget/searchList.dart';
 
 class MyAccountSetting extends StatefulWidget {
   const MyAccountSetting({super.key});
@@ -11,8 +12,7 @@ class MyAccountSetting extends StatefulWidget {
 }
 
 class _MyAccountSettingState extends State<MyAccountSetting> {
-  TextEditingController searchcontroller = TextEditingController();
-
+  TextEditingController searchController=TextEditingController();
   bool active = true;
   String shippingAddressCountry = "";
 
@@ -50,6 +50,7 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var allsize =
@@ -60,77 +61,13 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
       body: SafeArea(
         child: Stack(
           children: [
-            SingleChildScrollView(child: Consumer<AccountSettingProvider>(
+            SingleChildScrollView(child:
+            Consumer<AccountSettingProvider>(
                 builder: (context, account, child) {
               return account.AccountSettingData.isEmpty
                   ? Column(
                       children: [
                         SizedBox(height: size.height * 0.165),
-                        Consumer<StreamedDataProvider>(
-                            builder: (context, provider, child) {
-                          return Column(
-                            children: [
-                              provider.showsearchlist == true
-                                  ? provider.returnproduct.isEmpty
-                                      ? Container()
-                                      : ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount:
-                                              provider.returnproduct.length,
-                                          itemBuilder: (context, index) {
-                                            return InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  searchcontroller
-                                                      .text = provider
-                                                          .returnproduct[index]
-                                                      ['pr_ttle'];
-                                                });
-                                                provider.updatesearchselextion(
-                                                    provider.returnproduct[
-                                                        index]['pr_ttle']);
-                                              },
-                                              child: Container(
-                                                color: index % 2 == 0
-                                                    ? const Color(0xffececec)
-                                                    : Colors.white,
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(
-                                                      allsize * 0.005),
-                                                  child: RichText(
-                                                    text: TextSpan(
-                                                      style: TextStyle(
-                                                          fontSize:
-                                                              allsize * 0.012,
-                                                          color: Colors.black),
-                                                      children: <TextSpan>[
-                                                        TextSpan(
-                                                            text:
-                                                                "${provider.returnproduct[index]['pr_ttle']}-",
-                                                            style: const TextStyle(
-                                                                color: Color(
-                                                                    0xff818181))),
-                                                        TextSpan(
-                                                            text:
-                                                                provider.returnproduct[
-                                                                        index]
-                                                                    ['cg_name'],
-                                                            style: const TextStyle(
-                                                                color: Color(
-                                                                    0xff217fda))),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          })
-                                  : Container(),
-                            ],
-                          );
-                        }),
                         const Center(
                           child: CircularProgressIndicator(),
                         )
@@ -140,6 +77,7 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: size.height * 0.165),
+                        SearchList(searchcontroller:searchController,),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -743,9 +681,8 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
                     );
             })),
             Header_Widget(
-              ontap: () => scaffoldKey.currentState!.openDrawer(),
-              searchcontroller: searchcontroller,
-            )
+              searchcontroller: searchController,
+              ontap: () => scaffoldKey.currentState!.openDrawer(),)
           ],
         ),
       ),
@@ -1122,7 +1059,7 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Container(
+          child: SizedBox(
             height: size.height * 0.05,
             // color: Colors.grey[300],
             child: Padding(
@@ -2186,7 +2123,7 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
                 children: [
                   Text("Billing Address",
                       style: TextStyle(fontSize: allsize * 0.012)),
-                  Container(
+                  SizedBox(
                     width: size.width * 0.5,
                     child: Column(
                       children: [

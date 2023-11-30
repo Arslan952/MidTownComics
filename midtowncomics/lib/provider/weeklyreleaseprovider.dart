@@ -48,7 +48,6 @@ class WeeklyReleaseProvider extends ChangeNotifier{
   {
     filter=data;
     filterlist=data['DATA']['weeklyReleaseFilters'];
-    print(data['DATA']['weeklyReleaseFilters']);
     notifyListeners();
   }
   String total="";
@@ -56,7 +55,6 @@ class WeeklyReleaseProvider extends ChangeNotifier{
   List<dynamic>dataweekly=[];
   getWeeklyReleaseData(Map<String,dynamic>data)
   {
-    print(data);
     WeeklyReleaseData=data;
     dataweekly=data['DATA']['weeklyReleaseList'];
     total=data['DATA']['totalCount']['gTotal']??"";
@@ -71,12 +69,12 @@ class WeeklyReleaseProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void updateweeklyrelease(String productId, String inCartValue, sc_qty) {
-    print(productId);
+  void updateweeklyrelease(String productId, String inCartValue, scQty,addedtowl) {
     for (var product in dataweekly) {
       if (product["pr_id"] == productId) {
         product["in_cart"] = inCartValue;
-        product['sc_qty'] = sc_qty;
+        product['sc_qty'] = scQty;
+        product['addedtowl']=addedtowl;
         break; // Exit the loop once the product is found and updated
       }
     }
@@ -85,10 +83,8 @@ class WeeklyReleaseProvider extends ChangeNotifier{
 
   updateIsSubscribe(String id)
   {
-    print(id);
     for( var product in dataweekly)
       {
-        print(product['pr_id']);
         if(product['pr_id']==id)
         {
           product['issubscribe']="1";

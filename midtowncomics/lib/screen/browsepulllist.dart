@@ -1,5 +1,6 @@
 
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class BrowsePullList extends StatefulWidget {
   const BrowsePullList({super.key});
@@ -12,7 +13,7 @@ class _BrowsePullListState extends State<BrowsePullList> {
   bool defaultshipping = true;
   bool defaultbilling = true;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -27,6 +28,7 @@ class _BrowsePullListState extends State<BrowsePullList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: size.height * 0.16),
+                SearchList(searchcontroller: searchController),
                 const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
@@ -97,6 +99,7 @@ class _BrowsePullListState extends State<BrowsePullList> {
               ],
             )),
             Header_Widget(
+              searchcontroller: searchController,
               ontap: () => scaffoldKey.currentState!.openDrawer(),
             )
           ],

@@ -112,60 +112,95 @@ class CustomDialugue3 extends StatelessWidget {
                               SizedBox(
                                 width: double.infinity,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(2),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       SizedBox(
-                                        height: size.height * 0.13,
-                                        width: size.width * 0.15,
-                                        child:Image.network(
-                                          "https://www.midtowncomics.com/images/PRODUCT/FUL/${pullListDataList[index]['pr_id']}_ful.jpg",
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                              loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            } else {
-                                              return const Center(
-                                                  child:
-                                                  CircularProgressIndicator());
-                                            }
-                                          },
-                                          // fit: BoxFit.fill,
+                                        height: size.height * 0.15,
+                                        width: size.width * 0.20,
+                                        child:Flexible(
+                                          child: Image.network(
+                                            "https://www.midtowncomics.com/images/PRODUCT/FUL/${pullListDataList[index]['pr_id']}_ful.jpg",
+                                            loadingBuilder: (BuildContext context,
+                                                Widget child,
+                                                ImageChunkEvent?
+                                                loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              } else {
+                                                return const Center(
+                                                    child:
+                                                    CircularProgressIndicator());
+                                              }},
+                                            errorBuilder: (context, exception, stackTrace) {
+                                              return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
+                                            },
+                                            fit: BoxFit.contain,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(
-                                        width: size.width * 0.3,
+                                        width: size.width * 0.38,
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              pullListDataList[index]['pr_ttle'],
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  fontSize: allsize * 0.01),
+                                            RichText(
+                                              text: TextSpan(
+                                                style: TextStyle(
+                                                    fontSize:
+                                                    allsize * 0.012,
+                                                    color: Colors.black),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text:
+                                                      "${pullListDataList[index]['su_title']} ",
+                                                    style: TextStyle(
+                                                        fontSize: allsize * 0.0105,color: Colors.grey[600]),
+                                                      // style: const TextStyle(
+                                                      //     color: Color(
+                                                      //         0xff818181)),
+                                                  ),
+                                                      TextSpan(
+                                                      text:pullListDataList[index]['su_count']== "1"?"(regular)":'(non-regular)',
+                                                      style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: allsize*0.0105,
+                                                        color: Colors.grey[700]
+                                                      )),
+                                                ],
+                                              ),
                                             ),
-                                            TextButton(
-                                                onPressed: () {
-                                                  final streamedDataProvider =
-                                                  Provider.of<StreamedDataProvider>(context,
-                                                      listen: false);
+                                            SizedBox(height: size.height*0.01,),
+                                            InkWell(
+                                              onTap: (){
+                                                final streamedDataProvider =
+                                                Provider.of<StreamedDataProvider>(context,
+                                                    listen: false);
 
-                                                  ApiRequests().SavePullList(streamedDataProvider.loginuserdata['sh_id'],pullListDataList[index]['su_id'],"1","1","", context);
-                                                },
-                                                child: Text(
-                                                  'Remove',
-                                                  style: TextStyle(
-                                                      fontSize: allsize * 0.011,
-                                                      color: Colors.black),
-                                                ))
+                                                ApiRequests().SavePullList(streamedDataProvider.loginuserdata['sh_id'],pullListDataList[index]['su_id'],"1","1","", context);
+                                              },
+                                              child: Text(
+                                                'Remove',
+                                                style: TextStyle(
+                                                    fontSize: allsize * 0.012,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                            // TextButton(
+                                            //     onPressed: () {
+                                            //
+                                            //     },
+                                            //     child: Text(
+                                            //       'Remove',
+                                            //       style: TextStyle(
+                                            //           fontSize: allsize * 0.011,
+                                            //           color: Colors.black),
+                                            //     ))
                                           ],
                                         ),
                                       ),

@@ -2,7 +2,10 @@
 
 import 'package:intl/intl.dart';
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
+import '../widget/dialagueBox/weeklyreleasefilter.dart';
+import '../widget/dialagueBox/weeklyreleasesortby.dart';
 import '../widget/weeklyreleaselistview.dart';
 
 class WeeklyReleasePage extends StatefulWidget {
@@ -71,11 +74,7 @@ class _WeeklyReleasePageState extends State<WeeklyReleasePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: size.height * 0.153),
-                                provider.returnproduct.isEmpty
-                                    ? Container()
-                                    : SizedBox(
-                                        height: size.height * 0.02,
-                                      ),
+                                SearchList(searchcontroller: searchcontroller),
                                 provider.showsearchlist == true
                                     ? provider.returnproduct.isEmpty
                                         ? Container()
@@ -333,21 +332,9 @@ class _WeeklyReleasePageState extends State<WeeklyReleasePage> {
                                                                     .map<Widget>(
                                                                         (dynamic
                                                                             item) {
-                                                                  final dateFormat =
-                                                                      DateFormat(
-                                                                          "M/d/yyyy");
-                                                                  DateTime
-                                                                      dateTime =
-                                                                      dateFormat
-                                                                          .parse(
-                                                                              item['comicsdate']);
-                                                                  DateTime dateOnly = DateTime(
-                                                                      dateTime
-                                                                          .year,
-                                                                      dateTime
-                                                                          .month,
-                                                                      dateTime
-                                                                          .day);
+                                                                  final dateFormat = DateFormat("M/d/yyyy");
+                                                                  DateTime dateTime = dateFormat.parse(item['comicsdate']);
+                                                                  DateTime dateOnly = DateTime(dateTime.year, dateTime.month, dateTime.day);
                                                                   return ListTile(
                                                                     title: Text(
                                                                         "${dateOnly.year}-${dateOnly.month}-${dateOnly.day}"),
@@ -737,8 +724,6 @@ class _WeeklyReleasePageState extends State<WeeklyReleasePage> {
                                                         CircularProgressIndicator(),
                                                   ))
                                                 :
-                                                // noofsearcheditem ==
-                                                //     providerweekly.dataweekly.length?Container():
                                                 InkWell(
                                                     child: Padding(
                                                       padding:

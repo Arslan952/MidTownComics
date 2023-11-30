@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
-import 'package:flutter/cupertino.dart';
 import 'package:midtowncomics/export.dart';
 import 'package:intl/intl.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -25,6 +25,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController phone = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController c_password = TextEditingController();
+  TextEditingController searchController=TextEditingController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   Future<void> _showDatePicker() async {
     showDatePicker(
@@ -57,7 +58,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: size.height * 0.16),
+                    SizedBox(height: size.height * 0.125),
+                     SearchList(searchcontroller:searchController),
                      Text(
                       "Join Us At Midtown",
                       style:
@@ -189,7 +191,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
             ),
-            Header_Widget(ontap:() => scaffoldKey.currentState!.openDrawer(),)
+            Header_Widget(searchcontroller:searchController,ontap:() => scaffoldKey.currentState!.openDrawer(),)
           ],
         ),
       ),

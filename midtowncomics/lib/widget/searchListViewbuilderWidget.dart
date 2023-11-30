@@ -38,6 +38,8 @@ class _ListViewBuilderWidgetState extends State<ListViewBuilderWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var sizea=MediaQuery.of(context).size;
+    var allsize=MediaQuery.of(context).size.height+MediaQuery.of(context).size.width;
     return Container(
       decoration: const BoxDecoration(
         boxShadow: [
@@ -73,6 +75,9 @@ class _ListViewBuilderWidgetState extends State<ListViewBuilderWidget> {
                               // CircularProgressIndicator()
                           );
                         }
+                      },
+                      errorBuilder: (context, exception, stackTrace) {
+                        return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
                       },
                       // fit: BoxFit.fill,
                     )),
@@ -363,8 +368,8 @@ class _ListViewBuilderWidgetState extends State<ListViewBuilderWidget> {
                                                                     '-Remove-') {
                                                                   showdialugue = false;
                                                                   dropdownValue = '1 in Cart';
-                                                                  provider.call(provider.returnproduct[widget.index]['pr_id'], "0", "1");
-                                                                  provider.updatereturnproduct(provider.returnproduct[widget.index]['pr_id'], "0", "1");
+                                                                  provider.call(provider.returnproduct[widget.index]['pr_id'], "0", "1",provider.returnproduct[widget.index]['addedtowl']);
+                                                                  provider.updatereturnproduct(provider.returnproduct[widget.index]['pr_id'], "0", "1",provider.returnproduct[widget.index]['addedtowl']);
                                                                   // provider.updatedetail("0", "1");
                                                                 }
                                                                 dropdownValue =
@@ -428,7 +433,7 @@ class _ListViewBuilderWidgetState extends State<ListViewBuilderWidget> {
                                                                       ['pr_id'],
                                                                   "1",
                                                                   value1
-                                                                      .toString());
+                                                                      .toString(),provider.returnproduct[widget.index]['addedtowl']);
                                                               provider.updatereturnproduct(
                                                                   provider.returnproduct[
                                                                           widget
@@ -436,7 +441,7 @@ class _ListViewBuilderWidgetState extends State<ListViewBuilderWidget> {
                                                                       ['pr_id'],
                                                                   "1",
                                                                   value1
-                                                                      .toString());
+                                                                      .toString(),provider.returnproduct[widget.index]['addedtowl']);
                                                             },
                                                           );
                                                         }).toList(),
@@ -450,7 +455,40 @@ class _ListViewBuilderWidgetState extends State<ListViewBuilderWidget> {
                                           size: widget.size,
                                           dropdownValue: dropdownValue,
                                           allsize: widget.allsize),
-                                    )
+                                    ):
+                          int.parse( provider.returnproduct[widget.index]
+                          ['pr_qty'])==0?
+                          InkWell(
+                            child: Container(
+                              height: sizea.height * 0.06,
+                              color: int.parse(provider.returnproduct[widget.index]['addedtowl'])>0?Colors.grey:Colors.red,
+                              child: Center(
+                                  child: Text(
+                                    int.parse(provider.returnproduct[widget.index]['addedtowl'])>0?"ADDED TO WISH LIST":
+                                    "ADD TO WISH LIST",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: allsize * 0.012),
+                                  )),
+                            ),
+                            onTap: (){
+                              if( int.parse(provider.returnproduct[widget.index]['addedtowl'])>0)
+                              {
+                                Get.to(const MyWishListScreen());
+                              }
+                              {
+                                final streamedDataProvider =
+                                Provider.of<StreamedDataProvider>(context,
+                                    listen: false);
+                                ApiRequests().saveToWishList(streamedDataProvider.loginuserdata['sh_id']
+                                    , provider.returnproduct[widget.index]['pr_parentid']);
+                                streamedDataProvider.updateWishListDetail();
+                                streamedDataProvider.call(provider.returnproduct[widget.index]['pr_id'],provider.returnproduct[widget.index]['in_cart'],provider.returnproduct[widget.index]['sc_qty'], "1");
+                                provider.updatereturnproduct(provider.returnproduct[widget.index]['pr_id'],provider.returnproduct[widget.index]['in_cart'],provider.returnproduct[widget.index]['sc_qty'], "1");
+                              }
+                            },
+                          )
                                   : InkWell(
                                       onTap: () async {
                                         int quantity = int.parse(provider.returnproduct[widget.index]['pr_qty']);
@@ -464,8 +502,8 @@ class _ListViewBuilderWidgetState extends State<ListViewBuilderWidget> {
                                                 provider.returnproduct[
                                                     widget.index]['pr_id'],
                                                 "1",
-                                                "1");
-                                            provider.updatereturnproduct(provider.returnproduct[widget.index]['pr_id'], "1", "1");
+                                                "1",provider.returnproduct[widget.index]['addedtowl']);
+                                            provider.updatereturnproduct(provider.returnproduct[widget.index]['pr_id'], "1", "1",provider.returnproduct[widget.index]['addedtowl']);
                                             provider.updatedetail("1", "1");
                                             setState(() {
                                               change =
@@ -537,8 +575,8 @@ class _ListViewBuilderWidgetState extends State<ListViewBuilderWidget> {
                                                                         .index]
                                                                 ['pr_id'],
                                                             "0",
-                                                            "1");
-                                                        provider.updatereturnproduct(provider.returnproduct[widget.index]['pr_id'], "0", "1");
+                                                            "1",provider.returnproduct[widget.index]['addedtowl']);
+                                                        provider.updatereturnproduct(provider.returnproduct[widget.index]['pr_id'], "0", "1",provider.returnproduct[widget.index]['addedtowl']);
                                                         // provider.updatedetail(
                                                         //     "0", "1");
                                                       }
@@ -586,13 +624,13 @@ class _ListViewBuilderWidgetState extends State<ListViewBuilderWidget> {
                                                                 widget.index]
                                                             ['pr_id'],
                                                         "1",
-                                                        value1.toString());
+                                                        value1.toString(),provider.returnproduct[widget.index]['addedtowl']);
                                                     provider.updatereturnproduct(
                                                         provider.returnproduct[
                                                                 widget.index]
                                                             ['pr_id'],
                                                         "1",
-                                                        value1.toString());
+                                                        value1.toString(),provider.returnproduct[widget.index]['addedtowl']);
                                                   },
                                                 );
                                               }).toList(),

@@ -1,4 +1,6 @@
 
+import 'package:midtowncomics/widget/searchList.dart';
+
 import '../widget/backissuelistwidget.dart';
 import 'package:midtowncomics/export.dart';
 
@@ -13,7 +15,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
   int index = 1;
   String dropdownselected = "";
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -30,6 +32,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: size.height * 0.18),
+                    SearchList(searchcontroller: searchController),
                     Material(
                       elevation: 3,
                       child: SizedBox(
@@ -120,7 +123,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                                           index++)
                                             if (index <
                                                 200)
-                                              SizedBox(
+                                              const SizedBox(
                                                 // width: size.width * 0.47962,
                                                 // Adjust the width as needed
                                                 child: BackIssueListWidget(),
@@ -180,7 +183,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                                           index++)
                                             if (index <
                                                 200)
-                                              SizedBox(
+                                              const SizedBox(
                                                 // width: size.width * 0.47962,
                                                 // Adjust the width as needed
                                                 child: BackIssueListWidget(),
@@ -239,7 +242,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                                           index++)
                                             if (index <
                                                 200)
-                                              SizedBox(
+                                              const SizedBox(
                                                 // width: size.width * 0.47962,
                                                 // Adjust the width as needed
                                                 child: BackIssueListWidget(),
@@ -298,7 +301,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                                           index++)
                                             if (index <
                                                 200)
-                                              SizedBox(
+                                              const SizedBox(
                                                 // width: size.width * 0.47962,
                                                 // Adjust the width as needed
                                                 child: BackIssueListWidget(),
@@ -357,7 +360,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                                           index++)
                                             if (index <
                                                 200)
-                                              SizedBox(
+                                              const SizedBox(
                                                 // width: size.width * 0.47962,
                                                 // Adjust the width as needed
                                                 child: BackIssueListWidget(),
@@ -416,7 +419,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                                           index++)
                                             if (index <
                                                 200)
-                                              SizedBox(
+                                              const SizedBox(
                                                 // width: size.width * 0.47962,
                                                 // Adjust the width as needed
                                                 child: BackIssueListWidget(),
@@ -475,7 +478,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                                           index++)
                                             if (index <
                                                 200)
-                                              SizedBox(
+                                              const SizedBox(
                                                 // width: size.width * 0.47962,
                                                 // Adjust the width as needed
                                                 child: BackIssueListWidget(),
@@ -534,7 +537,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                                           index++)
                                             if (index <
                                                 200)
-                                              SizedBox(
+                                              const SizedBox(
                                                 // width: size.width * 0.47962,
                                                 // Adjust the width as needed
                                                 child: BackIssueListWidget(),
@@ -624,7 +627,7 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                                           index++)
                                             if (index <
                                                 200)
-                                              SizedBox(
+                                              const SizedBox(
                                                 // width: size.width * 0.47962,
                                                 // Adjust the width as needed
                                                 child: BackIssueListWidget(),
@@ -702,7 +705,9 @@ class _BackIssueScreenState extends State<BackIssueScreen> {
                     )
                   ],
                 )),
-            Header_Widget(ontap: () => scaffoldKey.currentState!.openDrawer())
+            Header_Widget(
+              searchcontroller: searchController,
+                ontap: () => scaffoldKey.currentState!.openDrawer())
           ],
         ),
       ),

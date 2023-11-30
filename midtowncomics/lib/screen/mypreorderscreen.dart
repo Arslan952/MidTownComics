@@ -1,5 +1,6 @@
 
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class MyPreOrderScreen extends StatefulWidget {
   const MyPreOrderScreen({super.key});
@@ -10,6 +11,7 @@ class MyPreOrderScreen extends StatefulWidget {
 
 class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -25,6 +27,7 @@ class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: size.height * 0.16),
+                    SearchList(searchcontroller: searchController),
                     Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -244,7 +247,9 @@ class _MyPreOrderScreenState extends State<MyPreOrderScreen> {
                 )
               ],
             )),
-            Header_Widget(ontap:() => scaffoldKey.currentState!.openDrawer(),)
+            Header_Widget(
+              searchcontroller: searchController,
+              ontap:() => scaffoldKey.currentState!.openDrawer(),)
           ],
         ),
       ),

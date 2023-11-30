@@ -1,5 +1,6 @@
 
 import 'package:midtowncomics/export.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,8 +15,21 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> fetchData() async {
     final streamedDataProvider =
         Provider.of<StreamedDataProvider>(context, listen: false);
-    Map<String,dynamic>data=await ApiRequests().fetchData();
-      streamedDataProvider.updateData(data);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String sh_id=prefs.getString("sh_id")??"";
+    if(sh_id=="")
+      {
+        Map<String,dynamic>data=await ApiRequests().fetchData();
+        streamedDataProvider.updateData(data);
+      }
+    else
+      {
+        String sh_id=prefs.getString("sh_id")??"";
+        String f_name=prefs.getString("sh_fname")??"";
+        String l_name=prefs.getString("sh_lname")??"";
+        String email=prefs.getString("sh_lgid")??"";
+        streamedDataProvider.updateSharedPrefrenceData(sh_id, email, f_name, l_name);
+      }
   }
 
   @override

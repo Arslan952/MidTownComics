@@ -1,4 +1,6 @@
 
+import 'package:midtowncomics/widget/searchList.dart';
+
 import '../widget/featurenewrelease.dart';
 import 'package:midtowncomics/export.dart';
 
@@ -13,7 +15,7 @@ class _BooksState extends State<Books> {
   int index = 1;
   String dropdownselected = "";
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -31,6 +33,7 @@ class _BooksState extends State<Books> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: size.height * 0.18),
+                      SearchList(searchcontroller: searchController),
                       Material(
                         elevation: 3,
                         child: SizedBox(
@@ -163,8 +166,13 @@ class _BooksState extends State<Books> {
                                                         .featurenewrelease[
                                                     index]['sc_qty']),
                                                     data: provider
+                                                    .featurenewrelease[
+                                                    index], parentid: provider
+                                                      .featurenewrelease[
+                                                  index]['pr_parentid'], 
+                                                    addedtowl:int.parse(provider
                                                         .featurenewrelease[
-                                                    index],
+                                                    index]['addedtowl']),
                                                   ),
                                                 ),
                                           ],
@@ -268,7 +276,11 @@ class _BooksState extends State<Books> {
                                                     index]['sc_qty']),
                                                     data: provider
                                                         .recomendedpreorder[
-                                                    index],
+                                                    index], parentid: provider
+                                                      .recomendedpreorder[
+                                                  index]['pr_parentid'], addedtowl: int.parse(provider
+                                                      .recomendedpreorder[
+                                                  index]['addedtowl']),
                                                   ),
                                                 ),
                                           ],
@@ -342,7 +354,9 @@ class _BooksState extends State<Books> {
                     ],
                   );
                 })),
-            Header_Widget(ontap: () => scaffoldKey.currentState!.openDrawer())
+            Header_Widget(
+              searchcontroller:searchController,
+                ontap: () => scaffoldKey.currentState!.openDrawer())
           ],
         ),
       ),

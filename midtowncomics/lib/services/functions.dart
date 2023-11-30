@@ -63,4 +63,43 @@ class FunctionClass{
 
     return spaceRemove;
   }
+
+
+  //Convert Pre Code TO Date
+  String convertToFullMonth(String input) {
+    // Define a mapping for month abbreviations
+    Map<String, String> monthAbbreviations = {
+      'JAN': 'JANUARY',
+      'FEB': 'FEBRUARY',
+      'MAR': 'MARCH',
+      'APR': 'APRIL',
+      'MAY': 'MAY',
+      'JUN': 'JUNE',
+      'JUL': 'JULY',
+      'AUG': 'AUGUST',
+      'SEP': 'SEPTEMBER',
+      'OCT': 'OCTOBER',
+      'NOV': 'NOVEMBER',
+      'DEC': 'DECEMBER',
+    };
+
+    // Extract month and year from the input
+    String monthAbbreviation = input.substring(0, 3);
+    String year = '20' + input.substring(3); // Add '20' at the start of the year
+
+    // Convert month abbreviation to full month name
+    String fullMonth = monthAbbreviations[monthAbbreviation] ?? 'UNKNOWN';
+
+    // Combine full month and year
+    String result = '$fullMonth $year';
+
+    return result;
+  }
+
+  void main() {
+    String input = 'JAN21';
+    String output = convertToFullMonth(input);
+    print(output); // Output: JANUARY 2021
+  }
+
 }

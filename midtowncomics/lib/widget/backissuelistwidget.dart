@@ -4,7 +4,7 @@ import 'package:midtowncomics/export.dart';
 class BackIssueListWidget extends StatefulWidget {
   // String title;
 
-  BackIssueListWidget(
+  const BackIssueListWidget(
       {super.key,
        });
 

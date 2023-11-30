@@ -1,5 +1,6 @@
 
-import '../widget/backissuelistwidget.dart';
+import 'package:midtowncomics/widget/searchList.dart';
+
 import '../widget/featurenewrelease.dart';
 import 'package:midtowncomics/export.dart';
 
@@ -14,7 +15,7 @@ class _GraphicNovelsState extends State<GraphicNovels> {
   int index = 1;
   String dropdownselected = "";
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -32,6 +33,7 @@ class _GraphicNovelsState extends State<GraphicNovels> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: size.height * 0.18),
+                  SearchList(searchcontroller: searchController),
                   Material(
                     elevation: 3,
                     child: SizedBox(
@@ -165,7 +167,11 @@ class _GraphicNovelsState extends State<GraphicNovels> {
                                                 index]['sc_qty']),
                                                 data: provider
                                                     .featurenewrelease[
-                                                index],
+                                                index],parentid: provider
+                                                  .featurenewrelease[
+                                              index]['pr_parentid'], addedtowl: int.parse(provider
+                                                  .featurenewrelease[
+                                              index]['addedtowl']),
                                               ),
                                             ),
                                       ],
@@ -269,7 +275,12 @@ class _GraphicNovelsState extends State<GraphicNovels> {
                                                 index]['sc_qty']),
                                                 data: provider
                                                     .recomendedpreorder[
-                                                index],
+                                                index], parentid: provider
+                                                  .recomendedpreorder[
+                                              index]['pr_parentid'],
+                                                addedtowl: int.parse(provider
+                                                  .featurenewrelease[
+                                              index]['addedtowl']),
                                               ),
                                             ),
                                       ],
@@ -343,7 +354,9 @@ class _GraphicNovelsState extends State<GraphicNovels> {
                 ],
               );
             })),
-            Header_Widget(ontap: () => scaffoldKey.currentState!.openDrawer())
+            Header_Widget(
+              searchcontroller: searchController,
+                ontap: () => scaffoldKey.currentState!.openDrawer())
           ],
         ),
       ),

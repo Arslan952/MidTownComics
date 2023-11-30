@@ -1,20 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/provider/previewOrderProvider.dart';
 
-class WeeklyReleaseFilter extends StatefulWidget {
-  const WeeklyReleaseFilter({Key? key}) : super(key: key);
+class PreviewFilter extends StatefulWidget {
+  const PreviewFilter({Key? key}) : super(key: key);
 
   @override
-  State<WeeklyReleaseFilter> createState() => _WeeklyReleaseFilterState();
+  State<PreviewFilter> createState() => _PreviewFilterState();
 }
 
-class _WeeklyReleaseFilterState extends State<WeeklyReleaseFilter> {
+class _PreviewFilterState extends State<PreviewFilter> {
+  TextEditingController searchData=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
-    return Consumer<WeeklyReleaseProvider>(
+    return Consumer<PreviewOrderProvider>(
       builder: (context, provider, child) {
         return Dialog(
           insetPadding: EdgeInsets.symmetric(
@@ -35,7 +37,7 @@ class _WeeklyReleaseFilterState extends State<WeeklyReleaseFilter> {
                           children: [
                             InkWell(
                               onTap: () {
-                                print(provider.filterlist);
+                                print(provider.previewFilterList);
                               },
                               child: Text(
                                 "Filters",
@@ -59,7 +61,34 @@ class _WeeklyReleaseFilterState extends State<WeeklyReleaseFilter> {
                         ),
                       ),
                     ),
-                    if (provider.filterlist.isNotEmpty)
+                    Container(
+                      height: size.height * 0.05,
+                      color: const Color(0xffececec),
+                      child: Center(
+                        child: Text(
+                          "Search",
+                          style: TextStyle(
+                              color: const Color(0xff818181),
+                              fontWeight: FontWeight.bold,
+                              fontSize: allsize * 0.016),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height*0.01,),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal:size.width*0.01),
+                          child: Row(children: [
+                      SizedBox(
+                          width: size.width*0.7,
+                          child: TextFormField(
+                            controller: searchData,
+                          ),
+                      ),
+                            TextButton(onPressed: (){}, child: const Text("SEARCH",style: TextStyle(fontWeight: FontWeight.bold),))
+                    ],),
+                        ),
+                    SizedBox(height: size.height*0.01,),
+                    if (provider.previewFilterList.isNotEmpty)
                       Container(
                         height: size.height * 0.05,
                         color: const Color(0xffececec),
@@ -73,46 +102,49 @@ class _WeeklyReleaseFilterState extends State<WeeklyReleaseFilter> {
                           ),
                         ),
                       ),
-                    if (provider.filterlist.isNotEmpty)
+                    if (provider.previewFilterList.isNotEmpty)
                       ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: provider.filterlist.length,
+                        itemCount: provider.previewFilterList.length,
                         itemBuilder: (context, index) {
                           return  Row(
                             children: [
                               Checkbox(
-                                // fillColor: MaterialStateProperty.all<Color>(
-                                //     const Color(0xff006ccf)),
-                                activeColor:Color(0xff006ccf),
-                                value: datam.departmentvalue ==
-                                    provider.filterlist[index]['cg_id'],
+                                activeColor: const Color(0xff006ccf),
+                                value: index == provider.selectedIndexChanged,
                                 onChanged: (bool? value) async {
                                   if (value != null && value) {
-                                    if( provider.filterlist[index]['cg_counts']=="0")
-                                      {
-                                       Navigator.pop(context);
-                                      }
-                                    else{
-                                      final login=Provider.of<StreamedDataProvider>(context,listen: false);
-                                      datam.updatedepartentvalue(provider.filterlist[index]['cg_id']);
-                                      datam.updatedepartentnamevalue(provider.filterlist[index]['cg_name']);
-                                      provider.updateindex(0);
+                                    // Unselect the previously selected item
+                                    if (provider.selectedIndexChanged != -1) {
+                                      provider.updateSelectedIndex(provider.selectedIndexChanged);
+                                      // provider.updateSelectedState(selectedIndexChanged, false);
+                                    }
+
+                                    if (provider.previewFilterList[index]['cg_counts'] == "") {
                                       Navigator.pop(context);
-                                      await ApiRequests().GetWeeklyReleaseData(
-                                          context,
-                                          provider.selecteddate,
-                                          datam.departmentvalue,
-                                          provider.sortby,
-                                          provider.dataweekly.length.toString(),false,login.loginuserdata.isEmpty ? "0" :login.loginuserdata['sh_id']);
+                                    } else {
+                                      final login = Provider.of<StreamedDataProvider>(
+                                        context,
+                                        listen: false,
+                                      );
+                                      provider.updateFilterData(
+                                        provider.previewFilterList[index]['cat_name'],
+                                      );
+                                      final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
+                                      ApiRequests().getPreviewItem(streamedDataProvider.loginuserdata['sh_id'],provider.filterData,provider.previewCodeValue,provider.searchValue,provider.sortByGroupValue,"1",provider.previewDataList.length,false);
+                                      // Update the selected index
+                                      provider.updateSelectedIndex(index);
+
+                                      // provider.updateSelectedState(index, true);
                                     }
                                   }
                                 },
                               ),
                               Text(
-                                provider.filterlist[index]['cg_name'] +
+                                provider.previewFilterList[index]['cat_name'] +
                                     "(" +
-                                    provider.filterlist[index]['cg_counts'] +
+                                    provider.previewFilterList[index]['totalcount'] +
                                     ")",
                                 style: TextStyle(fontSize: allsize * 0.012),
                               ),

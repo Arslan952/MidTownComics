@@ -98,6 +98,9 @@ class _WeeklyRelaseListViewState extends State<WeeklyRelaseListView> {
                             );
                           }
                         },
+                        errorBuilder: (context, exception, stackTrace) {
+                          return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
+                        },
                         // fit: BoxFit.fill,
                       )),
                 ),
@@ -371,14 +374,14 @@ class _WeeklyRelaseListViewState extends State<WeeklyRelaseListView> {
                                                                           [
                                                                           'pr_id'],
                                                                       "0",
-                                                                      "1");
+                                                                      "1",provider.dataweekly[widget.index]['addedtowl']);
                                                                   provider.updateweeklyrelease(
                                                                       provider.dataweekly[
                                                                               widget.index]
                                                                           [
                                                                           'pr_id'],
                                                                       "0",
-                                                                      "1");
+                                                                      "1",provider.dataweekly[widget.index]['addedtowl']);
                                                                   // provider.updatereturnproduct(provider.returnproduct[widget.index]['pr_id'], "0", "1");
                                                                   // provider.updatedetail("0", "1");
                                                                 }
@@ -437,7 +440,7 @@ class _WeeklyRelaseListViewState extends State<WeeklyRelaseListView> {
                                                                       ['pr_id'],
                                                                   "1",
                                                                   value1
-                                                                      .toString());
+                                                                      .toString(),provider.dataweekly[widget.index]['addedtowl']);
                                                               provider.updateweeklyrelease(
                                                                   provider.dataweekly[
                                                                           widget
@@ -445,7 +448,7 @@ class _WeeklyRelaseListViewState extends State<WeeklyRelaseListView> {
                                                                       ['pr_id'],
                                                                   "1",
                                                                   value1
-                                                                      .toString());
+                                                                      .toString(),provider.dataweekly[widget.index]['addedtowl']);
                                                               // provider.updatereturnproduct(
                                                               //     provider.returnproduct[
                                                               //     widget
@@ -467,7 +470,39 @@ class _WeeklyRelaseListViewState extends State<WeeklyRelaseListView> {
                                           size: size,
                                           dropdownValue: dropdownValue,
                                           allsize: allsize),
-                                    )
+                                    ):
+                              int.parse(provider.dataweekly[widget.index]['pr_qty'])==0?
+                              InkWell(
+                                onTap: (){
+                                  if( int.parse(provider.dataweekly[widget.index]['addedtowl'])>0)
+                                  {
+                                    Get.to(const MyWishListScreen());
+                                  }
+                                  {
+                                    final streamedDataProvider =
+                                    Provider.of<StreamedDataProvider>(context,
+                                        listen: false);
+                                    ApiRequests().saveToWishList(streamedDataProvider.loginuserdata['sh_id']
+                                        , provider.dataweekly[widget.index]['pr_parentid']);
+                                    streamedDataProvider.updateWishListDetail();
+                                    streamedDataProvider.call(provider.dataweekly[widget.index]['pr_id'],provider.dataweekly[widget.index]['in_cart'],provider.dataweekly[widget.index]['sc_qty'], "1");
+                                    provider.updateweeklyrelease(provider.dataweekly[widget.index]['pr_id'],provider.dataweekly[widget.index]['in_cart'],provider.dataweekly[widget.index]['sc_qty'],"1");
+                                  }
+                                },
+                                child: Container(
+                                  height: size.height * 0.06,
+                                  color: int.parse(provider.dataweekly[widget.index]['addedtowl'])>0?Colors.grey: Colors.red,
+                                  child: Center(
+                                      child: Text(
+                                        int.parse(provider.dataweekly[widget.index]['addedtowl'])>0?"ADDED TO WISH LIST":
+                                            "ADD TO WISH LIST",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: allsize * 0.012),
+                                      )),
+                                ),
+                              )
                                   : InkWell(
                                       onTap: () async {
                                         final streamprovider =
@@ -488,12 +523,12 @@ class _WeeklyRelaseListViewState extends State<WeeklyRelaseListView> {
                                                 provider.dataweekly[
                                                     widget.index]['pr_id'],
                                                 "1",
-                                                "1");
+                                                "1",provider.dataweekly[widget.index]['addedtowl']);
                                             provider.updateweeklyrelease(
                                                 provider.dataweekly[
                                                     widget.index]['pr_id'],
                                                 "1",
-                                                "1");
+                                                "1",provider.dataweekly[widget.index]['addedtowl']);
                                             // provider.updatedetail("1", "1");
                                             setState(() {
                                               change =
@@ -566,14 +601,14 @@ class _WeeklyRelaseListViewState extends State<WeeklyRelaseListView> {
                                                                         .index]
                                                                 ['pr_id'],
                                                             "0",
-                                                            "1");
+                                                            "1",provider.dataweekly[widget.index]['addedtowl']);
                                                         provider.updateweeklyrelease(
                                                             provider.dataweekly[
                                                                     widget
                                                                         .index]
                                                                 ['pr_id'],
                                                             "0",
-                                                            "1");
+                                                            "1",provider.dataweekly[widget.index]['addedtowl']);
                                                         // provider.updatereturnproduct(provider.returnproduct[widget.index]['pr_id'], "0", "1");
                                                         // provider.updatedetail("0", "1");
                                                       }
@@ -616,7 +651,7 @@ class _WeeklyRelaseListViewState extends State<WeeklyRelaseListView> {
                                                                 widget.index]
                                                             ['pr_id'],
                                                         "1",
-                                                        value1.toString());
+                                                        value1.toString(),provider.dataweekly[widget.index]['addedtowl']);
                                                     provider
                                                         .updateweeklyrelease(
                                                             provider.dataweekly[
@@ -624,7 +659,7 @@ class _WeeklyRelaseListViewState extends State<WeeklyRelaseListView> {
                                                                         .index]
                                                                 ['pr_id'],
                                                             "1",
-                                                            value1.toString());
+                                                            value1.toString(),provider.dataweekly[widget.index]['addedtowl']);
                                                     // provider.updatereturnproduct(
                                                     //     provider.returnproduct[
                                                     //     widget

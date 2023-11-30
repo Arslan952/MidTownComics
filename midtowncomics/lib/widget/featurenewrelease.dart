@@ -1,14 +1,15 @@
 // ignore_for_file: must_be_immutable, depend_on_referenced_packages
 import 'package:midtowncomics/screen/ProductDetailPage.dart';
-import 'CustomProductDialugue.dart';
 import 'package:http/http.dart'as http;
 import 'package:midtowncomics/export.dart';
+
+import 'dialagueBox/CustomProductDialugue.dart';
 
 class FeatureNewRelease extends StatefulWidget {
   // String title;
   Map<String, dynamic> data;
-  String? title, prce1, price2, image, pulllist, preorder, adultimage;
-  int? quantity, incart, productquantity, qtycart;
+  String? title, prce1, price2, image, pulllist, preorder, adultimage,parentid;
+  int? quantity, incart, productquantity, qtycart,addedtowl;
 
   FeatureNewRelease(
       {super.key,
@@ -23,7 +24,9 @@ class FeatureNewRelease extends StatefulWidget {
       this.incart,
       this.productquantity,
       required this.qtycart,
-      required this.data});
+      required this.data,
+        required this.parentid,
+      required this.addedtowl});
 
   @override
   State<FeatureNewRelease> createState() => _FeatureNewReleaseState();
@@ -101,6 +104,9 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                             );
                           }
                         },
+                        errorBuilder: (context, exception, stackTrace) {
+                          return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
+                        },
                         // fit: BoxFit.fill,
                       ),
                     ),
@@ -128,7 +134,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                             : "----------",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: allsize * 0.013),
+                        style: TextStyle(fontSize: allsize * 0.0125,fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
@@ -146,21 +152,21 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                               "\$${widget.prce1}",
                               style: TextStyle(
                                   decoration: TextDecoration.lineThrough,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: allsize * 0.0115),
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: allsize * 0.012),
                             ),
                             Container(
                               height: size.height * 0.03,
                               width: size.width * 0.2,
                               decoration: BoxDecoration(
                                   border:
-                                      Border.all(color: Colors.red, width: 3),
+                                      Border.all(color: const Color(0xffe3483c), width: 3),
                                   borderRadius: BorderRadius.circular(5)),
                               child: Center(
                                 child: Text(
                                   "${FunctionClass().findoff(widget.prce1!,widget.price2!)}% OFF",
                                   style: TextStyle(
-                                      color: Colors.red,
+                                      color: const Color(0xffe3483c),
                                       fontSize: allsize * 0.01,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -209,7 +215,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                           if (item == '-Remove-') {
                                             showDropdown = false;
                                             dropdownValue = '1 in Cart';
-                                            provider.call(widget.image!, "0","1");
+                                            provider.call(widget.image!, "0","1",widget.addedtowl.toString());
                                           }
                                           dropdownValue = item;
 
@@ -245,7 +251,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                           debugPrint(
                                               response.reasonPhrase);
                                         }
-                                        provider.call(widget.image!, "1",value1.toString());
+                                        provider.call(widget.image!, "1",value1.toString(),widget.addedtowl.toString());
                                       },
                                     );
                                   }).toList(),
@@ -276,6 +282,35 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                           ],
                         ),
                       ),
+                    ):
+                    widget.quantity==0?
+                    InkWell(
+                      onTap: (){
+                        if(widget.addedtowl!>0)
+                          {
+                            Get.to(const MyWishListScreen());
+                          }
+                        else{
+                          final streamedDataProvider =
+                          Provider.of<StreamedDataProvider>(context,
+                              listen: false);
+                          ApiRequests().saveToWishList(streamedDataProvider.loginuserdata['sh_id']
+                              , widget.parentid);
+                          provider.call(widget.image!,widget.data['in_cart'],widget.data['sc_qty'],"1");
+                        }
+                      },
+                      child: Container(
+                        height: size.height * 0.06,
+                        color:widget.addedtowl!>0? Colors.grey:Colors.red,
+                        child: Center(
+                            child: Text(
+                              widget.addedtowl!>0?"Added to Wish List": "Add to Wish List",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012),
+                            )),
+                      ),
                     )
                             : InkWell(
                                 onTap: () async {
@@ -283,26 +318,26 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                         Get.to(const SignInScreen());
                                   }
                                       else{
-                                        provider.call(widget.image!, "1","1");
-                                        debugPrint(widget.qtycart.toString());
-                                        setState(() {
-                                          change =
-                                          true; // Set the loading flag to true
-                                        });
-                                        // Make your API request
-                                        final streamedDataProvider =
-                                        Provider.of<StreamedDataProvider>(context,
-                                            listen: false);
-                                        Map<String, dynamic> data =
-                                        await ApiRequests()
-                                            .Savedata( streamedDataProvider.loginuserdata['sh_id'],widget.image, 1, context);
-                                        setState(() {
-                                          change =
-                                          false; // Set the loading flag to false when the API request is done
-                                          showDropdown =
-                                          true; // Show the dropdown after the button is pressed
-                                        });
-                                        streamedDataProvider.updateCartData(data);
+                                          provider.call(widget.image!, "1","1",widget.addedtowl.toString());
+                                          debugPrint(widget.qtycart.toString());
+                                          setState(() {
+                                            change =
+                                            true; // Set the loading flag to true
+                                          });
+                                          // Make your API request
+                                          final streamedDataProvider =
+                                          Provider.of<StreamedDataProvider>(context,
+                                              listen: false);
+                                          Map<String, dynamic> data =
+                                          await ApiRequests()
+                                              .Savedata( streamedDataProvider.loginuserdata['sh_id'],widget.image, 1, context);
+                                          setState(() {
+                                            change =
+                                            false; // Set the loading flag to false when the API request is done
+                                            showDropdown =
+                                            true; // Show the dropdown after the button is pressed
+                                          });
+                                          streamedDataProvider.updateCartData(data);
                                       }
                                 },
                                 child: ButtonWidget(
@@ -333,7 +368,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                           if (item == '-Remove-') {
                                             showDropdown = false;
                                             dropdownValue = '1 in Cart';
-                                            provider.call(widget.image!, "0","1");
+                                            provider.call(widget.image!, "0","1",widget.addedtowl.toString());
                                           }
                                           dropdownValue = item;
 
@@ -369,7 +404,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                           debugPrint(
                                               response.reasonPhrase);
                                         }
-                                        provider.call(widget.image!, "1",value1.toString());
+                                        provider.call(widget.image!, "1",value1.toString(),widget.addedtowl.toString());
                                       },
                                     );
                                   }).toList(),
@@ -467,15 +502,11 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       height: size.height * 0.06,
       color: (widget.preorder == "1")
           ? const Color(0xff9048c4)
-          : (quantity == 0 || quantity < 0)
-              ? Colors.red
               : const Color(0xff006ccf),
       child: Center(
           child: Text(
         widget.preorder == "1"
             ? "PRE-ORDER"
-            : (quantity == 0 || quantity < 0)
-                ? "ADD TO WISH LIST"
                 : "ADD TO CART",
         style: TextStyle(
             color: Colors.white,

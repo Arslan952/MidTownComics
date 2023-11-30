@@ -1,8 +1,8 @@
-
-import 'package:midtowncomics/screen/weeklyreleasepage.dart';
 import 'package:intl/intl.dart';
-import 'CustomProductDialugue.dart';
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/screen/weeklyreleasepage.dart';
+
+import 'dialagueBox/CustomProductDialugue.dart';
 
 class CardGridView extends StatelessWidget {
   const CardGridView({super.key});
@@ -14,16 +14,16 @@ class CardGridView extends StatelessWidget {
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Consumer<StreamedDataProvider>(builder: (context, provider, child) {
       int endTime=0;
-      if(provider.DODSummary.isNotEmpty)
-        {
-          DateTime dateTime = DateFormat("MM/dd/yyyy hh:mm a").parse(provider.streamedData['DATA']['DODSummary']['dealdate']);
-           endTime = dateTime.millisecondsSinceEpoch;
-        }
+      if(provider.DODSummary.isNotEmpty) {
+        DateTime dateTime = DateFormat("MM/dd/yyyy hh:mm a")
+            .parse(provider.DODSummary['dealdate']);
+        endTime = dateTime.millisecondsSinceEpoch;
+      }
       return Padding(
         padding: EdgeInsets.all(allsize * 0.005),
         child: GridView.count(
-          mainAxisSpacing: allsize * 0.01,
-          crossAxisSpacing: allsize * 0.01,
+          mainAxisSpacing: allsize * 0.009,
+          crossAxisSpacing: allsize * 0.009,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           crossAxisCount: 2,
@@ -48,8 +48,8 @@ class CardGridView extends StatelessWidget {
                 decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 5.0,
+                      color: Colors.black12,
+                      blurRadius: 0.1,
                       offset: Offset(0, 2),
                     ),
                   ],
@@ -74,23 +74,30 @@ class CardGridView extends StatelessWidget {
                         ),
                         Flexible(
                           child: Image.network(
-                            provider.shoppersummary
-                                        ['hideadultimage'] ==
-                                    "0"
-                                ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.shoppersummary['pr_id']}_ful.jpg"
-                                : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
-                            fit: BoxFit.contain,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
-                          ),
-                        ),
+                                  provider.shoppersummary['hideadultimage'] ==
+                                          "0"
+                                      ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.shoppersummary['pr_id']}_ful.jpg"
+                                      : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
+                                  fit: BoxFit.contain,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  },
+                                  errorBuilder:
+                                      (context, exception, stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/imagecomingsoon_ful.jpg',
+                                      fit: BoxFit.contain,
+                                    );
+                                  },
+                                ),
+                              ),
 
                         Text(
                           provider.loginuserdata.isEmpty?
@@ -134,8 +141,8 @@ class CardGridView extends StatelessWidget {
                 decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 5.0,
+                      color: Colors.black12,
+                      blurRadius: 0.1,
                       offset: Offset(0, 2),
                     ),
                   ],
@@ -157,23 +164,32 @@ class CardGridView extends StatelessWidget {
                         ),
                         Flexible(
                           child: Image.network(
-                            provider.streamedData['DATA']['weeklyReleaseSummary']
-                                        ['hideadultimage'] ==
-                                    "0"
-                                ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['weeklyReleaseSummary']['pr_id']}_ful.jpg"
-                                : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
-                            fit: BoxFit.contain,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
-                          ),
-                        ),
+                                  provider.streamedData['DATA']
+                                                  ['weeklyReleaseSummary']
+                                              ['hideadultimage'] ==
+                                          "0"
+                                      ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['weeklyReleaseSummary']['pr_id']}_ful.jpg"
+                                      : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
+                                  fit: BoxFit.contain,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  },
+                                  errorBuilder:
+                                      (context, exception, stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/imagecomingsoon_ful.jpg',
+                                      fit: BoxFit.contain,
+                                    );
+                                  },
+                                ),
+                              ),
                         Text(
                           "Updated Every Wednesday",
                           textAlign: TextAlign.center,
@@ -222,8 +238,8 @@ class CardGridView extends StatelessWidget {
                 decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 5.0,
+                      color: Colors.black12,
+                      blurRadius: 0.1,
                       offset: Offset(0, 2),
                     ),
                   ],
@@ -246,23 +262,32 @@ class CardGridView extends StatelessWidget {
                         ),
                         Flexible(
                           child: Image.network(
-                            provider.streamedData['DATA']['pullListSummary']
-                                        ['hideadultimage'] ==
-                                    "0"
-                                ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['pullListSummary']['pr_id']}_ful.jpg"
-                                : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
-                            fit: BoxFit.contain,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
-                          ),
-                        ),
+                                  provider.streamedData['DATA']
+                                                  ['pullListSummary']
+                                              ['hideadultimage'] ==
+                                          "0"
+                                      ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['pullListSummary']['pr_id']}_ful.jpg"
+                                      : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
+                                  fit: BoxFit.contain,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  },
+                                  errorBuilder:
+                                      (context, exception, stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/imagecomingsoon_ful.jpg',
+                                      fit: BoxFit.contain,
+                                    );
+                                  },
+                                ),
+                              ),
                         Text(
                           "Never Miss An Issue!\n"
                           "Update Pull-List Setting",
@@ -295,8 +320,8 @@ class CardGridView extends StatelessWidget {
                 decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 5.0,
+                      color: Colors.black12,
+                      blurRadius: 0.1,
                       offset: Offset(0, 2),
                     ),
                   ],
@@ -318,23 +343,32 @@ class CardGridView extends StatelessWidget {
                         ),
                         Flexible(
                           child: Image.network(
-                            provider.streamedData['DATA']['preOrdersSummary']
-                                        ['hideadultimage'] ==
-                                    "0"
-                                ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['preOrdersSummary']['pr_id']}_ful.jpg"
-                                : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
-                            fit: BoxFit.contain,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
-                          ),
-                        ),
+                                  provider.streamedData['DATA']
+                                                  ['preOrdersSummary']
+                                              ['hideadultimage'] ==
+                                          "0"
+                                      ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['preOrdersSummary']['pr_id']}_ful.jpg"
+                                      : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
+                                  fit: BoxFit.contain,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  },
+                                  errorBuilder:
+                                      (context, exception, stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/imagecomingsoon_ful.jpg',
+                                      fit: BoxFit.contain,
+                                    );
+                                  },
+                                ),
+                              ),
                         Text(
                           "Save Up to 50%\n"
                           "on upcoming orders",
@@ -390,23 +424,32 @@ class CardGridView extends StatelessWidget {
                         ),
                         Flexible(
                           child: Image.network(
-                            provider.streamedData['DATA']['wishListSummary']
-                                        ['hideadultimage'] ==
-                                    "0"
-                                ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['wishListSummary']['pr_id']}_ful.jpg"
-                                : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
-                            fit: BoxFit.contain,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
-                          ),
-                        ),
+                                  provider.streamedData['DATA']
+                                                  ['wishListSummary']
+                                              ['hideadultimage'] ==
+                                          "0"
+                                      ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['wishListSummary']['pr_id']}_ful.jpg"
+                                      : 'https://www.midtowncomics.com/images/PRODUCT/FUL/adults_ful.jpg',
+                                  fit: BoxFit.contain,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  },
+                                  errorBuilder:
+                                      (context, exception, stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/imagecomingsoon_ful.jpg',
+                                      fit: BoxFit.contain,
+                                    );
+                                  },
+                                ),
+                              ),
                         Text(
                           "Never Miss an Issue",
                           textAlign: TextAlign.center,
@@ -462,19 +505,27 @@ class CardGridView extends StatelessWidget {
                         ),
                         Flexible(
                           child: Image.network(
-                            "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['DODSummary']['pr_id']}_ful.jpg",
-                            fit: BoxFit.contain,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
-                          ),
-                        ),
+                                  "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['DODSummary']['pr_id']}_ful.jpg",
+                                  fit: BoxFit.contain,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  },
+                                  errorBuilder:
+                                      (context, exception, stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/imagecomingsoon_ful.jpg',
+                                      fit: BoxFit.contain,
+                                    );
+                                  },
+                                ),
+                              ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [

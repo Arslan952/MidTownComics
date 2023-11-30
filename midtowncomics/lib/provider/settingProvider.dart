@@ -138,8 +138,8 @@ class AccountSettingProvider extends ChangeNotifier{
         updateSubscriptionVariable('Select Subscription Type');
       }
     else{
-      String sm_id=data['DATA']['pullListSetting']['sm_id'];
-      if(sm_id=="10"||sm_id=="32"||sm_id=="40"||sm_id=="45"||sm_id=="64")
+      String smId=data['DATA']['pullListSetting']['sm_id'];
+      if(smId=="10"||smId=="32"||smId=="40"||smId=="45"||smId=="64")
       {
         updateSubscriptionVariable("In-Store Pickup");
       }
@@ -414,8 +414,8 @@ class AccountSettingProvider extends ChangeNotifier{
     }
   }
 
-  updateCreditCardValue(id,cc_list){
-    for (var product in cc_list)
+  updateCreditCardValue(id,ccList){
+    for (var product in ccList)
     {
       if (product["pm_id"] == id)
       {
@@ -529,12 +529,9 @@ class AccountSettingProvider extends ChangeNotifier{
     }
   }
 
-  updatePreviewCreditCardValue(id,cc_list){
-    print("Function Called");
-    print(id);
-    for (var product in cc_list)
+  updatePreviewCreditCardValue(id,ccList){
+    for (var product in ccList)
     {
-      print(product["pm_id"]);
       if (product["pm_id"] == id)
       {
         updatePreviewSettingCreditCard(product['pm_cardnum']);

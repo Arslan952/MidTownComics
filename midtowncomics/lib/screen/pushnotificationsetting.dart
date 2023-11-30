@@ -1,5 +1,6 @@
 
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class PushNotificationSetting extends StatefulWidget {
   const PushNotificationSetting({super.key});
@@ -11,6 +12,7 @@ class PushNotificationSetting extends StatefulWidget {
 
 class _PushNotificationSettingState extends State<PushNotificationSetting> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -25,6 +27,7 @@ class _PushNotificationSettingState extends State<PushNotificationSetting> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: size.height * 0.16),
+                SearchList(searchcontroller: searchController),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
@@ -36,7 +39,9 @@ class _PushNotificationSettingState extends State<PushNotificationSetting> {
                 )
               ],
             )),
-            Header_Widget(ontap:() => scaffoldKey.currentState!.openDrawer(),)
+            Header_Widget(
+              searchcontroller: searchController,
+              ontap:() => scaffoldKey.currentState!.openDrawer(),)
           ],
         ),
       ),

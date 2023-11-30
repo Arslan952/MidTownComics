@@ -1,6 +1,7 @@
 
 import 'package:flutter_html/flutter_html.dart';
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 import '../widget/featurenewrelease.dart';
 
@@ -15,7 +16,7 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
   int index = 1;
   String dropdownselected = "";
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -33,6 +34,7 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: size.height * 0.18),
+                SearchList(searchcontroller: searchController),
                 DealOfTheDayText(size: size, allsize: allsize),
                 SizedBox(height: size.height*0.01,),
                 SizedBox(
@@ -869,7 +871,11 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
                                               index]['sc_qty']),
                                               data: provider
                                                   .featurenewrelease[
-                                              index],
+                                              index], parentid: provider
+                                                .featurenewrelease[
+                                            index]['pr_parentid'], addedtowl: int.parse(provider
+                                                .featurenewrelease[
+                                            index]['addedtowl']),
                                             ),
                                           ),
                                     ],
@@ -895,7 +901,9 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
                 )
               ],
             )),
-        Header_Widget(ontap: () => scaffoldKey.currentState!.openDrawer())
+        Header_Widget(
+          searchcontroller: searchController,
+            ontap: () => scaffoldKey.currentState!.openDrawer())
       ],
     );
         })
@@ -923,7 +931,7 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
                           TextSpan(text:"Twitter", style: TextStyle(color: const Color(0xff217fda),decoration: TextDecoration.underline,fontSize: allsize*0.012)),
                           TextSpan(text: "or", style: TextStyle(color: const Color(0xff818181),fontSize: allsize*0.012)),
                           TextSpan(text:"Facebook", style: TextStyle(color: const Color(0xff217fda),decoration: TextDecoration.underline,fontSize: allsize*0.012)),
-                          TextSpan(text: "or download our iPhone app or get notified of our deals of the days", style: TextStyle(color: Color(0xff818181),fontSize: allsize*0.012)),
+                          TextSpan(text: "or download our iPhone app or get notified of our deals of the days", style: TextStyle(color: const Color(0xff818181),fontSize: allsize*0.012)),
                         ],
                       ),
                     ),

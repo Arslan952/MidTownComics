@@ -1,6 +1,6 @@
 import 'package:midtowncomics/export.dart';
 class ViewMoreCustomDialugue extends StatelessWidget {
-  const ViewMoreCustomDialugue({super.key});
+  ViewMoreCustomDialugue({super.key});
 
   @override
   Widget build(BuildContext context) {

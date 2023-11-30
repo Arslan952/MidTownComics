@@ -3,7 +3,7 @@ import 'package:midtowncomics/export.dart';
 
 class EditProfileDialague extends StatefulWidget {
   final firstName,lastName,dob,email;
-  EditProfileDialague({super.key,required this.firstName,required this.lastName,required this.dob,required this.email});
+  const EditProfileDialague({super.key,required this.firstName,required this.lastName,required this.dob,required this.email});
 
   @override
   State<EditProfileDialague> createState() => _EditProfileDialagueState();
@@ -155,7 +155,7 @@ class _EditProfileDialagueState extends State<EditProfileDialague> {
                                    Provider.of<StreamedDataProvider>(context,
                                        listen: false);
                                    ApiRequests().SaveProfileData( streamedDataProvider.loginuserdata['sh_id'],firstNameController.text,lastNameController.text,dobController.text,emailController.text,confirmEmailController.text,password.text,confirmPassword.text,birthdayEmail==true?"1":"0",marketingEmail==true?"1":"0",trackingInfoEmail==true?"1":"0", widget.email, context);
-                                 }, child: Text("SAVE",style: TextStyle(color: Color(0xff006ccf,),fontSize: allsize*0.012,fontWeight: FontWeight.bold),)),
+                                 }, child: Text("SAVE",style: TextStyle(color: const Color(0xff006ccf,),fontSize: allsize*0.012,fontWeight: FontWeight.bold),)),
                                 ],
                               )
                             ],

@@ -3,6 +3,7 @@
 import 'package:midtowncomics/screen/shippingFaq.dart';
 import 'package:midtowncomics/export.dart';
 
+import '../provider/faqProvider.dart';
 import '../screen/faqscreen.dart';
 
 class Footer extends StatefulWidget {
@@ -13,6 +14,25 @@ class Footer extends StatefulWidget {
 }
 
 class _FooterState extends State<Footer> {
+  faqGetPullList()async{
+    final faq=Provider.of<FAQProvider>(context,listen: false);
+    final streamedDataProvider =
+    Provider.of<StreamedDataProvider>(context, listen: false);
+    faq.updatePullListInformationSection(await ApiRequests().faqApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'], "PLI"));
+  }
+  faqGetPreview()async{
+    final faq=Provider.of<FAQProvider>(context,listen: false);
+    final streamedDataProvider =
+    Provider.of<StreamedDataProvider>(context, listen: false);
+    faq.updatePreviewIInformationSection(await ApiRequests().faqApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'], "PREI"));
+  }
+  @override
+  void initState() {
+    faqGetPullList();
+    faqGetPreview();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -24,7 +44,10 @@ class _FooterState extends State<Footer> {
         children: [
           //About Us
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            data: Theme.of(context).copyWith(
+                dividerColor: Colors.transparent,
+                visualDensity: const VisualDensity(vertical: -4)
+            ),
             child: ExpansionTile(
               childrenPadding: EdgeInsets.zero,
               tilePadding: EdgeInsets.zero,
@@ -75,7 +98,10 @@ class _FooterState extends State<Footer> {
           ),
           //OUR Stories
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            data: Theme.of(context).copyWith(
+                dividerColor: Colors.transparent,
+                visualDensity: const VisualDensity(vertical: -4)
+            ),
             child: ExpansionTile(
               childrenPadding: EdgeInsets.zero,
               tilePadding: EdgeInsets.zero,
@@ -133,7 +159,10 @@ class _FooterState extends State<Footer> {
           ),
           //Community
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            data: Theme.of(context).copyWith(
+                dividerColor: Colors.transparent,
+                visualDensity: const VisualDensity(vertical: -4)
+            ),
             child: ExpansionTile(
               childrenPadding: EdgeInsets.zero,
               tilePadding: EdgeInsets.zero,
@@ -209,7 +238,10 @@ class _FooterState extends State<Footer> {
           ),
           //My Accounts
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            data: Theme.of(context).copyWith(
+                dividerColor: Colors.transparent,
+                visualDensity: const VisualDensity(vertical: -4)
+            ),
             child: ExpansionTile(
               childrenPadding: EdgeInsets.zero,
               tilePadding: EdgeInsets.zero,
@@ -270,16 +302,20 @@ class _FooterState extends State<Footer> {
                     Get.to(const ManageGiftCards());
                   },
                 ),
-                ListTile(
-                  title: Text(
-                    "PULL LIST FAQ",
-                    style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  onTap: () {
-                    Get.to(const FaqSacreen());
-                  },
+                Consumer<FAQProvider>(builder: (context,provider,child)
+                    {
+                      return ListTile(
+                        title: Text(
+                          "PULL LIST FAQ",
+                          style: GoogleFonts.openSans(
+                              fontSize: allsize * 0.0113,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        onTap: () {
+                          Get.to(FAQScreen(data:provider.pullListInformationSectionList, faqTopic:"Pull List Information"));
+                        },
+                      );
+                    }
                 ),
                 ListTile(
                   title: Text(
@@ -292,14 +328,20 @@ class _FooterState extends State<Footer> {
                     Get.to(const BrowsePullList());
                   },
                 ),
-                ListTile(
-                  title: Text(
-                    "PREVIEWS FAQ",
-                    style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  onTap: () {},
+                Consumer<FAQProvider>(builder: (context,providr,child)
+                    {
+                      return  ListTile(
+                        title: Text(
+                          "PREVIEWS FAQ",
+                          style: GoogleFonts.openSans(
+                              fontSize: allsize * 0.0113,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        onTap: () {
+                          Get.to(FAQScreen(data:providr.preViewInformationSectionList, faqTopic:"Previews Information"));
+                        },
+                      );
+                    }
                 ),
                 ListTile(
                   title: Text(
@@ -315,7 +357,10 @@ class _FooterState extends State<Footer> {
           ),
           //Customer Service
           Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            data: Theme.of(context).copyWith(
+                dividerColor: Colors.transparent,
+                visualDensity: const VisualDensity(vertical: -4)
+            ),
             child: ExpansionTile(
               childrenPadding: EdgeInsets.zero,
               tilePadding: EdgeInsets.zero,

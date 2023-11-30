@@ -25,7 +25,7 @@ class TextFormFieldWidget extends StatelessWidget {
           controller: textEditingController,
           style: TextStyle(fontSize: allsize*0.015,color: Colors.black),
         ),
-        SizedBox(height: size.height*0.005,)
+        SizedBox(height: size.height*0.001,)
       ],
     );
   }

@@ -1,5 +1,6 @@
 
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class ContactInformationScreen extends StatefulWidget {
   const ContactInformationScreen({super.key});
@@ -11,6 +12,7 @@ class ContactInformationScreen extends StatefulWidget {
 
 class _ContactInformationScreenState extends State<ContactInformationScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -26,6 +28,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: size.height * 0.17),
+                  SearchList(searchcontroller: searchController),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -217,6 +220,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
               ],
             )),
             Header_Widget(
+              searchcontroller: searchController,
               ontap:() => scaffoldKey.currentState!.openDrawer(),
             )
           ],

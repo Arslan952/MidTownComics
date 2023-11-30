@@ -1,7 +1,11 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:midtowncomics/widget/weeklyreleaselistview.dart';
+import 'package:midtowncomics/provider/previewOrderProvider.dart';
+import 'package:midtowncomics/widget/dialagueBox/previewFilterDialaugue.dart';
+import 'package:midtowncomics/widget/dialagueBox/previewSortBy.dart';
+import 'package:midtowncomics/widget/preViewListView.dart';
 import 'package:midtowncomics/export.dart';
+import '../widget/searchList.dart';
 
 class PreOrderScreen extends StatefulWidget {
   const PreOrderScreen({super.key});
@@ -16,13 +20,22 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
   int index = 1;
   TextEditingController searchcontroller = TextEditingController();
 
-  Future<bool> _onWillPop() async {
-    Navigator.of(context).popUntil((route) => route.isFirst);
-    return false;
+  getPreviewFilter()async{
+    final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
+    final preProvider=Provider.of<PreviewOrderProvider>(context,listen: false);
+    ApiRequests().previewFilter(streamedDataProvider.loginuserdata['sh_id'], preProvider.previewCodeValue);
+  }
+  
+  getPreViewList()async{
+    final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
+    final preProvider=Provider.of<PreviewOrderProvider>(context,listen: false);
+    ApiRequests().getPreviewItem(streamedDataProvider.loginuserdata['sh_id'],"cg",preProvider.previewCodeValue,"","tit","1","10",false);
   }
 
   @override
   void initState() {
+    getPreViewList();
+    getPreviewFilter();
     // TODO: implement initState
     super.initState();
   }
@@ -32,96 +45,25 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-          key: scaffoldKey,
-          drawer: const Custom_drawer(),
-          backgroundColor: const Color(0xfff6f6f6),
-          body: Consumer<StreamedDataProvider>(
-              builder: (context, provider, child) {
-                return Stack(
-                  children: [
-                    SafeArea(
-                        child: Stack(
-                          children: [
-                            SingleChildScrollView(
-                              child: provider.searchpagein == true
-                                  ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(height: size.height * 0.19),
-                                  const Center(
-                                      child: CircularProgressIndicator()),
-                                ],
-                              )
-                                  : Column(
+    return Scaffold(
+        key: scaffoldKey,
+        drawer: const Custom_drawer(),
+        backgroundColor: const Color(0xfff6f6f6),
+        body: Consumer<StreamedDataProvider>(
+            builder: (context, provider, child) {
+              return Stack(
+                children: [
+                  SafeArea(
+                      child: Stack(
+                        children: [
+                          SingleChildScrollView(
+                            child:  Consumer<PreviewOrderProvider>(
+                              builder: (context, provider, child) {
+                              return  Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(height: size.height * 0.153),
-                                  provider.returnproduct.isEmpty
-                                      ? Container()
-                                      : SizedBox(
-                                    height: size.height * 0.02,
-                                  ),
-                                  provider.showsearchlist == true
-                                      ? provider.returnproduct.isEmpty
-                                      ? Container()
-                                      : ListView.builder(
-                                      physics:
-                                      const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount:
-                                      provider.returnproduct.length,
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              searchcontroller.text =
-                                              provider.returnproduct[
-                                              index]['pr_ttle'];
-                                            });
-                                            provider.updatesearchselextion(
-                                                provider.returnproduct[
-                                                index]['pr_ttle']);
-                                          },
-                                          child: Container(
-                                            color: index % 2 == 0
-                                                ? const Color(0xffececec)
-                                                : Colors.white,
-                                            child: Padding(
-                                              padding: EdgeInsets.all(
-                                                  allsize * 0.005),
-                                              child: RichText(
-                                                text: TextSpan(
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                      allsize * 0.012,
-                                                      color:
-                                                      Colors.black),
-                                                  children: <TextSpan>[
-                                                    TextSpan(
-                                                        text:
-                                                        "${provider.returnproduct[index]['pr_ttle']}-",
-                                                        style: const TextStyle(
-                                                            color: Color(
-                                                                0xff818181))),
-                                                    TextSpan(
-                                                        text: provider
-                                                            .returnproduct[
-                                                        index]
-                                                        ['cg_name'],
-                                                        style: const TextStyle(
-                                                            color: Color(
-                                                                0xff217fda))),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      })
-                                      : Container(),
+                                  SearchList(searchcontroller: searchcontroller),
                                   SizedBox(
                                     height: size.height * 0.01,
                                   ),
@@ -154,7 +96,7 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
-                                                    return const SortByDialaugue();
+                                                    return const PreviewSortBy();
                                                   },
                                                 );
                                               },
@@ -188,7 +130,7 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
-                                                    return const FilterDialaugue();
+                                                    return const PreviewFilter();
                                                   },
                                                 );
                                               },
@@ -225,7 +167,7 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 8),
                                     child: Text(
-                                      "NOW SHOWING 355 NEW RELEASE ITEMS",
+                                      "NOW SHOWING ${provider.previewData['DATA']['totalCount']['gTotal']??""} NEW RELEASE ITEMS",
                                       style: TextStyle(
                                           color: const Color(0xff868686),
                                           fontSize: allsize * 0.012),
@@ -247,26 +189,80 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
                                               fontSize: allsize * 0.015,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        Container(
-                                          height: size.height * 0.04,
-                                          width: size.width * 0.4,
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey[300]),
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "Oct 25,2023",
-                                                style: TextStyle(
-                                                    fontSize: allsize * 0.014),
-                                              ),
-                                              Icon(
-                                                Icons.arrow_drop_down,
-                                                size: allsize * 0.02,
-                                              ),
-                                            ],
+                                        InkWell(
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext
+                                              context) {
+                                                return Dialog(
+                                                  insetPadding: EdgeInsets
+                                                      .symmetric(
+                                                      horizontal:
+                                                      allsize *
+                                                          0.016,
+                                                      vertical:
+                                                      allsize *
+                                                          0.04),
+                                                  child:
+                                                  SingleChildScrollView(
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                      MainAxisSize
+                                                          .min,
+                                                      children:provider.previewCodeList
+                                                          .map<Widget>(
+                                                              (dynamic
+                                                          item) {
+                                                            return ListTile(
+                                                              title: Text(FunctionClass().convertToFullMonth(item['pre_code'])),
+                                                              onTap:
+                                                                  () async {
+                                                                final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
+                                                                Navigator.of(context).pop();
+                                                                provider.updatePreviewCodeComplete(FunctionClass().convertToFullMonth(item['pre_code']));
+                                                                provider.updatePreviewCodeValue(item['pre_code']);
+                                                                await ApiRequests().previewFilter(streamedDataProvider.loginuserdata['sh_id'], provider.previewCodeValue);
+                                                                print(provider.previewFilterList);
+                                                              },
+                                                            );
+                                                          }).toList(),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            height:
+                                            size.height * 0.045,
+                                            width: size.width * 0.4,
+                                            decoration: BoxDecoration(
+                                                color:
+                                                Colors.grey[300]),
+                                            padding:
+                                            const EdgeInsets.all(
+                                                8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  provider.previewCodeComplete,
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                      allsize *
+                                                          0.012),
+                                                ),
+                                                Icon(
+                                                  Icons
+                                                      .arrow_drop_down,
+                                                  size:
+                                                  allsize * 0.02,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         )
                                       ],
@@ -287,6 +283,10 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
                                               setState(() {
                                                 index=1;
                                               });
+                                              final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
+                                              ApiRequests().getPreviewItem(streamedDataProvider.loginuserdata['sh_id'],"cg",provider.previewCodeValue,provider.searchValue,provider.sortByGroupValue,"1",provider.previewDataList.length,false);
+                                              provider.updateFilterData("cg");
+                                              provider.updateFilterName("");
                                             },
                                             child: Container(
                                               height: size.height * 0.1,
@@ -311,6 +311,10 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
                                               setState(() {
                                                 index=2;
                                               });
+                                              final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
+                                              ApiRequests().getPreviewItem(streamedDataProvider.loginuserdata['sh_id'],"ib",provider.previewCodeValue,provider.searchValue,provider.sortByGroupValue,"1",provider.previewDataList.length,false);
+                                              provider.updateFilterName("");
+                                              provider.updateFilterData("ib");
                                             },
                                             child: Container(
                                               height: size.height * 0.1,
@@ -335,6 +339,10 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
                                               setState(() {
                                                 index=3;
                                               });
+                                              final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
+                                              ApiRequests().getPreviewItem(streamedDataProvider.loginuserdata['sh_id'],"at",provider.previewCodeValue,provider.searchValue,provider.sortByGroupValue,"1",provider.previewDataList.length,false);
+                                              provider.updateFilterName("");
+                                              provider.updateFilterData("at");
                                             },
                                             child: Container(
                                               height: size.height * 0.1,
@@ -359,6 +367,10 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
                                               setState(() {
                                                 index=4;
                                               });
+                                             final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
+                                              ApiRequests().getPreviewItem(streamedDataProvider.loginuserdata['sh_id'],"mm",provider.previewCodeValue,provider.searchValue,provider.sortByGroupValue,"1",provider.previewDataList.length,false);
+                                              provider.updateFilterName("");
+                                              provider.updateFilterData("mm");
                                             },
                                             child: Container(
                                               height: size.height * 0.1,
@@ -403,50 +415,67 @@ class _PreOrderScreenState extends State<PreOrderScreen> {
                                   SizedBox(height: size.height*0.01,),
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: size.width*0.028),
-                                    child: Text("Dark Horse",style: TextStyle(color: const Color(0xff767676),fontSize: allsize*0.015,fontWeight: FontWeight.w500),),
+                                    child: Text(provider.filterName,style: TextStyle(color: const Color(0xff767676),fontSize: allsize*0.015,fontWeight: FontWeight.w500),),
                                   ),
                                   SizedBox(height: size.height*0.01,),
+                                  provider.changeindicator==false?
                                   ListView.builder(
                                       shrinkWrap: true,
                                       physics: const NeverScrollableScrollPhysics(),
-                                      itemCount: 5,
+                                      itemCount: provider.previewDataList.length,
                                       itemBuilder: (context,index)
                                       {
-                                        return WeeklyRelaseListView(index: index,);
+                                        return PreViewListView(index: index);
                                       }
-                                  ),
+                                  )
+                                  :const Center(child: CircularProgressIndicator(),),
                                   SizedBox(height: size.height*0.01,),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.all(3.0),
-                                    child: Container(
-                                      height: size.height * 0.06,
-                                      color: const Color(0xff006ccf),
-                                      child: Center(
-                                        child: Text(
-                                          "LOAD MORE",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize:
-                                              allsize * 0.013),
+                                  provider.loadmore == true
+                                      ? const Center(
+                                      child: Padding(
+                                        padding:
+                                        EdgeInsets.all(8.0),
+                                        child:
+                                        CircularProgressIndicator(),
+                                      ))
+                                      :
+                                  InkWell(
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.all(3.0),
+                                      child: Container(
+                                        height: size.height * 0.06,
+                                        color: const Color(0xff006ccf),
+                                        child: Center(
+                                          child: Text(
+                                            "LOAD MORE",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize:
+                                                allsize * 0.013),
+                                          ),
                                         ),
                                       ),
                                     ),
+                                    onTap: (){
+                                      final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
+                                      ApiRequests().getPreviewItem(streamedDataProvider.loginuserdata['sh_id'],provider.filterData,provider.previewCodeValue,provider.searchValue,provider.sortByGroupValue,"1",provider.previewDataList.length+10,true);
+                                    },
                                   ),
                                   SizedBox(height: size.height*0.01,)
                                 ],
-                              ),
-                            ),
-                            Header_Widget(
-                              ontap: () => scaffoldKey.currentState!.openDrawer(),
-                              searchcontroller: searchcontroller,
-                            )
-                          ],
-                        )),
-                  ],
-                );
-              })),
-    );
+                              );
+                              })
+                          ),
+                          Header_Widget(
+                            ontap: () => scaffoldKey.currentState!.openDrawer(),
+                            searchcontroller: searchcontroller,
+                          )
+                        ],
+                      )),
+                ],
+              );
+            }));
   }
 }
 

@@ -113,33 +113,39 @@ class CustomDialougue2 extends StatelessWidget {
                               SizedBox(
                                 width: double.infinity,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(2),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       SizedBox(
-                                        height: size.height * 0.13,
-                                        width: size.width * 0.15,
-                                        child: Image.network(
-                                          "https://www.midtowncomics.com/images/PRODUCT/FUL/${cartdatalist[index]['pr_id']}_ful.jpg",
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            } else {
-                                              return const Center(
-                                                  child:
-                                                      CircularProgressIndicator());
-                                            }
-                                          },
-                                          // fit: BoxFit.fill,
+                                        height: size.height * 0.15,
+                                        width: size.width * 0.20,
+                                        child: Flexible(
+                                          child: Image.network(
+                                            "https://www.midtowncomics.com/images/PRODUCT/FUL/${cartdatalist[index]['pr_id']}_ful.jpg",
+                                            loadingBuilder: (BuildContext context,
+                                                Widget child,
+                                                ImageChunkEvent?
+                                                    loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              } else {
+                                                return const Center(
+                                                    child:
+                                                        CircularProgressIndicator());
+                                              }
+                                            },
+                                            errorBuilder: (context, exception, stackTrace) {
+                                              return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
+                                            },
+                                            fit: BoxFit.contain,
+                                            // fit: BoxFit.fill,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(
-                                        width: size.width * 0.3,
+                                        width: size.width * 0.38,
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -153,45 +159,47 @@ class CustomDialougue2 extends StatelessWidget {
                                               style: TextStyle(
                                                   fontSize: allsize * 0.01),
                                             ),
-                                            TextButton(
-                                                onPressed: () async {
-                                                  provider.call(cartdatalist[index]['pr_id'], "0","1");
-                                                  final streamedDataProvider =
-                                                      Provider.of<
-                                                              StreamedDataProvider>(
-                                                          context,
-                                                          listen: false);
-                                                  var request = http.Request(
-                                                      'GET',
-                                                      Uri.parse(
-                                                          'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=${streamedDataProvider.loginuserdata['sh_id']}&pr_id=${cartdatalist[index]['pr_id']}&sc_qty=0&app_id='));
-                                                  http.StreamedResponse
-                                                      response =
-                                                      await request.send();
-                                                  if (response.statusCode ==
-                                                      200) {
-                                                    final data = await response
-                                                        .stream
-                                                        .bytesToString();
-                                                    streamedDataProvider
-                                                        .updateCartData(
-                                                            jsonDecode(data));
-                                                    Map<String, dynamic>
-                                                        datache =
-                                                        jsonDecode(data);
-                                                    // Map<String,dynamic>refresh=await ApiRequests().fetchData1(context);
-                                                    // streamedDataProvider.updateData(refresh);
-                                                  } else {
-                                                    debugPrint(
-                                                        response.reasonPhrase);
-                                                  }
-                                                },
-                                                child: Text(
-                                                  'Remove',
-                                                  style: TextStyle(
-                                                      fontSize: allsize * 0.011,
-                                                      color: Colors.black),
-                                                ))
+                                            InkWell(
+                                              onTap: () async {
+                                                provider.call(cartdatalist[index]['pr_id'], "0","1",cartdatalist[index]['addedtowl']);
+                                                final streamedDataProvider =
+                                                Provider.of<
+                                                    StreamedDataProvider>(
+                                                    context,
+                                                    listen: false);
+                                                var request = http.Request(
+                                                    'GET',
+                                                    Uri.parse(
+                                                        'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=${streamedDataProvider.loginuserdata['sh_id']}&pr_id=${cartdatalist[index]['pr_id']}&sc_qty=0&app_id='));
+                                                http.StreamedResponse
+                                                response =
+                                                await request.send();
+                                                if (response.statusCode ==
+                                                    200) {
+                                                  final data = await response
+                                                      .stream
+                                                      .bytesToString();
+                                                  streamedDataProvider
+                                                      .updateCartData(
+                                                      jsonDecode(data));
+                                                  Map<String, dynamic>
+                                                  datache =
+                                                  jsonDecode(data);
+                                                  // Map<String,dynamic>refresh=await ApiRequests().fetchData1(context);
+                                                  // streamedDataProvider.updateData(refresh);
+                                                } else {
+                                                  debugPrint(
+                                                      response.reasonPhrase);
+                                                }
+                                              },
+
+                                              child: Text(
+                                                'Remove',
+                                                style: TextStyle(
+                                                    fontSize: allsize * 0.013,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -255,7 +263,7 @@ class CustomDialougue2 extends StatelessWidget {
                         Get.to(const CartDetail());
                       },
                       child: Container(
-                        height: size.height * 0.07,
+                        height: size.height * 0.065,
                         width: double.infinity,
                         color: const Color(0xff006ccf),
                         child: Center(

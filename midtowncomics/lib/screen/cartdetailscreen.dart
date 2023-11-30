@@ -4,6 +4,7 @@
 import 'package:http/http.dart' as http;
 
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class CartDetail extends StatefulWidget {
   const CartDetail({super.key});
@@ -18,7 +19,6 @@ class _CartDetailState extends State<CartDetail> {
   TextEditingController searchcontroller = TextEditingController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   String countryValue="-SELECT COUNTRY-";
-
   @override
   Widget build(BuildContext context) {
     ApiRequests().GetCountries(context);
@@ -52,59 +52,7 @@ class _CartDetailState extends State<CartDetail> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: size.height * 0.165),
-                          provider.showsearchlist == true
-                              ? provider.returnproduct.isEmpty
-                              ? Container()
-                              : ListView.builder(
-                              physics:
-                              const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: provider.returnproduct.length,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      searchcontroller.text =
-                                      provider.returnproduct[index]
-                                      ['pr_ttle'];
-                                    });
-                                    provider.updatesearchselextion(
-                                        provider.returnproduct[index]
-                                        ['pr_ttle']);
-                                  },
-                                  child: Container(
-                                    color: index % 2 == 0
-                                        ? const Color(0xffececec)
-                                        : Colors.white,
-                                    child: Padding(
-                                      padding:
-                                      EdgeInsets.all(allsize * 0.005),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          style: TextStyle(
-                                              fontSize: allsize * 0.012,
-                                              color: Colors.black),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                                text:
-                                                "${provider.returnproduct[index]['pr_ttle']}-",
-                                                style: const TextStyle(
-                                                    color: Color(0xff818181))),
-                                            TextSpan(
-                                                text: provider
-                                                    .returnproduct[
-                                                index]['cg_name'],
-                                                style: const TextStyle(
-                                                    color: Color(
-                                                        0xff217fda))),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              })
-                              : Container(),
+                          SearchList(searchcontroller: searchcontroller),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
@@ -870,7 +818,7 @@ class _DetailPageListViewWidgetState extends State<DetailPageListViewWidget> {
                                               widget.cartdatalist[widget.index]
                                               ['pr_id'],
                                               "0",
-                                              "1");
+                                              "1",widget.cartdatalist[widget.index]['addedtowl']);
                                           final data =
                                           await response.stream.bytesToString();
                                           streamedDataProvider

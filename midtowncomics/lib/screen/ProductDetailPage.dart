@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 import '../widget/featurenewrelease.dart';
 
@@ -91,60 +92,7 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                       child: Column(
                         children: [
                           SizedBox(height: size.height * 0.18),
-                          provider.showsearchlist == true
-                              ? provider.returnproduct.isEmpty
-                                  ? Container()
-                                  : ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: provider.returnproduct.length,
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              searchcontroller.text =
-                                                  provider.returnproduct[index]
-                                                      ['pr_ttle'];
-                                            });
-                                            provider.updatesearchselextion(
-                                                provider.returnproduct[index]
-                                                    ['pr_ttle']);
-                                          },
-                                          child: Container(
-                                            color: index % 2 == 0
-                                                ? const Color(0xffececec)
-                                                : Colors.white,
-                                            child: Padding(
-                                              padding: EdgeInsets.all(
-                                                  allsize * 0.005),
-                                              child: RichText(
-                                                text: TextSpan(
-                                                  style: TextStyle(
-                                                      fontSize: allsize * 0.012,
-                                                      color: Colors.black),
-                                                  children: <TextSpan>[
-                                                    TextSpan(
-                                                        text:
-                                                            "${provider.returnproduct[index]['pr_ttle']}-",
-                                                        style: const TextStyle(
-                                                            color: Color(
-                                                                0xff818181))),
-                                                    TextSpan(
-                                                        text: provider
-                                                                .returnproduct[
-                                                            index]['cg_name'],
-                                                        style: const TextStyle(
-                                                            color: Color(
-                                                                0xff217fda))),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      })
-                              : Container(),
+                          SearchList(searchcontroller: searchcontroller),
                           provider.detailpageindicator == true ||
                                   provider.detail.isEmpty
                               ? const Padding(
@@ -211,6 +159,9 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                   child:
                                                       CircularProgressIndicator());
                                             }
+                                          },
+                                          errorBuilder: (context, exception, stackTrace) {
+                                            return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
                                           },
                                           fit: BoxFit.contain,
                                         ),
@@ -960,7 +911,7 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                                           if (item == '-Remove-') {
                                                                                             showdialugue = false;
                                                                                             dropdownValue = '1 in Cart';
-                                                                                            provider.call(provider.detail['pr_id'], "0", "1");
+                                                                                            provider.call(provider.detail['pr_id'], "0", "1",provider.detail['addedtowl']);
                                                                                             provider.updatedetail("0", "1");
                                                                                           }
                                                                                           dropdownValue = item;
@@ -980,7 +931,7 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                                           debugPrint(response.reasonPhrase);
                                                                                         }
                                                                                         provider.updatedetail("1", value1.toString());
-                                                                                        provider.call(widget.productid, "1", value1.toString());
+                                                                                        provider.call(widget.productid, "1", value1.toString(),provider.detail['addedtowl']);
                                                                                       },
                                                                                     );
                                                                                   }).toList(),
@@ -996,7 +947,38 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                         dropdownValue,
                                                                     allsize:
                                                                         allsize),
-                                                              )
+                                                              ):
+                                                        int.parse(provider.detail['pr_qty'])==0?
+                                    InkWell(
+                                      child: Container(
+                                      height: size.height * 0.06,
+                                      color:int.parse(provider.detail['addedtowl'])>0?Colors.grey:Colors.red,
+                                      child: Center(
+                                      child: Text(
+                                        int.parse(provider.detail['addedtowl'])>0?"ADDED TO WISH LIST":
+                                   "ADD TO WISH LIST",
+                                      style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: allsize * 0.012),
+                                      )),
+                                      ),
+                                      onTap: (){
+                                        if( int.parse(provider.detail['addedtowl'])>0)
+                                        {
+                                          Get.to(const MyWishListScreen());
+                                        }
+                                        {
+                                          final streamedDataProvider =
+                                          Provider.of<StreamedDataProvider>(context,
+                                              listen: false);
+                                          ApiRequests().saveToWishList(streamedDataProvider.loginuserdata['sh_id']
+                                              , provider.detail['pr_parentid']);
+                                          streamedDataProvider.updateWishListDetail();
+                                          streamedDataProvider.call(provider.detail['pr_id'],provider.detail['in_cart'],provider.detail['sc_qty'], "1");
+                                        }
+                                      },
+                                    )
                                                             : InkWell(
                                                                 onTap:
                                                                     () async {
@@ -1010,7 +992,9 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                         provider
                                                                             .detail['pr_id'],
                                                                         "1",
-                                                                        "1");
+                                                                        "1",
+                                                                      provider.detail['addedtowl']
+                                                                    );
                                                                     provider
                                                                         .updatedetail(
                                                                             "1",
@@ -1096,7 +1080,7 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                                 if (item == '-Remove-') {
                                                                                   showdialugue = false;
                                                                                   dropdownValue = '1 in Cart';
-                                                                                  provider.call(provider.detail['pr_id'], "0", "1");
+                                                                                  provider.call(provider.detail['pr_id'], "0", "1",provider.detail['addedtowl']);
                                                                                   provider.updatedetail("0", "1");
                                                                                 }
                                                                                 dropdownValue = item;
@@ -1115,22 +1099,7 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                                 debugPrint(response.reasonPhrase);
                                                                               }
                                                                               provider.updatedetail("1", value1.toString());
-                                                                              provider.call(widget.productid, "1", value1.toString());
-                                                                              // Map<String, dynamic> data =
-                                                                              //     await ApiRequests().Savedata(
-                                                                              //         widget.image,
-                                                                              //         item == "-Remove-"
-                                                                              //             ? "0"
-                                                                              //             : value1,
-                                                                              //         context);
-                                                                              // streamedDataProvider
-                                                                              //     .updateCartData(data);
-                                                                              // Map<String, dynamic> refresh =
-                                                                              //     await ApiRequests()
-                                                                              //         .fetchData1(context);
-                                                                              // streamedDataProvider
-                                                                              //     .updateData(refresh);
-                                                                              // Close the dialog
+                                                                              provider.call(widget.productid, "1", value1.toString(),provider.detail['addedtowl']);
                                                                             },
                                                                           );
                                                                         }).toList(),
@@ -1207,21 +1176,6 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                       ),
                                                     ),
                                                     onTap: (){
-                                                      // final streamedDataProvider=   Provider.of<
-                                                      //     StreamedDataProvider>(
-                                                      //     context,
-                                                      //     listen: false);
-                                                      // if (provider.loginuserdata.isEmpty) {
-                                                      //   Get.to(const SignInScreen());
-                                                      // } else {
-                                                      //   ApiRequests().SavePullList(
-                                                      //       streamedDataProvider
-                                                      //           .loginuserdata['sh_id'],
-                                                      //       provider.detail['su_id'],
-                                                      //       "1",
-                                                      //       "0",
-                                                      //       context);
-                                                      // }
                                                     },
                                                   )
                                                 ],
@@ -1530,7 +1484,11 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                           'sc_qty']),
                                                                   data: provider
                                                                           .writer[
-                                                                      index],
+                                                                      index], parentid: provider
+                                                                        .writer[
+                                                                    index]['pr_parentid'], addedtowl: int.parse(provider
+                                                                        .writer[
+                                                                    index]['addedtowl']),
                                                                 ),
                                                               ),
                                                         ],
@@ -1667,7 +1625,11 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                           'sc_qty']),
                                                                   data: provider
                                                                           .artist[
-                                                                      index],
+                                                                      index], parentid: provider
+                                                                        .artist[
+                                                                    index]['pr_parentid'], addedtowl: int.parse(provider
+                                                                        .artist[
+                                                                    index]['addedtowl']),
                                                                 ),
                                                               ),
                                                         ],
@@ -1807,7 +1769,11 @@ class _ProductDetialPageState extends State<ProductDetialPage> {
                                                                           'sc_qty']),
                                                                   data: provider
                                                                           .recentlyview[
-                                                                      index],
+                                                                      index], parentid: provider
+                                                                        .recentlyview[
+                                                                    index]['pr_parentid'], addedtowl: int.parse(provider
+                                                                        .recentlyview[
+                                                                    index]['addedtowl']),
                                                                 ),
                                                               ),
                                                         ],

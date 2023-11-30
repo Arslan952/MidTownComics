@@ -1,7 +1,9 @@
 
 import 'package:midtowncomics/export.dart';
-
-import '../widget/featurenewrelease.dart';
+import 'package:midtowncomics/widget/homeScrrenHorizantalListView.dart';
+import 'package:midtowncomics/widget/homeSeriesCrossOver.dart';
+import 'package:midtowncomics/widget/searchList.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +16,20 @@ final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchcontroller=TextEditingController();
-  // ScrollController scrollController= ScrollController();
+  ScrollController featuredScrollController=ScrollController(initialScrollOffset: 0.0,keepScrollOffset: false);
+  ScrollController recomendedScrollController=ScrollController(initialScrollOffset: 0.0,keepScrollOffset: false);
+  ScrollController forYouScrollController=ScrollController(initialScrollOffset: 0.0,keepScrollOffset: false);
+  ScrollController preOrderScrollController=ScrollController(initialScrollOffset: 0.0,keepScrollOffset: false);
+  ScrollController backIssueScrollController=ScrollController(initialScrollOffset: 0.0,keepScrollOffset: false);
+  ScrollController bestSellerScrollController=ScrollController(initialScrollOffset: 0.0,keepScrollOffset: false);
+  ScrollController exclusiveScrollController=ScrollController(initialScrollOffset: 0.0,keepScrollOffset: false);
+  PageController featuredPageController=PageController();
+  PageController recomendedPageController=PageController();
+  PageController forYouPageController=PageController();
+  PageController preOrderPageController=PageController();
+  PageController backIssuePageController=PageController();
+  PageController bestSellerPageController=PageController();
+  PageController exclusivePageController=PageController();
   Future<void> cartdata() async {
     final streamedDataProvider =
         Provider.of<StreamedDataProvider>(context, listen: false);
@@ -34,6 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
             : streamedDataProvider
             .loginuserdata['sh_id']);
     streamedDataProvider.updatePullListData(data2);
+    ApiRequests().loadShippingInformation( streamedDataProvider.loginuserdata.isEmpty ? "" : streamedDataProvider.loginuserdata['sh_id']);
+    ApiRequests().loadInStorePickUpInfo( streamedDataProvider.loginuserdata.isEmpty ? "" : streamedDataProvider.loginuserdata['sh_id']);
   }
 
   fetchdates()async{
@@ -67,1071 +84,628 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     SizedBox(height: size.height * 0.152),
-                    // provider.returnproduct.isEmpty?Container():
-                    // SizedBox(height: size.height*0.02,),
-                   provider.showsearchlist==true?
-                    provider.returnproduct.isEmpty?Container():
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                        itemCount: provider.returnproduct.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: (){
-                              setState(() {
-                                searchcontroller.text=provider.returnproduct[index]['pr_ttle'];
-                              });
-                              provider.updatesearchselextion(provider.returnproduct[index]['pr_ttle']);
-                            },
-                            child: Container(
-                              color: index % 2 == 0
-                                  ? const Color(0xffececec)
-                                  : Colors.white,
-                              child: Padding(
-                                padding:EdgeInsets.all(allsize*0.005),
-                                child: RichText(
-                                  text: TextSpan(
-                                  style: TextStyle(fontSize:allsize*0.012, color: Colors.black),
-                            children: <TextSpan>[
-                            TextSpan(text: "${provider.returnproduct[index]['pr_ttle']}-", style: const TextStyle(color: Color(0xff818181))),
-                              TextSpan(text:provider.returnproduct[index]['cg_name'], style: const TextStyle(color: Color(0xff217fda))),
-                            ],
-                            ),
-                            ),
-                              ),
-                            ),
-                          );
-                        }):Container(),
-                    const HomeScreenBanner(),
-                    const WeeklyReleaseButton(),
-                    const Slider1(),
-                    SizedBox(
-                      height: size.height * 0.05,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: size.width * 0.01),
-                      child: const Slider2(),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.02,
-                    ),
-                    const CardGridView(),
-                    Consumer<StreamedDataProvider>(
-                        builder: (context, provider, child) {
-                      return
-                      provider.Pagebannerlist1.isEmpty?const Center(child: CircularProgressIndicator()):
-                        Slider3(
-                        data: provider.Pagebannerlist1,
-                      );
-                    }),
-                    Consumer<StreamedDataProvider>(
-                        builder: (context, provider, child) {
-                      return provider.Pagebannerlist2.isEmpty?const Center(child: CircularProgressIndicator(),): Slider3(
-                        data:provider.Pagebannerlist2,
-                      );
-                    }),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: size.height * 0.48,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Featured New Release",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: allsize * 0.0143,
-                                        fontWeight: FontWeight.w400)),
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const ViewMoreCustomDialugue();
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    height: size.height * 0.04,
-                                    width: size.width * 0.4,
-                                    color: Colors.grey[300],
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Text(
-                                        "View More",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.0143),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.height * 0.01,
-                            ),
-                            SizedBox(
-                              height: size.height * 0.43,
-                              child: Scrollbar(
-                                // controller: scrollController,
-                                trackVisibility: true,
-                                thumbVisibility: true,
-                                child: PageView.builder(
-                                  itemCount:
-                                      (provider.featurenewrelease.length /
-                                              2)
-                                          .ceil(),
-                                  // Display two items per page
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, pageIndex) {
-                                    FunctionClass().precacheImages(
-                                        provider.featurenewrelease,
-                                        context);
-                                    final startIndex = pageIndex * 2;
-                                    final endIndex = startIndex + 2;
-
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: size.width * 0.013),
-                                      child: Row(
-                                        mainAxisAlignment: endIndex <=
-                                                provider.featurenewrelease
-                                                    .length
-                                            ? MainAxisAlignment.spaceBetween
-                                            : MainAxisAlignment.start,
-                                        children: [
-                                          for (var index = startIndex;
-                                              index < endIndex;
-                                              index++)
-                                            if (index <
-                                                provider.featurenewrelease
-                                                    .length)
-                                              SizedBox(
-                                                // width: size.width * 0.47962,
-                                                // Adjust the width as needed
-                                                child: FeatureNewRelease(
-                                                  adultimage: provider
-                                                          .featurenewrelease[
-                                                      index]['hideadultimage'],
-                                                  pulllist: provider
-                                                          .featurenewrelease[
-                                                      index]['su_id'],
-                                                  image: provider
-                                                          .featurenewrelease[
-                                                      index]['pr_id'],
-                                                  title: provider
-                                                          .featurenewrelease[
-                                                      index]['pr_ttle'],
-                                                  prce1: provider
-                                                          .featurenewrelease[
-                                                      index]['pr_price'],
-                                                  price2: provider
-                                                          .featurenewrelease[
-                                                      index]['pr_lprice'],
-                                                  preorder: provider
-                                                          .featurenewrelease[
-                                                      index]['pr_advord'],
-                                                  quantity: int.parse(provider
-                                                          .featurenewrelease[
-                                                      index]['pr_qty']),
-                                                  incart: int.parse(provider
-                                                          .featurenewrelease[
-                                                      index]['in_cart']),
-                                                  productquantity:
-                                                      int.parse(provider
-                                                              .featurenewrelease[
-                                                          index]['pr_qty']),
-                                                  qtycart: int.parse(provider
-                                                          .featurenewrelease[
-                                                      index]['sc_qty']),
-                                                  data: provider
-                                                          .featurenewrelease[
-                                                      index],
-                                                ),
-                                              ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
+                   //Search List
+                   SearchList(searchcontroller: searchcontroller),
+                    Column(
+                      children: [
+                        const HomeScreenBanner(),
+                        //Weekly Release Button
+                        const WeeklyReleaseButton(),
+                        //Slider 01
+                        const Slider1(),
+                        Container(
+                          color: Colors.white,
+                          height: size.height * 0.05,
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        color: Colors.grey[200],
-                        height: size.height * 0.17,
-                        width: double.infinity,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-                            Text("SERIES/CROSSOVER",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: allsize * 0.0143,
-                                    fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              height: size.height * 0.11,
-                              child: RawScrollbar(
-                                thumbColor: Colors.grey,
-                                thickness: allsize * 0.003,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: size.height * 0.03,
-                                      horizontal: size.width * 0.03),
-                                  child: ListView.builder(
-                                      itemCount:
-                                          provider.crossoverlist.length,
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (item, index) {
-                                        return Row(
-                                          children: [
-                                            SizedBox(
-                                              height: size.height * 0.08,
-                                              width: size.width * 0.1,
-                                              child: Image.network(
-                                                provider.crossoverlist[
-                                                    index]['img_url'],
-                                                fit: BoxFit.contain,
-                                              ),
+                        //Slider 02
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.01),
+                          child: const Slider2(),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.005,
+                        ),
+                        //Grid View 01
+                        const CardGridView(),
+                        //Slider 03
+                        Consumer<StreamedDataProvider>(
+                            builder: (context, provider, child) {
+                              return
+                                provider.Pagebannerlist1.isEmpty?const Center(child: CircularProgressIndicator()):
+                                Slider3(
+                                  data: provider.Pagebannerlist1,
+                                );
+                            }),
+                        //Slider 04
+                        Consumer<StreamedDataProvider>(
+                            builder: (context, provider, child) {
+                              return provider.Pagebannerlist2.isEmpty?const Center(child: CircularProgressIndicator(),): Slider3(
+                                data:provider.Pagebannerlist2,
+                              );
+                            }),
+                        //Features New Release Section
+                        Container(
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: size.height * 0.48,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Featured New Release",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: allsize * 0.0143,
+                                              fontWeight: FontWeight.w400)),
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return  ViewMoreCustomDialugue();
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          height: size.height * 0.04,
+                                          width: size.width * 0.4,
+                                          color: const Color(0xffe0e0e0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: Text(
+                                              "View More",
+                                              style: TextStyle(
+                                                  fontSize: allsize * 0.0143),
                                             ),
-                                            SizedBox(
-                                              width: size.width * 0.01,
-                                            )
-                                          ],
-                                        );
-                                      }),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        // height: size.height * 0.48,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Recommended For You",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: allsize * 0.0143,
-                                        fontWeight: FontWeight.w400)),
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const ViewMoreCustomDialugue();
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    height: size.height * 0.04,
-                                    width: size.width * 0.4,
-                                    color: Colors.grey[300],
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Text(
-                                        "View More",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.0143),
-                                      ),
-                                    ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.height * 0.01,
-                            ),
-                            SizedBox(
-                              height: size.height * 0.43,
-                              child: Scrollbar(
-                                // controller: scrollController,
-                                trackVisibility: true,
-                                thumbVisibility: true,
-                                child: PageView.builder(
-                                  itemCount:
-                                      (provider.recommendedforyou.length /
-                                              2)
-                                          .ceil(),
-                                  // Display two items per page
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, pageIndex) {
-                                    FunctionClass().precacheImages(
-                                        provider.recommendedforyou,
-                                        context);
-                                    final startIndex = pageIndex * 2;
-                                    final endIndex = startIndex + 2;
-
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: size.width * 0.013),
-                                      child: Row(
-                                        mainAxisAlignment: endIndex <=
-                                                provider.recommendedforyou
-                                                    .length
-                                            ? MainAxisAlignment.spaceBetween
-                                            : MainAxisAlignment.start,
-                                        children: [
-                                          for (var index = startIndex;
-                                              index < endIndex;
-                                              index++)
-                                            if (index <
-                                                provider.recommendedforyou
-                                                    .length)
-                                              SizedBox(
-                                                // width: size.width * 0.47962,
-                                                // Adjust the width as needed
-                                                child: FeatureNewRelease(
-                                                  adultimage: provider
-                                                          .recommendedforyou[
-                                                      index]['hideadultimage'],
-                                                  pulllist: provider
-                                                          .recommendedforyou[
-                                                      index]['su_id'],
-                                                  image: provider
-                                                          .recommendedforyou[
-                                                      index]['pr_id'],
-                                                  title: provider
-                                                          .recommendedforyou[
-                                                      index]['pr_ttle'],
-                                                  prce1: provider
-                                                          .recommendedforyou[
-                                                      index]['pr_price'],
-                                                  price2: provider
-                                                          .recommendedforyou[
-                                                      index]['pr_lprice'],
-                                                  preorder: provider
-                                                          .recommendedforyou[
-                                                      index]['pr_advord'],
-                                                  quantity: int.parse(provider
-                                                          .recommendedforyou[
-                                                      index]['pr_qty']),
-                                                  incart: int.parse(provider
-                                                          .recommendedforyou[
-                                                      index]['in_cart']),
-                                                  productquantity:
-                                                      int.parse(provider
-                                                              .recommendedforyou[
-                                                          index]['pr_qty']),
-                                                  qtycart: int.parse(provider
-                                                          .recommendedforyou[
-                                                      index]['sc_qty']),
-                                                  data: provider
-                                                          .recommendedforyou[
-                                                      index],
-                                                ),
-                                              ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                  SizedBox(
+                                      height: size.height * 0.43,
+                                      child:HomeScrrenHorizantalList(data:provider.featurenewrelease, scrollController: featuredScrollController, pageScrollController: featuredPageController,)
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    provider.Pagebanner3==""?const CircularProgressIndicator():
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 5.0,
-                            offset: Offset(0, 2),
                           ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: Image.network(
-                          provider.Pagebanner3,
-                          // Use the 'image' field from your data
-                          fit: BoxFit.fill,
-                          width: size.width, // Adjust the width as needed
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        // height: size.height * 0.48,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                        //Series Cross Over List
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                            color: Colors.grey[200],
+                            height: size.height * 0.17,
+                            width: double.infinity,
+                            child: Column(
                               children: [
-                                Text("Recommended Pre-Order",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: allsize * 0.0143,
-                                        fontWeight: FontWeight.w400)),
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const ViewMoreCustomDialugue();
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    height: size.height * 0.04,
-                                    width: size.width * 0.4,
-                                    color: Colors.grey[300],
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Text(
-                                        "View More",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.0143),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.height * 0.01,
-                            ),
-                            SizedBox(
-                              height: size.height * 0.43,
-                              child: Scrollbar(
-                                // controller: scrollController,
-                                trackVisibility: true,
-                                thumbVisibility: true,
-                                child: PageView.builder(
-                                  itemCount:
-                                      (provider.recomendedpreorder.length /
-                                              2)
-                                          .ceil(),
-                                  // Display two items per page
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, pageIndex) {
-                                    FunctionClass().precacheImages(
-                                        provider.recomendedpreorder,
-                                        context);
-                                    final startIndex = pageIndex * 2;
-                                    final endIndex = startIndex + 2;
+                                SizedBox(
+                                  height: size.height * 0.02,
+                                ),
 
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: size.width * 0.013),
-                                      child: Row(
-                                        mainAxisAlignment: endIndex <=
-                                                provider.recomendedpreorder
-                                                    .length
-                                            ? MainAxisAlignment.spaceBetween
-                                            : MainAxisAlignment.start,
-                                        children: [
-                                          for (var index = startIndex;
-                                              index < endIndex;
-                                              index++)
-                                            if (index <
-                                                provider.recomendedpreorder
-                                                    .length)
-                                              SizedBox(
-                                                // width: size.width * 0.47962,
-                                                // Adjust the width as needed
-                                                child: FeatureNewRelease(
-                                                  adultimage: provider
-                                                          .recomendedpreorder[
-                                                      index]['hideadultimage'],
-                                                  pulllist: provider
-                                                          .recomendedpreorder[
-                                                      index]['su_id'],
-                                                  image: provider
-                                                          .recomendedpreorder[
-                                                      index]['pr_id'],
-                                                  title: provider
-                                                          .recomendedpreorder[
-                                                      index]['pr_ttle'],
-                                                  prce1: provider
-                                                          .recomendedpreorder[
-                                                      index]['pr_price'],
-                                                  price2: provider
-                                                          .recomendedpreorder[
-                                                      index]['pr_lprice'],
-                                                  preorder: provider
-                                                          .recomendedpreorder[
-                                                      index]['pr_advord'],
-                                                  quantity: int.parse(provider
-                                                          .recomendedpreorder[
-                                                      index]['pr_qty']),
-                                                  incart: int.parse(provider
-                                                          .recomendedpreorder[
-                                                      index]['in_cart']),
-                                                  productquantity:
-                                                      int.parse(provider
-                                                              .recomendedpreorder[
-                                                          index]['pr_qty']),
-                                                  qtycart: int.parse(provider
-                                                          .recomendedpreorder[
-                                                      index]['sc_qty']),
-                                                  data: provider
-                                                          .recomendedpreorder[
-                                                      index],
-                                                ),
-                                              ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        // height: size.height * 0.48,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Recommended Back Issue",
+                                Text("SERIES/CROSSOVER",
                                     style: TextStyle(
-                                        color: Colors.black,
+                                        color: Colors.grey,
                                         fontSize: allsize * 0.0143,
-                                        fontWeight: FontWeight.w400)),
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const ViewMoreCustomDialugue();
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    height: size.height * 0.04,
-                                    width: size.width * 0.4,
-                                    color: Colors.grey[300],
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Text(
-                                        "View More",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.0143),
-                                      ),
-                                    ),
-                                  ),
-                                )
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                    height: size.height * 0.11,
+                                    child: HomeSeriesCrossOver(data: provider.crossoverlist,)
+                                ),
                               ],
                             ),
-                            SizedBox(
-                              height: size.height * 0.01,
-                            ),
-                            SizedBox(
-                              height: size.height * 0.43,
-                              child: Scrollbar(
-                                // controller: scrollController,
-                                trackVisibility: true,
-                                thumbVisibility: true,
-                                child: PageView.builder(
-                                  itemCount:
-                                      (provider.recomendedbackissue.length /
-                                              2)
-                                          .ceil(),
-                                  // Display two items per page
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, pageIndex) {
-                                    FunctionClass().precacheImages(
-                                        provider.recomendedbackissue,
-                                        context);
-                                    final startIndex = pageIndex * 2;
-                                    final endIndex = startIndex + 2;
-
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: size.width * 0.013),
-                                      child: Row(
-                                        mainAxisAlignment: endIndex <=
-                                                provider.recomendedbackissue
-                                                    .length
-                                            ? MainAxisAlignment.spaceBetween
-                                            : MainAxisAlignment.start,
-                                        children: [
-                                          for (var index = startIndex;
-                                              index < endIndex;
-                                              index++)
-                                            if (index <
-                                                provider.recomendedbackissue
-                                                    .length)
-                                              SizedBox(
-                                                // width: size.width * 0.47962,
-                                                // Adjust the width as needed
-                                                child: FeatureNewRelease(
-                                                  adultimage: provider
-                                                          .recomendedbackissue[
-                                                      index]['hideadultimage'],
-                                                  pulllist: provider
-                                                          .recomendedbackissue[
-                                                      index]['su_id'],
-                                                  image: provider
-                                                          .recomendedbackissue[
-                                                      index]['pr_id'],
-                                                  title: provider
-                                                          .recomendedbackissue[
-                                                      index]['pr_ttle'],
-                                                  prce1: provider
-                                                          .recomendedbackissue[
-                                                      index]['pr_price'],
-                                                  price2: provider
-                                                          .recomendedbackissue[
-                                                      index]['pr_lprice'],
-                                                  preorder: provider
-                                                          .recomendedbackissue[
-                                                      index]['pr_advord'],
-                                                  quantity: int.parse(provider
-                                                          .recomendedbackissue[
-                                                      index]['pr_qty']),
-                                                  incart: int.parse(provider
-                                                          .recomendedbackissue[
-                                                      index]['in_cart']),
-                                                  productquantity:
-                                                      int.parse(provider
-                                                              .recomendedbackissue[
-                                                          index]['pr_qty']),
-                                                  qtycart: int.parse(provider
-                                                          .recomendedbackissue[
-                                                      index]['sc_qty']),
-                                                  data: provider
-                                                          .recomendedbackissue[
-                                                      index],
-                                                ),
-                                              ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    //Best Seller
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        // height: size.height * 0.48,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Best Seller",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: allsize * 0.0143,
-                                        fontWeight: FontWeight.w400)),
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const ViewMoreCustomDialugue();
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    height: size.height * 0.04,
-                                    width: size.width * 0.4,
-                                    color: Colors.grey[300],
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Text(
-                                        "View More",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.0143),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.height * 0.01,
-                            ),
-                            SizedBox(
-                              height: size.height * 0.43,
-                              child: Scrollbar(
-                                // controller: scrollController,
-                                trackVisibility: true,
-                                thumbVisibility: true,
-                                child: PageView.builder(
-                                  itemCount:
-                                      (provider.bestSeller.length / 2)
-                                          .ceil(),
-                                  // Display two items per page
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, pageIndex) {
-                                    FunctionClass().precacheImages(
-                                        provider.bestSeller, context);
-                                    final startIndex = pageIndex * 2;
-                                    final endIndex = startIndex + 2;
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: size.width * 0.013),
-                                      child: Row(
-                                        mainAxisAlignment: endIndex <=
-                                                provider.bestSeller.length
-                                            ? MainAxisAlignment.spaceBetween
-                                            : MainAxisAlignment.start,
-                                        children: [
-                                          for (var index = startIndex;
-                                              index < endIndex;
-                                              index++)
-                                            if (index <
-                                                provider.bestSeller.length)
-                                              SizedBox(
-                                                // width: size.width * 0.47962,
-                                                // Adjust the width as needed
-                                                child: FeatureNewRelease(
-                                                  adultimage: provider
-                                                          .bestSeller[index]
-                                                      ['hideadultimage'],
-                                                  pulllist: provider
-                                                          .bestSeller[index]
-                                                      ['su_id'],
-                                                  image: provider
-                                                          .bestSeller[index]
-                                                      ['pr_id'],
-                                                  title: provider
-                                                          .bestSeller[index]
-                                                      ['pr_ttle'],
-                                                  prce1: provider
-                                                          .bestSeller[index]
-                                                      ['pr_price'],
-                                                  price2: provider
-                                                          .bestSeller[index]
-                                                      ['pr_lprice'],
-                                                  preorder: provider
-                                                          .bestSeller[index]
-                                                      ['pr_advord'],
-                                                  quantity: int.parse(
-                                                      provider.bestSeller[
-                                                          index]['pr_qty']),
-                                                  incart: int.parse(provider
-                                                          .bestSeller[index]
-                                                      ['in_cart']),
-                                                  productquantity:
-                                                      int.parse(provider
-                                                              .bestSeller[
-                                                          index]['pr_qty']),
-                                                  qtycart: int.parse(
-                                                      provider.bestSeller[
-                                                          index]['sc_qty']),
-                                                  data: provider
-                                                      .bestSeller[index],
-                                                ),
-                                              ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        // height: size.height * 0.5,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    'Featured Midtown Comics\n'
-                                    'Signed/Exclusive',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: allsize * 0.0143,
-                                        fontWeight: FontWeight.w400)),
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const ViewMoreCustomDialugue();
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    height: size.height * 0.04,
-                                    width: size.width * 0.4,
-                                    color: Colors.grey[300],
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Text(
-                                        "View More",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.0143),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.height * 0.01,
-                            ),
-                            SizedBox(
-                              height: size.height * 0.43,
-                              child: Scrollbar(
-                                trackVisibility: true,
-                                thumbVisibility: true,
-                                child: PageView.builder(
-                                  itemCount: (provider.exclusive.length / 2)
-                                      .ceil(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, pageIndex) {
-                                    FunctionClass().precacheImages(
-                                        provider.exclusive, context);
-                                    final startIndex = pageIndex * 2;
-                                    final endIndex = startIndex + 2;
-
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: size.width * 0.013),
-                                      child: Row(
-                                        mainAxisAlignment: endIndex <=
-                                                provider.exclusive.length
-                                            ? MainAxisAlignment.spaceBetween
-                                            : MainAxisAlignment.start,
-                                        children: [
-                                          for (var index = startIndex;
-                                              index < endIndex;
-                                              index++)
-                                            if (index <
-                                                provider.exclusive.length)
-                                              SizedBox(
-                                                // width: MediaQuery.of(context).size.width * 0.47962, // Adjust the width as needed
-                                                child: FeatureNewRelease(
-                                                  adultimage: provider
-                                                          .exclusive[index]
-                                                      ['hideadultimage'],
-                                                  pulllist: provider
-                                                          .exclusive[index]
-                                                      ['su_id'],
-                                                  image: provider
-                                                          .exclusive[index]
-                                                      ['pr_id'],
-                                                  title: provider
-                                                          .exclusive[index]
-                                                      ['pr_ttle'],
-                                                  prce1: provider
-                                                          .exclusive[index]
-                                                      ['pr_price'],
-                                                  price2: provider
-                                                          .exclusive[index]
-                                                      ['pr_lprice'],
-                                                  preorder: provider
-                                                          .exclusive[index]
-                                                      ['pr_advord'],
-                                                  quantity: int.parse(
-                                                      provider.exclusive[
-                                                          index]['pr_qty']),
-                                                  incart: int.parse(provider
-                                                          .exclusive[index]
-                                                      ['in_cart']),
-                                                  productquantity:
-                                                      int.parse(provider
-                                                              .exclusive[
-                                                          index]['pr_qty']),
-                                                  qtycart: int.parse(
-                                                      provider.exclusive[
-                                                          index]['sc_qty']),
-                                                  data: provider
-                                                      .exclusive[index],
-                                                ),
-                                              ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    const CardGridView2(),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    provider.Pagebanner4==""?const CircularProgressIndicator():
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: allsize * 0.005),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 5.0,
-                            offset: Offset(0, 2),
                           ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(2),
-                        child: Image.network(
-                          provider.Pagebanner4,
-                          // Use the 'image' field from your data
-                          fit: BoxFit.fill,
-                          loadingBuilder: (BuildContext context,
-                              Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                        ),
+                        //Recommended FOr You
+                        Container(
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              // height: size.height * 0.48,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Recommended For You",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: allsize * 0.0143,
+                                              fontWeight: FontWeight.w400)),
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return  ViewMoreCustomDialugue();
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          height: size.height * 0.04,
+                                          width: size.width * 0.4,
+                                          color:const Color(0xffe0e0e0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: Text(
+                                              "View More",
+                                              style: TextStyle(
+                                                  fontSize: allsize * 0.0143),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.43,
+                                    child:HomeScrrenHorizantalList(data: provider.recommendedforyou, scrollController:forYouScrollController, pageScrollController: forYouPageController,),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        //Page Banner 3
+                        provider.Pagebanner3.isEmpty?const CircularProgressIndicator():
+                        InkWell(
+                          onTap: (){
+                            provider. updatesearchselextion(provider.Pagebanner3['target_page_parameters']['q']);
+                            final streamedDataProvider =
+                            Provider.of<StreamedDataProvider>(context, listen: false);
+                            ApiRequests().SearchApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'],provider.Pagebanner3['target_page_parameters']['q'],"","10","",provider.Pagebanner3['target_page_parameters']['os'],"","","","", "","", "", "", "", "","",false,"", context);
+                            Get.to(const SearchPage());
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 5.0,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(2),
+                              child: Image.network(
+                                provider.Pagebanner3['image_url'],
+                                // Use the 'image' field from your data
+                                fit: BoxFit.fill,
+                                width: size.width, // Adjust the width as needed
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        //Recommended Pre Order
+                        Container(
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              // height: size.height * 0.48,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Recommended Pre-Order",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: allsize * 0.0143,
+                                              fontWeight: FontWeight.w400)),
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return  ViewMoreCustomDialugue();
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          height: size.height * 0.04,
+                                          width: size.width * 0.4,
+                                          color: const Color(0xffe0e0e0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: Text(
+                                              "View More",
+                                              style: TextStyle(
+                                                  fontSize: allsize * 0.0143),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                  SizedBox(
+                                      height: size.height * 0.43,
+                                      child:HomeScrrenHorizantalList(data: provider.recomendedpreorder, scrollController: preOrderScrollController, pageScrollController: preOrderPageController,)
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        //Recommended Back Issue
+                        Container(
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              // height: size.height * 0.48,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Recommended Back Issue",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: allsize * 0.0143,
+                                              fontWeight: FontWeight.w400)),
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return  ViewMoreCustomDialugue();
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          height: size.height * 0.04,
+                                          width: size.width * 0.4,
+                                          color:const Color(0xffe0e0e0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: Text(
+                                              "View More",
+                                              style: TextStyle(
+                                                  fontSize: allsize * 0.0143),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.43,
+                                    child:HomeScrrenHorizantalList(data: provider.recomendedbackissue, scrollController: backIssueScrollController, pageScrollController: backIssuePageController,),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        //Best Seller
+                        Container(
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              // height: size.height * 0.48,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Best Seller",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: allsize * 0.0143,
+                                              fontWeight: FontWeight.w400)),
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return  ViewMoreCustomDialugue();
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          height: size.height * 0.04,
+                                          width: size.width * 0.4,
+                                          color: const Color(0xffe0e0e0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: Text(
+                                              "View More",
+                                              style: TextStyle(
+                                                  fontSize: allsize * 0.0143),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.43,
+                                    child:HomeScrrenHorizantalList(data: provider.bestSeller, scrollController: bestSellerScrollController, pageScrollController: bestSellerPageController,),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        //Exclusive
+                        Container(
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              // height: size.height * 0.5,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          'Featured Midtown Comics\n'
+                                              'Signed/Exclusive',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: allsize * 0.0143,
+                                              fontWeight: FontWeight.w400)),
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return  ViewMoreCustomDialugue();
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          height: size.height * 0.04,
+                                          width: size.width * 0.4,
+                                          color:const Color(0xffe0e0e0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: Text(
+                                              "View More",
+                                              style: TextStyle(
+                                                  fontSize: allsize * 0.0143),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.43,
+                                    child: HomeScrrenHorizantalList(data: provider.exclusive, scrollController: exclusiveScrollController, pageScrollController: exclusivePageController,),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        //ridView 02
+                        const CardGridView2(),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        //Page Banner 04
+                        provider.Pagebanner4.isEmpty?const CircularProgressIndicator():
+                        InkWell(
+                          onTap: (){
+                            provider. updatesearchselextion(provider.Pagebanner4['target_page_parameters']['q']);
+                            final streamedDataProvider =
+                            Provider.of<StreamedDataProvider>(context, listen: false);
+                            ApiRequests().SearchApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'],provider.Pagebanner4['target_page_parameters']['q'],"","10","","","","","","", "","", "", "", "", "","",false,"", context);
+                            Get.to(const SearchPage());
+                          },
+                          child: Container(
+                            margin:
+                            EdgeInsets.symmetric(horizontal: allsize * 0.005),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 5.0,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(2),
+                              child: Image.network(
+                                provider.Pagebanner4['image_url'],
+                                // Use the 'image' field from your data
+                                fit: BoxFit.fill,
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  }
+                                },
+                                errorBuilder: (context, exception, stackTrace) {
+                                  return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.cover,);
+                                },
+                                // width: size.width, // Adjust the width as needed
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        //Page Banner 05
+                        provider.Pagebanner5.isEmpty?const CircularProgressIndicator():
+                        InkWell(
+                          onTap: (){
+                            provider. updatesearchselextion(provider.Pagebanner5['target_page_parameters']['q']);
+                            final streamedDataProvider =
+                            Provider.of<StreamedDataProvider>(context, listen: false);
+                            ApiRequests().SearchApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'],provider.Pagebanner5['target_page_parameters']['q'],"","10","","","","","","", "","", "", "", "", "","",false,"", context);
+                            Get.to(const SearchPage());
+                          },
+                          child: Container(
+                            margin:
+                            EdgeInsets.symmetric(horizontal: allsize * 0.005),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 5.0,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(2),
+                              child: Image.network(
+                                provider.Pagebanner5['image_url'],
+                                // Use the 'image' field from your data
+                                fit: BoxFit.fill,
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  }
+                                },
+                                errorBuilder: (context, exception, stackTrace) {
+                                  return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.cover,);
+                                },
+
+                                width: size.width, // Adjust the width as needed
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        //Page Banner 06
+                        provider.Pagebanner6.isEmpty?const CircularProgressIndicator():
+                        InkWell(
+                          onTap: ()async{
+                            if (!await launchUrl(Uri.parse(provider.Pagebanner6['external_url']))) {
+                            throw Exception('Could not launch ${Uri.parse(provider.Pagebanner6['external_url']
+                            )}');
                             }
                           },
-                          // width: size.width, // Adjust the width as needed
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    provider.Pagebanner5==""?const CircularProgressIndicator():
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: allsize * 0.005),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 5.0,
-                            offset: Offset(0, 2),
+                          child: Container(
+                            margin:
+                            EdgeInsets.symmetric(horizontal: allsize * 0.005),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 5.0,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(2),
+                              child: Image.network(
+                                provider.Pagebanner6['image_url'],
+                                // Use the 'image' field from your data
+                                fit: BoxFit.fill,
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  }
+                                },
+                                errorBuilder: (context, exception, stackTrace) {
+                                  return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.cover,);
+                                },
+                                width: size.width, // Adjust the width as needed
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(2),
-                        child: Image.network(
-                          provider.Pagebanner5,
-                          // Use the 'image' field from your data
-                          fit: BoxFit.fill,
-                          loadingBuilder: (BuildContext context,
-                              Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                          },
-                          width: size.width, // Adjust the width as needed
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    provider.Pagebanner6==""?const CircularProgressIndicator():
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: allsize * 0.005),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 5.0,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(2),
-                        child: Image.network(
-                          provider.Pagebanner6,
-                          // Use the 'image' field from your data
-                          fit: BoxFit.fill,
-                          loadingBuilder: (BuildContext context,
-                              Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                          },
-                          width: size.width, // Adjust the width as needed
+                        SizedBox(
+                          height: size.height * 0.01,
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    const SubcribeWidget(),
-                    SizedBox(
-                      height: size.height * 0.02,
-                    ),
-                    const Footer(),
-                    SizedBox(
-                      height: size.height * 0.05,
+                        //News Letter Subcribe Widget
+                        const SubcribeWidget(),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        //Footer Widget
+                        const Footer(),
+                        SizedBox(
+                          height: size.height * 0.05,
+                        )
+                      ],
                     )
+                    //Home Screen Banner
+
                   ],
                 ),
               ),
+              //Header Widget
               Header_Widget(
                 ontap: () => scaffoldKey.currentState!.openDrawer(),
                 searchcontroller:searchcontroller,

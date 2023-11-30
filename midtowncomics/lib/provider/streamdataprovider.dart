@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:midtowncomics/screen/weeklyreleasepage.dart';
+import 'package:get/get.dart';
+import 'package:midtowncomics/screen/homescreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/apirequest.dart';
 
 class StreamedDataProvider extends ChangeNotifier {
   bool showsearchlist = false;
-
   searchlist(bool show) {
     showsearchlist = show;
     notifyListeners();
@@ -61,10 +62,11 @@ class StreamedDataProvider extends ChangeNotifier {
   Map<String, dynamic> _streamedData = {};
 
   Map<String, dynamic> get streamedData => _streamedData;
-  String Pagebanner3="";
-  String Pagebanner4="";
-  String Pagebanner5="";
-  String Pagebanner6="";
+  List<dynamic>headerList=[];
+  Map<String,dynamic> Pagebanner3={};
+  Map<String,dynamic> Pagebanner4={};
+  Map<String,dynamic> Pagebanner5={};
+  Map<String,dynamic> Pagebanner6={};
   List<dynamic>slider1=[];
   List<dynamic> crossoverlist = [];
   List<dynamic> recommendedforyou = [];
@@ -88,6 +90,7 @@ class StreamedDataProvider extends ChangeNotifier {
   Map<String,dynamic>featurenewrelease4={};
   void updateData(Map<String, dynamic> data) {
     _streamedData = data;
+    headerList=data['DATA']['headerList'];
     crossoverlist = _streamedData['DATA']['sCrossOversList'];
     recommendedforyou =
         _streamedData['DATA']['recommendedForYouSection']['productList'];
@@ -99,16 +102,15 @@ class StreamedDataProvider extends ChangeNotifier {
         _streamedData['DATA']['recommendedBISection']['productList'];
     bestSeller = _streamedData['DATA']['bestSellersSection']['productList'];
     exclusive = _streamedData['DATA']['mtExlusiveSection']['productList'];
-    Pagebanner3=_streamedData['DATA']['pageBanner3']['image_url'];
-    Pagebanner4=_streamedData['DATA']['pageBanner4']['image_url'];
-    Pagebanner5=_streamedData['DATA']['pageBanner5']['image_url'];
-    Pagebanner6=_streamedData['DATA']['pageBanner6']['image_url'];
+    Pagebanner3=_streamedData['DATA']['pageBanner3'];
+    Pagebanner4=_streamedData['DATA']['pageBanner4'];
+    Pagebanner5=_streamedData['DATA']['pageBanner5'];
+    Pagebanner6=_streamedData['DATA']['pageBanner6'];
     slider1=_streamedData['DATA']['sliderList'];
     Pagebannerlist1=_streamedData['DATA']['pageBanner1List'];
     Pagebannerlist2=_streamedData['DATA']['pageBanner2List'];
     DODSummary=_streamedData['DATA']['DODSummary'];
     shoppersummary=_streamedData['DATA']['shopperSummary'];
-    print(_streamedData['DATA']['featureNewAdditionSection1']);
     weeklyReleasegrid=_streamedData['DATA']['weeklyReleaseSummary'];
     pulllistSummary=_streamedData['DATA']['pullListSummary'];
     preorderSummary=_streamedData['DATA']['preOrdersSummary'];
@@ -118,6 +120,7 @@ class StreamedDataProvider extends ChangeNotifier {
     featurenewrelease3=_streamedData['DATA']['featureNewAdditionSection3'];
     featurenewrelease4=_streamedData['DATA']['featureNewAdditionSection4'];
     featurenewreleasegrid=_streamedData['DATA']['featureNewAdditionSection1'];
+    featurenewrelease1=_streamedData['DATA']['featureNewAdditionSection1'];
     notifyListeners();
   }
 
@@ -155,7 +158,7 @@ class StreamedDataProvider extends ChangeNotifier {
 
   void updateProductDetail(Map<String, dynamic> data) {
     _productdetail = data;
-    writer = _productdetail['DATA']['writerList'];
+    writer = _productdetail['DATA']['writerList']??[];
     artist = _productdetail['DATA']['artistList'];
     recentlyview = _productdetail['DATA']['recentlyViewList'];
     multiplecoverlist = _productdetail['DATA']['multipleCoversList'];
@@ -196,9 +199,16 @@ class StreamedDataProvider extends ChangeNotifier {
   }
 
   //Change Status
-  void updatedetail(String data, sc_qty) {
+  void updatedetail(String data, scQty) {
     detail['pr_id'] = data;
-    detail['sc_qty'] = sc_qty.toString();
+    detail['sc_qty'] = scQty.toString();
+    notifyListeners();
+  }
+
+  //Update for Wish List
+  void updateWishListDetail()
+  {
+    detail['addedtowl']="1";
     notifyListeners();
   }
 
@@ -216,11 +226,12 @@ class StreamedDataProvider extends ChangeNotifier {
   }
 
   //Update Recomended For You
-  void updateInreco(String productId, String inCartValue, sc_qty) {
+  void updateInreco(String productId, String inCartValue, scQty,addedtowl) {
     for (var product in recommendedforyou) {
       if (product["pr_id"] == productId) {
         product["in_cart"] = inCartValue;
-        product['sc_qty'] = sc_qty;
+        product['sc_qty'] = scQty;
+        product['addedtowl']=addedtowl;
         notifyListeners();
         break; // Exit the loop once the product is found and updated
       }
@@ -228,11 +239,12 @@ class StreamedDataProvider extends ChangeNotifier {
   }
 
   //Feature New Release
-  void updatefeature(String productId, String inCartValue, sc_qty) {
+  void updatefeature(String productId, String inCartValue, scQty,addedtowl) {
     for (var product in featurenewrelease) {
       if (product["pr_id"] == productId) {
         product["in_cart"] = inCartValue;
-        product['sc_qty'] = sc_qty;
+        product['sc_qty'] = scQty;
+        product['addedtowl']=addedtowl;
         notifyListeners();
         break; // Exit the loop once the product is found and updated
       }
@@ -240,11 +252,12 @@ class StreamedDataProvider extends ChangeNotifier {
   }
 
   //Recomended Pre Order
-  void updatepreorder(String productId, String inCartValue, sc_qty) {
+  void updatepreorder(String productId, String inCartValue, scQty,addedtowl) {
     for (var product in recomendedpreorder) {
       if (product["pr_id"] == productId) {
         product["in_cart"] = inCartValue;
-        product['sc_qty'] = sc_qty;
+        product['sc_qty'] = scQty;
+        product['addedtowl']=addedtowl;
         notifyListeners();
         break; // Exit the loop once the product is found and updated
       }
@@ -252,11 +265,12 @@ class StreamedDataProvider extends ChangeNotifier {
   }
 
   //Recomended Back Issue
-  void updateback(String productId, String inCartValue, sc_qty) {
+  void updateback(String productId, String inCartValue, scQty,addedtowl) {
     for (var product in recomendedbackissue) {
       if (product["pr_id"] == productId) {
         product["in_cart"] = inCartValue;
-        product['sc_qty'] = sc_qty;
+        product['sc_qty'] = scQty;
+        product['addedtowl']=addedtowl;
         notifyListeners();
         break; // Exit the loop once the product is found and updated
       }
@@ -264,11 +278,12 @@ class StreamedDataProvider extends ChangeNotifier {
   }
 
   //Best Seller
-  void updatebest(String productId, String inCartValue, sc_qty) {
+  void updatebest(String productId, String inCartValue, scQty,addedtowl) {
     for (var product in bestSeller) {
       if (product["pr_id"] == productId) {
         product["in_cart"] = inCartValue;
-        product['sc_qty'] = sc_qty;
+        product['sc_qty'] = scQty;
+        product['addedtowl']=addedtowl;
         notifyListeners();
         break; // Exit the loop once the product is found and updated
       }
@@ -276,11 +291,12 @@ class StreamedDataProvider extends ChangeNotifier {
   }
 
   //Exclusive
-  void updateexclusive(String productId, String inCartValue, sc_qty) {
+  void updateexclusive(String productId, String inCartValue, scQty,addedtowl) {
     for (var product in exclusive) {
       if (product["pr_id"] == productId) {
         product["in_cart"] = inCartValue;
-        product['sc_qty'] = sc_qty;
+        product['sc_qty'] = scQty;
+        product['addedtowl']=addedtowl;
         notifyListeners();
         break; // Exit the loop once the product is found and updated
       }
@@ -288,22 +304,43 @@ class StreamedDataProvider extends ChangeNotifier {
   }
 
   //Call All Methods
-  void call(String productId, String inCartValue, sc_qty) {
-    updateInreco(productId, inCartValue, sc_qty);
-    updatefeature(productId, inCartValue, sc_qty);
-    updatepreorder(productId, inCartValue, sc_qty);
-    updateback(productId, inCartValue, sc_qty);
-    updatebest(productId, inCartValue, sc_qty);
-    updateexclusive(productId, inCartValue, sc_qty);
+  void call(String productId, String inCartValue, scQty,addedtowl) {
+    updateInreco(productId, inCartValue, scQty,addedtowl);
+    updatefeature(productId, inCartValue, scQty,addedtowl);
+    updatepreorder(productId, inCartValue, scQty,addedtowl);
+    updateback(productId, inCartValue, scQty,addedtowl);
+    updatebest(productId, inCartValue, scQty,addedtowl);
+    updateexclusive(productId, inCartValue, scQty,addedtowl);
   }
 
   //Login Data Management
   Map<String, dynamic> loindata = {};
   Map<String, dynamic> loginuserdata = {};
 
-  updateLogingData(Map<String, dynamic> data) async {
+  updateLogingData(Map<String, dynamic> data,bool remember) async {
     loindata = data;
-    loginuserdata = data['DATA']['shDetail'];
+    if(remember==true)
+      {
+        loginuserdata={
+          "sh_id":data['DATA']['shDetail']['sh_id'],
+          "sh_lgid":data['DATA']['shDetail']['sh_lgid'],
+          "sh_fname":data['DATA']['shDetail']['sh_fname'],
+          "sh_lname": data['DATA']['shDetail']['sh_lname']
+        };
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('sh_id', data['DATA']['shDetail']['sh_id']);
+        await prefs.setString('sh_lgid', data['DATA']['shDetail']['sh_lgid']);
+        await prefs.setString('sh_fname', data['DATA']['shDetail']['sh_fname']);
+        await prefs.setString('sh_lname', data['DATA']['shDetail']['sh_lname']);
+      }
+    else{
+      loginuserdata={
+        "sh_id":data['DATA']['shDetail']['sh_id'],
+        "sh_lgid":data['DATA']['shDetail']['sh_lgid'],
+        "sh_fname":data['DATA']['shDetail']['sh_fname'],
+        "sh_lname": data['DATA']['shDetail']['sh_lname']
+      };
+    }
     Map<String, dynamic> datacart = await ApiRequests()
         .loadcartdata(loginuserdata.isEmpty ? "" : loginuserdata['sh_id']);
     updateCartData(datacart);
@@ -315,6 +352,27 @@ class StreamedDataProvider extends ChangeNotifier {
     updateData(datahome);
     notifyListeners();
   }
+
+  updateSharedPrefrenceData(String sh_id,email,f_name,l_name)
+  async{
+    loginuserdata={
+      "sh_id":sh_id,
+      "sh_lgid":email,
+      "sh_fname":f_name,
+      "sh_lname": l_name
+    };
+    Map<String, dynamic> datacart = await ApiRequests()
+        .loadcartdata(loginuserdata.isEmpty ? "" : loginuserdata['sh_id']);
+    updateCartData(datacart);
+    Map<String, dynamic> dataPullList = await ApiRequests()
+        .loadPullList(loginuserdata.isEmpty ? "" : loginuserdata['sh_id']);
+    updatePullListData(dataPullList);
+    Map<String, dynamic> datahome = await ApiRequests()
+        .fetchData1(loginuserdata.isEmpty ? "" : loginuserdata['sh_id']);
+    updateData(datahome);
+    Get.off(const HomeScreen());
+    notifyListeners();
+}
 
   removelogindata() {
     loindata = {};
@@ -372,13 +430,12 @@ class StreamedDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updatereturnproduct(String productId, String inCartValue, sc_qty) {
-    print(productId);
+  void updatereturnproduct(String productId, String inCartValue, scQty,addedtowl) {
     for (var product in returnproduct) {
       if (product["pr_id"] == productId) {
         product["in_cart"] = inCartValue;
-        product['sc_qty'] = sc_qty;
-        print(returnproduct);
+        product['sc_qty'] = scQty;
+        product['addedtowl']=addedtowl;
         break; // Exit the loop once the product is found and updated
       }
     }

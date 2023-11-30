@@ -3,8 +3,10 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
 import 'package:midtowncomics/export.dart';
-
+import 'package:midtowncomics/widget/dialagueBox/customdialugue3.dart';
 import '../screen/homescreen.dart';
+import 'dialagueBox/customdialaugue2.dart';
+import 'dialagueBox/customdialouge1.dart';
 
 class Header_Widget extends StatefulWidget {
   TextEditingController?searchcontroller;

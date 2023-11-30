@@ -2,6 +2,7 @@ import 'package:midtowncomics/export.dart';
 import 'package:midtowncomics/provider/creditcardprovider.dart';
 import 'package:midtowncomics/widget/addCard.dart';
 import 'package:midtowncomics/widget/editcart.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class MyCreditCard extends StatefulWidget {
   const MyCreditCard({super.key});
@@ -12,6 +13,7 @@ class MyCreditCard extends StatefulWidget {
 
 class _MyCreditCardState extends State<MyCreditCard> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController searchController=TextEditingController();
 
   @override
   void initState() {
@@ -41,6 +43,7 @@ class _MyCreditCardState extends State<MyCreditCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: size.height * 0.165),
+                  SearchList(searchcontroller: searchController),
                   Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -114,6 +117,7 @@ class _MyCreditCardState extends State<MyCreditCard> {
               );
             })),
             Header_Widget(
+              searchcontroller: searchController,
               ontap: () => scaffoldKey.currentState!.openDrawer(),
             )
           ],

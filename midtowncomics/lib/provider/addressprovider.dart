@@ -17,7 +17,6 @@ class AddressProvider extends ChangeNotifier {
   LoadAddressData(Map<String,dynamic>data)
   {
     Addressalldata=data;
-    print(data['DATA']['addressList']);
     address=data['DATA']['addressList'];
     notifyListeners();
   }

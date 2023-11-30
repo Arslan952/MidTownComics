@@ -1,5 +1,6 @@
 
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class PrivacyPolicy extends StatefulWidget {
   const PrivacyPolicy({super.key});
@@ -10,7 +11,7 @@ class PrivacyPolicy extends StatefulWidget {
 
 class _PrivacyPolicyState extends State<PrivacyPolicy> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -25,6 +26,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: size.height * 0.16),
+                SearchList(searchcontroller: searchController),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
@@ -108,7 +110,9 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                 )
               ],
             )),
-            Header_Widget(ontap: () => scaffoldKey.currentState!.openDrawer())
+            Header_Widget(
+              searchcontroller: searchController,
+                ontap: () => scaffoldKey.currentState!.openDrawer())
           ],
         ),
       ),

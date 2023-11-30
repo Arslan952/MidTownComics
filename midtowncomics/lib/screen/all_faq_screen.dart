@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class AllFaqScreen extends StatefulWidget {
   const AllFaqScreen({super.key});
@@ -50,7 +51,7 @@ class _AllFaqScreenState extends State<AllFaqScreen> {
   bool defaultshipping = true;
   bool defaultbilling = true;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -65,6 +66,7 @@ class _AllFaqScreenState extends State<AllFaqScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: size.height * 0.17),
+                SearchList(searchcontroller: searchController),
                 const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
@@ -96,6 +98,7 @@ class _AllFaqScreenState extends State<AllFaqScreen> {
               ],
             )),
             Header_Widget(
+              searchcontroller: searchController,
               ontap: () => scaffoldKey.currentState!.openDrawer(),
             )
           ],

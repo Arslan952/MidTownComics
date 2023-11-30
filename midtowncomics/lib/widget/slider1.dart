@@ -1,6 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/screen/ProductDetailPage.dart';
+import 'package:midtowncomics/screen/landingPage.dart';
 
 class Slider1 extends StatefulWidget {
   const Slider1({super.key});
@@ -35,7 +37,8 @@ class _Slider1State extends State<Slider1> {
           {
             _precacheImages(provider.slider1);
           }
-        return SizedBox(
+        return Container(
+          color: Colors.white,
           // height: size.height * 0.34,
           child:
               provider.slider1.isEmpty?const Center(child: CircularProgressIndicator()):
@@ -49,32 +52,58 @@ class _Slider1State extends State<Slider1> {
                         int pageViewIndex) {
                       // Access the data from your list using itemIndex
                       final item = provider.slider1[itemIndex];
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: size.height * 0.25,
-                            width: double.infinity,
-                            child: Image.network(
-                                // Use the precached image instead of loading the image from the network directly
-                                item['img_url'],
-                                fit: BoxFit.fitHeight, loadingBuilder:
-                                    (BuildContext context, Widget child,
-                                        ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            }),
-                          ),
-                        ],
+                      return InkWell(
+                        onTap: ()async{
+                         if(item['url_type']=="P")
+                           {
+                             provider.chanddetai({});
+                             Get.to(ProductDetialPage(productid:item['search_object']['pr_id']));
+                           }
+                         else if(item['url_type']=="S")
+                           {
+                             provider. updatesearchselextion(item['search_object']['q']);
+                             final streamedDataProvider =
+                             Provider.of<StreamedDataProvider>(context, listen: false);
+                              ApiRequests().SearchApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'], item['search_object']['q'],"","10","","","","","","", "","", "", "", "", "","",false,"", context);
+                             Get.to(const SearchPage());
+                           }
+                         else if(item['url_type']=="L")
+                           {
+                             Get.to(LandingPage());
+                           }
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: size.height * 0.25,
+                              width: double.infinity,
+                              child: Image.network(
+                                  // Use the precached image instead of loading the image from the network directly
+                                  item['img_url'],
+                                  fit: BoxFit.fitHeight, loadingBuilder:
+                                      (BuildContext context, Widget child,
+                                          ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+                              },
+                                errorBuilder: (context, exception, stackTrace) {
+                                  return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.cover,);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                     },
                     options: CarouselOptions(
                       autoPlayInterval: const Duration(seconds: 5),
                       autoPlay: true,
+                      enableInfiniteScroll: false,
                       height: size.height * 0.25,
                       viewportFraction: 1.0,
                       onPageChanged: (index, reason) {

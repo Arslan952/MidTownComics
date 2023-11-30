@@ -49,6 +49,11 @@ dependencies:
   html: ^0.15.4
   shared_preferences: ^2.2.2
   fluttertoast: ^8.1.1
+  url_launcher: ^6.2.1
+  simple_html_css: ^4.0.0
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 class Magazines extends StatefulWidget {
   const Magazines({super.key});
@@ -12,7 +13,7 @@ class _MagazinesState extends State<Magazines> {
   int index = 1;
   String dropdownselected = "";
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextEditingController searchController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -29,6 +30,7 @@ class _MagazinesState extends State<Magazines> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: size.height * 0.18),
+                    SearchList(searchcontroller: searchController),
                     Material(
                       elevation: 3,
                       child: SizedBox(
@@ -128,7 +130,9 @@ class _MagazinesState extends State<Magazines> {
                     )
                   ],
                 )),
-            Header_Widget(ontap: () => scaffoldKey.currentState!.openDrawer())
+            Header_Widget(
+              searchcontroller: searchController,
+                ontap: () => scaffoldKey.currentState!.openDrawer())
           ],
         ),
       ),

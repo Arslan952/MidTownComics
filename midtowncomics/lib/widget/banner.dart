@@ -8,18 +8,38 @@ class HomeScreenBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Consumer<StreamedDataProvider>(builder: (context, provider, child) {
-      return SizedBox(
+      String imagedata= "";
+
+      if(provider.headerList.isEmpty)
+        {
+          imagedata="";
+        }
+      else{
+        imagedata=provider.headerList[0]['img_url'];
+      }
+
+      return
+        provider.streamedData.isEmpty || imagedata==" "
+            ?
+        Container()
+        // const Center(
+        //   child: CircularProgressIndicator(),
+        // )
+            :
+        SizedBox(
         height: size.height * 0.36,
         width: double.infinity,
-        child: provider.streamedData.isEmpty
-            ? const Center(
-          child: CircularProgressIndicator(),
-        )
+        child: provider.streamedData.isEmpty || imagedata==" "
+            ?
+            Container()
+        // const Center(
+        //   child: CircularProgressIndicator(),
+        // )
             :
         Image.network(
-          provider.streamedData['DATA']['headerList'][0]['img_url'],
+         imagedata,
           fit: BoxFit.fill,
-          loadingBuilder:  (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+          loadingBuilder:  ( context, child,  loadingProgress) {
             if(loadingProgress==null)
             {
               return child;
@@ -27,6 +47,9 @@ class HomeScreenBanner extends StatelessWidget {
             else{
               return const Center(child: CircularProgressIndicator());
             }
+          },
+          errorBuilder: (context, exception, stackTrace) {
+            return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.cover,);
           },
         ),
       );
