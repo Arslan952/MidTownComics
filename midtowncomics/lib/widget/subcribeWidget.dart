@@ -37,7 +37,7 @@ class SubcribeWidget extends StatelessWidget {
               ),
                   Text(
                 "Subscribe To Our NewsLetter For Special Saving And Offers!",
-                style: TextStyle(color: Colors.grey[700],fontSize: allsize*0.0124,fontWeight: FontWeight.w500),
+                style: TextStyle(color: Colors.grey[700],fontSize: allsize*0.0115,fontWeight:FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: size.height*0.007,),

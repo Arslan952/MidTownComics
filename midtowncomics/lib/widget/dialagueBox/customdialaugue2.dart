@@ -25,30 +25,28 @@ class CustomDialougue2 extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: Container(
-                  width: double.infinity,
-                  color: Colors.grey[200],
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Your Cart ($totalcart)",
-                          style: TextStyle(fontSize: allsize * 0.011),
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(
-                              CupertinoIcons.clear,
-                              color: Colors.black,
-                              size: allsize * 0.02,
-                            ))
-                      ],
-                    ),
+              Container(
+                width: double.infinity,
+                color: Colors.grey[200],
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Your Cart ($totalcart)",
+                        style: TextStyle(fontSize: allsize * 0.011),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            CupertinoIcons.clear,
+                            color: Colors.black,
+                            size: allsize * 0.02,
+                          ))
+                    ],
                   ),
                 ),
               ),
@@ -65,7 +63,7 @@ class CustomDialougue2 extends StatelessWidget {
                       Text(
                         "\$$totalprice",
                         style: TextStyle(
-                            color: Colors.grey[600], fontSize: allsize * 0.011),
+                            color: Colors.grey[600], fontSize: allsize * 0.011,fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: size.height * 0.1,
@@ -90,9 +88,9 @@ class CustomDialougue2 extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "89",
+                        "\$89",
                         style: TextStyle(
-                            color: Colors.grey[600], fontSize: allsize * 0.011),
+                            color: Colors.grey[600], fontSize: allsize * 0.011,fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -101,7 +99,7 @@ class CustomDialougue2 extends StatelessWidget {
               SizedBox(
                 height: size.height * 0.625,
                 child: Padding(
-                    padding: EdgeInsets.all(size.height * 0.01),
+                    padding: EdgeInsets.symmetric(horizontal: size.width*0.03),
                     child: ListView.builder(
                         itemCount: cartdatalist.length,
                         itemBuilder: (context, index) {
@@ -121,27 +119,25 @@ class CustomDialougue2 extends StatelessWidget {
                                       SizedBox(
                                         height: size.height * 0.15,
                                         width: size.width * 0.20,
-                                        child: Flexible(
-                                          child: Image.network(
-                                            "https://www.midtowncomics.com/images/PRODUCT/FUL/${cartdatalist[index]['pr_id']}_ful.jpg",
-                                            loadingBuilder: (BuildContext context,
-                                                Widget child,
-                                                ImageChunkEvent?
-                                                    loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              } else {
-                                                return const Center(
-                                                    child:
-                                                        CircularProgressIndicator());
-                                              }
-                                            },
-                                            errorBuilder: (context, exception, stackTrace) {
-                                              return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
-                                            },
-                                            fit: BoxFit.contain,
-                                            // fit: BoxFit.fill,
-                                          ),
+                                        child: Image.network(
+                                          "https://www.midtowncomics.com/images/PRODUCT/FUL/${cartdatalist[index]['pr_id']}_ful.jpg",
+                                          loadingBuilder: (BuildContext context,
+                                              Widget child,
+                                              ImageChunkEvent?
+                                                  loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child;
+                                            } else {
+                                              return const Center(
+                                                  child:
+                                                      CircularProgressIndicator());
+                                            }
+                                          },
+                                          errorBuilder: (context, exception, stackTrace) {
+                                            return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
+                                          },
+                                          fit: BoxFit.contain,
+                                          // fit: BoxFit.fill,
                                         ),
                                       ),
                                       SizedBox(

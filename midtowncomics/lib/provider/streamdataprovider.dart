@@ -227,12 +227,17 @@ class StreamedDataProvider extends ChangeNotifier {
 
   //Update Recomended For You
   void updateInreco(String productId, String inCartValue, scQty,addedtowl) {
+    print('InCartValue');
+    print(inCartValue);
     for (var product in recommendedforyou) {
+      print(productId);
       if (product["pr_id"] == productId) {
+        print("pr_id is availible");
         product["in_cart"] = inCartValue;
         product['sc_qty'] = scQty;
         product['addedtowl']=addedtowl;
         notifyListeners();
+        print(product['in_cart']);
         break; // Exit the loop once the product is found and updated
       }
     }
@@ -305,6 +310,8 @@ class StreamedDataProvider extends ChangeNotifier {
 
   //Call All Methods
   void call(String productId, String inCartValue, scQty,addedtowl) {
+    print("-------InCart Value------");
+    print(inCartValue);
     updateInreco(productId, inCartValue, scQty,addedtowl);
     updatefeature(productId, inCartValue, scQty,addedtowl);
     updatepreorder(productId, inCartValue, scQty,addedtowl);

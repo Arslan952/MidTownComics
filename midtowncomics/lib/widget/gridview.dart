@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:midtowncomics/export.dart';
+import 'package:midtowncomics/screen/dealoftheday.dart';
 import 'package:midtowncomics/screen/weeklyreleasepage.dart';
 
 import 'dialagueBox/CustomProductDialugue.dart';
@@ -49,8 +50,8 @@ class CardGridView extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
-                      blurRadius: 0.1,
-                      offset: Offset(0, 2),
+                      blurRadius: 1,
+                      offset: Offset(1, 1),
                     ),
                   ],
                 ),
@@ -142,8 +143,8 @@ class CardGridView extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
-                      blurRadius: 0.1,
-                      offset: Offset(0, 2),
+                      blurRadius: 1,
+                      offset: Offset(1, 1),
                     ),
                   ],
                 ),
@@ -239,8 +240,8 @@ class CardGridView extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
-                      blurRadius: 0.1,
-                      offset: Offset(0, 2),
+                      blurRadius: 1,
+                      offset: Offset(1, 1),
                     ),
                   ],
                 ),
@@ -321,8 +322,8 @@ class CardGridView extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
-                      blurRadius: 0.1,
-                      offset: Offset(0, 2),
+                      blurRadius: 1,
+                      offset: Offset(1, 1),
                     ),
                   ],
                 ),
@@ -402,8 +403,8 @@ class CardGridView extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
-                      blurRadius: 5.0,
-                      offset: Offset(0, 2),
+                      blurRadius: 1,
+                      offset: Offset(1, 1),
                     ),
                   ],
                 ),
@@ -467,23 +468,24 @@ class CardGridView extends StatelessWidget {
             //Deals of the Day
             InkWell(
               onTap: (){
-                provider.chanddetai({});
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CustomPrdoductDiallugue(
-                      productid:provider.streamedData['DATA']['DODSummary']['pr_id'],
-                    );
-                  },
-                );
+                // provider.chanddetai({});
+                // showDialog(
+                //   context: context,
+                //   builder: (BuildContext context) {
+                //     return CustomPrdoductDiallugue(
+                //       productid:provider.streamedData['DATA']['DODSummary']['pr_id'],
+                //     );
+                //   },
+                // );
+                Get.to(const DealOfTheDay());
               },
               child: Container(
                 decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
-                      blurRadius: 5.0,
-                      offset: Offset(0, 2),
+                      blurRadius: 1,
+                      offset: Offset(1, 1),
                     ),
                   ],
                 ),

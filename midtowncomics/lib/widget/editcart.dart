@@ -4,7 +4,7 @@ import 'package:midtowncomics/provider/creditcardprovider.dart';
 
 class EditCard extends StatefulWidget {
   Map<String,dynamic>data;
-   EditCard({super.key,required this.data});
+  EditCard({super.key,required this.data});
 
   @override
   State<EditCard> createState() => _EditCardState();
@@ -83,7 +83,7 @@ class _EditCardState extends State<EditCard> {
                   child: SizedBox(
                     height: size.height*1,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(allsize*0.015),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -328,7 +328,7 @@ class _EditCardState extends State<EditCard> {
                                 child: Container(
                                   height:
                                   size.height * 0.045,
-                                  width: size.width*0.35,
+                                  width: size.width*0.3,
                                   decoration: BoxDecoration(
                                       color:
                                       Colors.grey[300]),

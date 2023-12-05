@@ -180,72 +180,13 @@ class _PreViewListViewState extends State<PreViewListView> {
                             )
                           ],
                         ),
-                        // group.isNotEmpty||size.isNotEmpty?
-                        // InkWell(
-                        //   onTap: () {
-                        //     showDialog(
-                        //       context: context,
-                        //       builder: (BuildContext context) {
-                        //         return Dialog(
-                        //           insetPadding: EdgeInsets.symmetric(
-                        //               horizontal: widget.allsize * 0.016,
-                        //               vertical: widget.allsize * 0.04),
-                        //           child: SingleChildScrollView(
-                        //             child: Column(
-                        //               mainAxisSize: MainAxisSize.min,
-                        //               children: group
-                        //                   .map<Widget>((dynamic item) {
-                        //                 return ListTile(
-                        //                   title: Text(
-                        //                       item['condition_name']),
-                        //                   onTap: () async {
-                        //                     debugPrint(item['pr_id']);
-                        //                     provider
-                        //                         .updatereturnproductforgrade(
-                        //                         provider.returnproduct[
-                        //                         widget.index]
-                        //                         ['pr_id'],
-                        //                         item['pr_id'],
-                        //                         item['pr_price'],
-                        //                         item['pr_lprice'],
-                        //                         item['pr_advord'],
-                        //                         item['pr_qty']);
-                        //                     setState(() {
-                        //                       groupvalue =
-                        //                       item['condition_name'];
-                        //                     });
-                        //                     Navigator.of(context).pop();
-                        //                   },
-                        //                 );
-                        //               }).toList(),
-                        //             ),
-                        //           ),
-                        //         );
-                        //       },
-                        //     );
-                        //   },
-                        //   child: Container(
-                        //     height: widget.size.height * 0.04,
-                        //     decoration:
-                        //     BoxDecoration(color: Colors.grey[300]),
-                        //     padding: const EdgeInsets.all(8.0),
-                        //     child: Row(
-                        //       mainAxisAlignment:
-                        //       MainAxisAlignment.spaceBetween,
-                        //       children: [
-                        //         Text(
-                        //           groupvalue,
-                        //           style: TextStyle(
-                        //               fontSize: widget.allsize * 0.014),
-                        //         ),
-                        //         Icon(
-                        //           Icons.arrow_drop_down,
-                        //           size: widget.allsize * 0.02,
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ):Container(),
+                        SizedBox(height: size.height*0.005,),
+                        Text(
+                          provider.previewDataList[widget.index]['pre_code'],
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: allsize * 0.011),
+                        ),
                         SizedBox(
                           height: size.height * 0.02,
                         ),
@@ -833,7 +774,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                 : "ADD TO CART",
             style: TextStyle(
                 color: Colors.white,
-                fontWeight: FontWeight.bold,
+                fontFamily: 'opensans_semibold',
+                fontWeight: FontWeight.w900,
                 fontSize: allsize * 0.012),
           )),
     );

@@ -1,6 +1,7 @@
 import 'package:midtowncomics/export.dart';
 import 'package:midtowncomics/widget/addNewAdress.dart';
 import 'package:midtowncomics/widget/editAddress.dart';
+import 'package:midtowncomics/widget/searchList.dart';
 
 import '../provider/addressprovider.dart';
 
@@ -25,153 +26,85 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
-    return Scaffold(
-      key: scaffoldKey,
-      drawer: const Custom_drawer(),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(child:
-                Consumer<AddressProvider>(builder: (context,address, child) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: size.height * 0.165),
-                  Consumer<StreamedDataProvider>(
-                      builder: (context, provider, child) {
-                        return Column(
-                          children: [
-                            provider.showsearchlist == true
-                                ? provider.returnproduct.isEmpty
-                                ? Container()
-                                : ListView.builder(
-                                physics:
-                                const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount:
-                                provider.returnproduct.length,
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        searchcontroller
-                                            .text = provider
-                                            .returnproduct[index]
-                                        ['pr_ttle'];
-                                      });
-                                      provider.updatesearchselextion(
-                                          provider.returnproduct[
-                                          index]['pr_ttle']);
-                                    },
-                                    child: Container(
-                                      color: index % 2 == 0
-                                          ? const Color(0xffececec)
-                                          : Colors.white,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(
-                                            allsize * 0.005),
-                                        child: RichText(
-                                          text: TextSpan(
-                                            style: TextStyle(
-                                                fontSize:
-                                                allsize * 0.012,
-                                                color: Colors.black),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text:
-                                                  "${provider.returnproduct[index]['pr_ttle']}-",
-                                                  style: const TextStyle(
-                                                      color: Color(
-                                                          0xff818181))),
-                                              TextSpan(
-                                                  text:
-                                                  provider.returnproduct[
-                                                  index]
-                                                  ['cg_name'],
-                                                  style: const TextStyle(
-                                                      color: Color(
-                                                          0xff217fda))),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                })
-                                : Container(),
-                          ],
-                        );
-                      }),
-                  Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Address Book",
-                        style: TextStyle(
-                            fontFamily: 'oswald_bold',
-                            fontSize: allsize * 0.02,
-                            fontWeight: FontWeight.bold),
-                      )),
-                  address.address.isEmpty?const Center(child: CircularProgressIndicator(),):
-                  ListView.builder(
-                  itemCount:address.address.length
-                  ,shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context,index){
-                        // bool defaultshipping =  address.address[index]['sa_desc']=="0"?false:true;
-                        // bool defaultbilling=address.address[index]['sa_desc']=="0"?false:true;
-                    return  ListViewWidgetAddress(allsize: allsize, size: size,index:index);
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize:Size(size.width*1,size.height*0.159),
+          child: Header_Widget(
+            ontap: () => scaffoldKey.currentState!.openDrawer(),
+            searchcontroller:searchcontroller,
+          ),),
+        key: scaffoldKey,
+        drawer: const Custom_drawer(),
+        body: SingleChildScrollView(child:
+            Consumer<AddressProvider>(builder: (context,address, child) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SearchList(searchcontroller: searchcontroller),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Address Book",
+                    style: TextStyle(
+                        fontFamily: 'oswald_bold',
+                        fontSize: allsize * 0.02,
+                        fontWeight: FontWeight.bold),
+                  )),
+              address.address.isEmpty?const Center(child: CircularProgressIndicator(),):
+              ListView.builder(
+              itemCount:address.address.length
+              ,shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context,index){
+                return  ListViewWidgetAddress(allsize: allsize, size: size,index:index);
 
-                  }
-                  ),
-                  InkWell(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: size.height * 0.06,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: const Color(0xff006ccf), width: 3)),
-                        child: Center(
-                          child: Text(
-                            "ADD NEW ADDRESS",
-                            style: TextStyle(
-                                color: const Color(0xff006ccf),
-                                fontSize: allsize * 0.016,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
+              }
+              ),
+              InkWell(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: size.height * 0.06,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: const Color(0xff006ccf), width: 3)),
+                    child: Center(
+                      child: Text(
+                        "ADD NEW ADDRESS",
+                        style: TextStyle(
+                            color: const Color(0xff006ccf),
+                            fontSize: allsize * 0.015,
+                            fontFamily: 'opensans_semibold',
+                            fontWeight: FontWeight.w900),
                       ),
                     ),
-                    onTap: (){
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const AddNewAddress();
-                        },
-                      );
+                  ),
+                ),
+                onTap: (){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const AddNewAddress();
                     },
-                  ),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  const SubcribeWidget(),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  const Footer(),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  )
-                ],
-              );
-            })),
-            Header_Widget(
-              ontap: () => scaffoldKey.currentState!.openDrawer(),
-              searchcontroller: searchcontroller,
-            )
-          ],
-        ),
+                  );
+                },
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              const SubcribeWidget(),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              const Footer(),
+              SizedBox(
+                height: size.height * 0.015,
+              )
+            ],
+          );
+        })),
       ),
     );
   }
@@ -198,11 +131,12 @@ class _ListViewWidgetAddressState extends State<ListViewWidgetAddress> {
   bool defaultbilling=false;
   @override
   Widget build(BuildContext context) {
+    var size=MediaQuery.of(context).size;
     return  Consumer<AddressProvider>(builder: (context,address, child) {
       defaultbilling=address.address[widget.index]['sa_type']=="B"?true:false;
       defaultshipping=address.address[widget.index]['sa_type']=="S"?true:false;
       return Padding(
-        padding: const EdgeInsets.all(5),
+        padding:  EdgeInsets.symmetric(vertical: size.height*0.005,horizontal: size.width*0.01),
         child: Container(
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -215,7 +149,7 @@ class _ListViewWidgetAddressState extends State<ListViewWidgetAddress> {
             ],
           ),
           child: Padding(
-            padding: EdgeInsets.all(widget.allsize * 0.01),
+            padding: EdgeInsets.symmetric(horizontal: size.width*0.04),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -234,7 +168,7 @@ class _ListViewWidgetAddressState extends State<ListViewWidgetAddress> {
                           final streamedDataProvider =
                           Provider.of<StreamedDataProvider>(context,
                               listen: false);
-                          ApiRequests().ProceedAddress(streamedDataProvider.loginuserdata['sh_id'],address.address[widget.index]['sh_id'],"","dl", context);
+                          ApiRequests().ProceedAddress(streamedDataProvider.loginuserdata['sh_id'],address.address[widget.index]['sa_id'],"","dl", context);
                         },
                         icon: Icon(
                           Icons.delete,
@@ -272,7 +206,7 @@ class _ListViewWidgetAddressState extends State<ListViewWidgetAddress> {
                 ),
                 InkWell(
                   child: Container(
-                    height: widget.size.height * 0.07,
+                    height: widget.size.height * 0.06,
                     width: double.infinity,
                     color: const Color(0xff006ccf),
                     child: Center(
@@ -280,6 +214,7 @@ class _ListViewWidgetAddressState extends State<ListViewWidgetAddress> {
                         "EDIT ADDRESS",
                         style: TextStyle(
                             color: Colors.white,
+                            fontFamily: 'opensans_semibold',
                             fontSize: widget.allsize * 0.014,
                             fontWeight: FontWeight.bold),
                       ),
@@ -314,7 +249,7 @@ class _ListViewWidgetAddressState extends State<ListViewWidgetAddress> {
                                 listen: false);
                             setState(() {
                               defaultshipping = value;
-                              ApiRequests().ProceedAddress(streamedDataProvider.loginuserdata['sh_id'],address.address[widget.index]['sh_id'],"S","df", context);
+                              ApiRequests().ProceedAddress(streamedDataProvider.loginuserdata['sh_id'],address.address[widget.index]['sa_id'],"S","df", context);
                             });
                           }),
                     ),
@@ -338,7 +273,7 @@ class _ListViewWidgetAddressState extends State<ListViewWidgetAddress> {
                                 listen: false);
                             setState(() {
                               defaultbilling = value;
-                              ApiRequests().ProceedAddress(streamedDataProvider.loginuserdata['sh_id'],address.address[widget.index]['sh_id'],"B","df", context);
+                              ApiRequests().ProceedAddress(streamedDataProvider.loginuserdata['sh_id'],address.address[widget.index]['sa_id'],"B","df", context);
                             });
                           }),
                     )

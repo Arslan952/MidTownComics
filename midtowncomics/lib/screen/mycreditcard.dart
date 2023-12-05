@@ -31,97 +31,94 @@ class _MyCreditCardState extends State<MyCreditCard> {
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-      key: scaffoldKey,
-      drawer: const Custom_drawer(),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(child:
-                Consumer<CreditCardProvider>(builder: (context, credit, child) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: size.height * 0.165),
-                  SearchList(searchcontroller: searchController),
-                  Padding(
-                      padding: const EdgeInsets.all(8.0),
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize:Size(size.width*1,size.height*0.159),
+          child: Header_Widget(
+            ontap: () => scaffoldKey.currentState!.openDrawer(),
+            searchcontroller:searchController,
+          ),),
+        key: scaffoldKey,
+        drawer: const Custom_drawer(),
+        body: SingleChildScrollView(child:
+            Consumer<CreditCardProvider>(builder: (context, credit, child) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SearchList(searchcontroller: searchController),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "My Credit Cards",
+                    style: TextStyle(
+                        fontFamily: 'oswald_bold',
+                        fontSize: allsize * 0.02,
+                        fontWeight: FontWeight.bold),
+                  )),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              ListView.builder(
+                  itemCount: credit.creditcardlist.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    // bool defaultvalue=credit.creditcardlist[index]['is_default']=="0"?false:true;
+                    return credit.creditcardlist.isEmpty
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : ListVieCardWidget(
+                            allsize: allsize,
+                            size: size,
+                            index: index,
+                          );
+                  }),
+              InkWell(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: size.height * 0.06,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: const Color(0xff006ccf), width: 3)),
+                    child: Center(
                       child: Text(
-                        "My Credit Cards",
+                        "ADD NEW CARD",
                         style: TextStyle(
                             fontFamily: 'oswald_bold',
-                            fontSize: allsize * 0.02,
+                            color: const Color(0xff006ccf),
+                            fontSize: allsize * 0.015,
                             fontWeight: FontWeight.bold),
-                      )),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  ListView.builder(
-                      itemCount: credit.creditcardlist.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        // bool defaultvalue=credit.creditcardlist[index]['is_default']=="0"?false:true;
-                        return credit.creditcardlist.isEmpty
-                            ? const Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : ListVieCardWidget(
-                                allsize: allsize,
-                                size: size,
-                                index: index,
-                              );
-                      }),
-                  InkWell(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: size.height * 0.06,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: const Color(0xff006ccf), width: 3)),
-                        child: Center(
-                          child: Text(
-                            "ADD NEW CARD",
-                            style: TextStyle(
-                                fontFamily: 'oswald_bold',
-                                color: const Color(0xff006ccf),
-                                fontSize: allsize * 0.016,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
                       ),
                     ),
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const AddCard();
-                        },
-                      );
+                  ),
+                ),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const AddCard();
                     },
-                  ),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  const SubcribeWidget(),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
-                  const Footer(),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  )
-                ],
-              );
-            })),
-            Header_Widget(
-              searchcontroller: searchController,
-              ontap: () => scaffoldKey.currentState!.openDrawer(),
-            )
-          ],
-        ),
+                  );
+                },
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              const SubcribeWidget(),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              const Footer(),
+              SizedBox(
+                height: size.height * 0.015,
+              )
+            ],
+          );
+        })),
       ),
     );
   }
@@ -193,7 +190,7 @@ class _ListVieCardWidgetState extends State<ListVieCardWidget> {
             ],
           ),
           child: Padding(
-            padding: EdgeInsets.all(widget.allsize * 0.01),
+            padding: EdgeInsets.symmetric(horizontal: widget.size.width*0.04,vertical: widget.size.height*0.01),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -260,15 +257,16 @@ class _ListVieCardWidgetState extends State<ListVieCardWidget> {
                     );
                   },
                   child: Container(
-                    height: widget.size.height * 0.07,
+                    height: widget.size.height * 0.06,
                     width: double.infinity,
                     color: const Color(0xff006ccf),
                     child: Center(
                       child: Text(
                         "EDIT CREDIT CARD",
                         style: TextStyle(
+                          fontFamily: 'opensans_semibold',
                             color: Colors.white,
-                            fontSize: widget.allsize * 0.014,
+                            fontSize: widget.allsize * 0.015,
                             fontWeight: FontWeight.bold),
                       ),
                     ),

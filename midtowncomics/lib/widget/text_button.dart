@@ -13,7 +13,12 @@ class TextButtonWidget extends StatelessWidget {
         onTap:ontap,
         child: Text(
           title,
-          style: TextStyle(color: const Color(0xff8b8b8b), fontSize: allsize*0.013),
+          style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: allsize*0.0115,
+            // fontFamily: 'opensans_semibold',
+            fontWeight: FontWeight.w200
+          ),
         ));
   }
 }

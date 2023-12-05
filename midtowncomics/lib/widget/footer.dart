@@ -479,7 +479,7 @@ class _FooterState extends State<Footer> {
             "All Site Content and 2018 Midtown Comics, unless otherwise noted\n All Right Reserved",
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: const Color(0xff006ccf), fontSize: allsize * 0.01),
+                color: const Color(0xff006ccf), fontSize: allsize * 0.0097),
           )
         ],
       ),

@@ -37,8 +37,8 @@ class CardGridView2 extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
-                      blurRadius: 0.1,
-                      offset: Offset(0, 2),
+                      blurRadius: 1,
+                      offset: Offset(1, 1),
                     ),
                   ],
                 ),
@@ -95,8 +95,8 @@ class CardGridView2 extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
-                      blurRadius: 0.1,
-                      offset: Offset(0, 2),
+                      blurRadius: 1,
+                      offset: Offset(1, 1),
                     ),
                   ],
                 ),
@@ -157,8 +157,8 @@ class CardGridView2 extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
-                      blurRadius: 0.1,
-                      offset: Offset(0, 2),
+                      blurRadius: 1,
+                      offset: Offset(1, 1),
                     ),
                   ],
                 ),
@@ -216,8 +216,8 @@ class CardGridView2 extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
-                      blurRadius: 0.1,
-                      offset: Offset(0, 2),
+                      blurRadius: 1,
+                      offset: Offset(1, 1),
                     ),
                   ],
                 ),

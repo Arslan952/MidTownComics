@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:midtowncomics/export.dart';
 import 'package:midtowncomics/provider/wishListProvider.dart';
-import 'package:midtowncomics/widget/searchList.dart';
 import 'package:midtowncomics/widget/wishListList.dart';
 
 class MyWishListScreen extends StatefulWidget {
@@ -34,13 +33,17 @@ class _MyWishListScreenState extends State<MyWishListScreen> {
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
-    return Scaffold(
-      key: scaffoldKey,
-      drawer: const Custom_drawer(),
-      body: SafeArea(
-        child: Stack(
-          children: [
-        SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize:Size(size.width*1,size.height*0.159),
+          child: Header_Widget(
+            ontap: () => scaffoldKey.currentState!.openDrawer(),
+            searchcontroller:searchController,
+          ),),
+        key: scaffoldKey,
+        drawer: const Custom_drawer(),
+        body: SingleChildScrollView(
             child:
             Consumer<WishListProvider>(
                 builder: (context, provider, child) {
@@ -50,16 +53,18 @@ class _MyWishListScreenState extends State<MyWishListScreen> {
                     Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: size.height * 0.165),
-
-                      Padding(
+                      Container(
+                        height: size.height*0.065,
+                        color: Colors.grey[200],
+                        width: double.infinity,
+                        child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(
+                          child:Row(
                             children: [
                               Icon(
                                 Icons.star,
                                 color: const Color(0xffd09102),
-                                size: allsize * 0.025,
+                                size: allsize * 0.02,
                               ),
                               Text(
                                 "My Wish List",
@@ -69,7 +74,10 @@ class _MyWishListScreenState extends State<MyWishListScreen> {
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
-                          )),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: size.height*0.01,),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: SizedBox(
@@ -243,18 +251,12 @@ class _MyWishListScreenState extends State<MyWishListScreen> {
                       ),
                       const Footer(),
                       SizedBox(
-                        height: size.height * 0.05,
+                        height: size.height * 0.015,
                       )
                     ],
                   );
                 }),
 
-        ),
-            Header_Widget(
-              searchcontroller: mainSearchEditingController,
-              ontap: () => scaffoldKey.currentState!.openDrawer(),
-            )
-          ],
         ),
       ),
     );

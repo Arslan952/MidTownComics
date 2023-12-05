@@ -84,7 +84,13 @@ class _PreviewFilterState extends State<PreviewFilter> {
                             controller: searchData,
                           ),
                       ),
-                            TextButton(onPressed: (){}, child: const Text("SEARCH",style: TextStyle(fontWeight: FontWeight.bold),))
+                            TextButton(onPressed: (){
+                              provider.updateSearchValue(searchData.text);
+                              print(provider.searchValue);
+                              final streamedDataProvider = Provider.of<StreamedDataProvider>(context, listen: false);
+                              ApiRequests().getPreviewItem(streamedDataProvider.loginuserdata['sh_id'],provider.filterData,provider.previewCodeValue,provider.searchValue,provider.sortByGroupValue,"1",provider.previewDataList.length,false);
+                              Navigator.pop(context);
+                            }, child: const Text("SEARCH",style: TextStyle(fontWeight: FontWeight.bold),))
                     ],),
                         ),
                     SizedBox(height: size.height*0.01,),
@@ -135,7 +141,7 @@ class _PreviewFilterState extends State<PreviewFilter> {
                                       ApiRequests().getPreviewItem(streamedDataProvider.loginuserdata['sh_id'],provider.filterData,provider.previewCodeValue,provider.searchValue,provider.sortByGroupValue,"1",provider.previewDataList.length,false);
                                       // Update the selected index
                                       provider.updateSelectedIndex(index);
-
+                                      Navigator.pop(context);
                                       // provider.updateSelectedState(index, true);
                                     }
                                   }

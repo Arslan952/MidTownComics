@@ -16,7 +16,6 @@ class _HomeSeriesCrossOverState extends State<HomeSeriesCrossOver> {
     var size=MediaQuery.of(context).size;
     var allsize=MediaQuery.of(context).size.height+MediaQuery.of(context).size.width;
     return RawScrollbar(
-      thumbVisibility: true,
       thumbColor: Colors.grey,
       thickness: allsize * 0.003,
       child: Padding(

@@ -25,7 +25,9 @@ class CustomDialugue3 extends StatelessWidget {
                   .toList();
           if(pullListDataList.isNotEmpty){
              totalNumber = pullListDataList.length.toString();
-             remaining=(regular.length-10).toString();
+            var num=(regular.length-10).abs();
+            remaining=num.toString();
+             print(remaining);
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +42,7 @@ class CustomDialugue3 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Your Pull list  $totalNumber",
+                        "Your Pull list  ($totalNumber)",
                         style: TextStyle(fontSize: allsize * 0.011),
                       ),
                       IconButton(
@@ -76,32 +78,35 @@ class CustomDialugue3 extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         regular.length.toString(),
                         style: TextStyle(
-                            color: Colors.grey[600], fontSize: allsize * 0.011),
+                            color: Colors.grey[600], fontSize: allsize * 0.011,fontWeight: FontWeight.w900),
                       ),
+                      SizedBox(width: size.width*0.03,),
                       SizedBox(
                         height: size.height * 0.007,
-                        width: size.width * 0.5,
+                        width: size.width * 0.55,
                         child:  LinearProgressIndicator(
                           value: regular.length / 10,
                           color: const Color(0xff006ccf),
                           backgroundColor: Colors.grey,
                         ),
                       ),
+                      SizedBox(width: size.width*0.03,),
                       Text(
                         "10",
                         style: TextStyle(
-                            color: Colors.grey[600], fontSize: allsize * 0.011),
+                            color: Colors.grey[600], fontSize: allsize * 0.011,fontWeight: FontWeight.w900),
                       ),
                     ],
                   ),
                 ),
               ),
-              Flexible(
+              SizedBox(
+                height: size.height * 0.625,
                 child: Padding(
                     padding: EdgeInsets.all(size.height * 0.01),
                     child: ListView.builder(
@@ -120,25 +125,23 @@ class CustomDialugue3 extends StatelessWidget {
                                       SizedBox(
                                         height: size.height * 0.15,
                                         width: size.width * 0.20,
-                                        child:Flexible(
-                                          child: Image.network(
-                                            "https://www.midtowncomics.com/images/PRODUCT/FUL/${pullListDataList[index]['pr_id']}_ful.jpg",
-                                            loadingBuilder: (BuildContext context,
-                                                Widget child,
-                                                ImageChunkEvent?
-                                                loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              } else {
-                                                return const Center(
-                                                    child:
-                                                    CircularProgressIndicator());
-                                              }},
-                                            errorBuilder: (context, exception, stackTrace) {
-                                              return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
-                                            },
-                                            fit: BoxFit.contain,
-                                          ),
+                                        child:Image.network(
+                                          "https://www.midtowncomics.com/images/PRODUCT/FUL/${pullListDataList[index]['pr_id']}_ful.jpg",
+                                          loadingBuilder: (BuildContext context,
+                                              Widget child,
+                                              ImageChunkEvent?
+                                              loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child;
+                                            } else {
+                                              return const Center(
+                                                  child:
+                                                  CircularProgressIndicator());
+                                            }},
+                                          errorBuilder: (context, exception, stackTrace) {
+                                            return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
+                                          },
+                                          fit: BoxFit.contain,
                                         ),
                                       ),
                                       SizedBox(

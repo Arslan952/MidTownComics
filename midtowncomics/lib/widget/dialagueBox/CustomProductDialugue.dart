@@ -117,7 +117,7 @@ class _CustomPrdoductDiallugueState extends State<CustomPrdoductDiallugue> {
                             height: size.height * 0.02,
                           ),
                           SizedBox(
-                            height: size.height * 0.35,
+                            height: size.height * 0.38,
                             child: Image.network(
                               "https://www.midtowncomics.com/images/PRODUCT/FUL/${image}_ful.jpg",
                               loadingBuilder: (BuildContext context,

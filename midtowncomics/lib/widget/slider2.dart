@@ -4,6 +4,7 @@ import 'package:midtowncomics/export.dart';
 import 'package:midtowncomics/provider/faqProvider.dart';
 import 'package:midtowncomics/screen/faqScreen.dart';
 import 'package:midtowncomics/screen/shippingInformation.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Slider2 extends StatefulWidget {
   const Slider2({super.key});
@@ -78,13 +79,13 @@ class _Slider2State extends State<Slider2> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: Colors.grey),
-                          color: Colors.grey[200]),
+                          color: const Color(0xfff7f7f5)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FaIcon(
                             Ico[itemIndex],
-                            color: Colors.blue,
+                            color: const Color(0xff1277d1),
                             size: allsize * 0.018,
                           ),
                           SizedBox(
@@ -93,8 +94,9 @@ class _Slider2State extends State<Slider2> {
                           Text(
                             data[itemIndex],
                             style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
+                                color: const Color(0xff1277d1),
+                                fontFamily: 'opensans_semibold',
+                                fontWeight: FontWeight.w900,
                                 fontSize: allsize * 0.017),
                           )
                         ],
@@ -118,26 +120,39 @@ class _Slider2State extends State<Slider2> {
             SizedBox(
               height: size.height * 0.01,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: data.asMap().entries.map((entry) {
-                return Container(
-                  width: allsize * 0.013,
-                  height: allsize * 0.012,
-                  margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        color: _currentIndex == entry.key
-                            ? Colors.grey[300]!
-                            : Colors.grey[600]!),
-                    color: _currentIndex == entry.key
-                        ? Colors.white
-                        : Colors.transparent,
-                  ),
-                );
-              }).toList(),
+            AnimatedSmoothIndicator(
+              duration: const Duration(milliseconds: 300),
+              activeIndex: _currentIndex,
+              count: data.length,
+              effect:  WormEffect(
+                paintStyle: PaintingStyle.stroke,
+                dotColor: Colors.grey[600]!,
+                dotHeight: allsize*0.012,
+                dotWidth: allsize*0.012,
+                strokeWidth: 1.5,
+                activeDotColor: Colors.white,
+              ),
             ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: data.asMap().entries.map((entry) {
+            //     return Container(
+            //       width: allsize * 0.013,
+            //       height: allsize * 0.012,
+            //       margin: const EdgeInsets.symmetric(horizontal: 4.0),
+            //       decoration: BoxDecoration(
+            //         shape: BoxShape.circle,
+            //         border: Border.all(
+            //             color: _currentIndex == entry.key
+            //                 ? Colors.grey[300]!
+            //                 : Colors.grey[600]!),
+            //         color: _currentIndex == entry.key
+            //             ? Colors.white
+            //             : Colors.transparent,
+            //       ),
+            //     );
+            //   }).toList(),
+            // ),
             SizedBox(height: size.height*0.03,)
           ],
         ),

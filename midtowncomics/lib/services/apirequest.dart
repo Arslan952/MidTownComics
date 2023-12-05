@@ -528,7 +528,7 @@ class ApiRequests {
     var request = http.Request(
         'GET',
         Uri.parse(
-            "${Api().baseURL}address.svc/process-address?apiKey=&mtUser=&mtPass=&sh_id=76367&sa_id=530773&sa_type=B&action=df&app_id="));
+            "${Api().baseURL}address.svc/process-address?apiKey=&mtUser=&mtPass=&sh_id=$sha1&sa_id=$sa_id&sa_type=$sa_type&action=$action&app_id="));
     http.StreamedResponse response = await request.send();
     address.changeindicator(false);
     // streamedDataProvider.changeindicator(false);

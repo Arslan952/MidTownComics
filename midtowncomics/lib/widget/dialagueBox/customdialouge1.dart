@@ -6,6 +6,7 @@ import '../../provider/faqProvider.dart';
 import '../../screen/mypreorderscreen.dart';
 import '../../screen/preorder_screen.dart';
 
+
 class CustomDialugue1 extends StatefulWidget {
   const CustomDialugue1({super.key});
 
@@ -144,7 +145,7 @@ class _CustomDialugue1State extends State<CustomDialugue1> {
                         children: [
                           Text(
                             "Not You?",
-                            style: TextStyle(color: const Color(0xff8b8b8b), fontSize: allsize * 0.013),
+                            style: TextStyle(color: const Color(0xff8b8b8b), fontSize: allsize * 0.012),
                           ),
                           InkWell(
                               onTap: () async {
@@ -328,7 +329,7 @@ class _CustomDialugue1State extends State<CustomDialugue1> {
                     ),
                     TextButtonWidget(
                         ontap: () {
-                          // Get.to(const PreOrderScreen());
+                          Get.to(const PreOrderScreen());
                         },
                         title: "Pre Order Catalogs"),
                     SizedBox(

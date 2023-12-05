@@ -55,636 +55,606 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
-    return Scaffold(
-      key: scaffoldKey,
-      drawer: const Custom_drawer(),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(child:
-            Consumer<AccountSettingProvider>(
-                builder: (context, account, child) {
-              return account.AccountSettingData.isEmpty
-                  ? Column(
-                      children: [
-                        SizedBox(height: size.height * 0.165),
-                        const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize:Size(size.width*1,size.height*0.159),
+          child: Header_Widget(
+            ontap: () => scaffoldKey.currentState!.openDrawer(),
+            searchcontroller:searchController,
+          ),),
+        key: scaffoldKey,
+        drawer: const Custom_drawer(),
+        body: SingleChildScrollView(child:
+        Consumer<AccountSettingProvider>(
+            builder: (context, account, child) {
+          return account.AccountSettingData.isEmpty
+              ? const Column(
+                  children: [
+                    Center(
+                      child: CircularProgressIndicator(),
                     )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: size.height * 0.165),
-                        SearchList(searchcontroller:searchController,),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "My Account Setting",
-                            style: TextStyle(
-                                fontSize: allsize * 0.02,
-                                fontFamily: 'oswald_bold',
-                                fontWeight: FontWeight.bold),
-                          ),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SearchList(searchcontroller:searchController,),
+                    Container(
+                      height: size.height*0.065,
+                      color: Colors.grey[200],
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "My Account Setting",
+                          style: TextStyle(
+                              fontSize: allsize * 0.02,
+                              fontFamily: 'oswald_bold',
+                              fontWeight: FontWeight.bold),
                         ),
-                        TextButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return EditProfileDialague(
-                                    firstName: account.profiledata['sh_fname'],
-                                    lastName: account.profiledata['sh_lname'],
-                                    dob: account.profiledata['sh_dob'],
-                                    email: account.profiledata['sh_lgid'],
-                                  );
-                                },
+                      ),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return EditProfileDialague(
+                                firstName: account.profiledata['sh_fname'],
+                                lastName: account.profiledata['sh_lname'],
+                                dob: account.profiledata['sh_dob'],
+                                email: account.profiledata['sh_lgid'],
                               );
                             },
-                            child: Row(
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Text(
+                              "My Profile",
+                              style: TextStyle(
+                                  color: const Color(0xff006ccf),
+                                  fontSize: allsize * 0.016,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            Icon(
+                              Icons.edit,
+                              color: const Color(0xff006ccf),
+                              size: allsize * 0.02,
+                            )
+                          ],
+                        )),
+                    MyProfileRow(
+                        title: "Name:",
+                        value: account.profiledata['sh_fname'] +
+                            " " +
+                            account.profiledata['sh_lname']),
+                    MyProfileRow(
+                        title: "Date of Birth:",
+                        value: account.profiledata['sh_dob']),
+                    MyProfileRow(
+                        title: "Email:",
+                        value: account.profiledata['sh_lgid']),
+                    MyProfileRow(title: "Password:", value: "******"),
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          "My Orders",
+                          style: TextStyle(
+                              color: const Color(0xff006ccf),
+                              fontSize: allsize * 0.015,
+                              fontWeight: FontWeight.bold),
+                        )),
+                    // Pending Orders
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Pending",
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: allsize * 0.012,
+                            ),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Get.to(const MyOrderScreen());
+                              },
+                              child: Text(
+                                "(VIEW ALL)",
+                                style: TextStyle(
+                                    color: const Color(0xff006ccf),
+                                    fontSize: allsize * 0.011,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.025),
+                      child: Table(
+                        defaultColumnWidth:
+                            FixedColumnWidth(size.width * 0.35),
+                        // const <int, TableColumnWidth>{
+                        //   0: FlexColumnWidth(3), // Title
+                        //   1: FlexColumnWidth(1), // Qty
+                        //   2: FlexColumnWidth(1), // Type
+                        //   3: FlexColumnWidth(1), // Total
+                        //   4: FlexColumnWidth(1), // Action
+                        // },
+                        // border: TableBorder.all(color: Colors.grey),
+                        // defaultColumnWidth: FixedColumnWidth(size.width * 0.2),
+                        children: [
+                          TableRow(
+                            decoration: const BoxDecoration(
+                                color: Color(0xffececec)),
+                            children: [
+                              Text(
+                                'Date',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012,
+                                ),
+                              ),
+                              Text(
+                                'Order#',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012,
+                                ),
+                              ),
+                              Text(
+                                'Total',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Generate table rows
+                          for (var item in account.orderinprocess)
+                            TableRow(
                               children: [
                                 Text(
-                                  "My Profile",
+                                  "${item['od_stmp']}",
                                   style: TextStyle(
-                                      color: const Color(0xff006ccf),
-                                      fontSize: allsize * 0.016),
+                                      fontSize: allsize * 0.012),
                                 ),
-                                Icon(
-                                  Icons.edit,
-                                  color: const Color(0xff006ccf),
-                                  size: allsize * 0.02,
-                                )
+                                Text(
+                                  item['od_id'],
+                                  style: TextStyle(
+                                    fontSize: allsize * 0.012,
+                                    color: const Color(0xff006ccf),
+                                  ),
+                                ),
+                                Text(
+                                  "\$${item['order_total']}",
+                                  style: TextStyle(
+                                      fontSize: allsize * 0.012),
+                                ),
                               ],
-                            )),
-                        MyProfileRow(
-                            title: "Name:",
-                            value: account.profiledata['sh_fname'] +
-                                " " +
-                                account.profiledata['sh_lname']),
-                        MyProfileRow(
-                            title: "Date of Birth:",
-                            value: account.profiledata['sh_dob']),
-                        MyProfileRow(
-                            title: "Email:",
-                            value: account.profiledata['sh_lgid']),
-                        MyProfileRow(title: "Password:", value: "******"),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            ),
+                        ],
+                      ),
+                    ),
+                    //Shipped
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Shipped",
+                            style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: allsize * 0.012),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Get.to(const MyOrderScreen());
+                              },
+                              child: Text(
+                                "(VIEW ALL)",
+                                style: TextStyle(
+                                    color: const Color(0xff006ccf),
+                                    fontSize: allsize * 0.011,fontWeight: FontWeight.bold),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.025),
+                      child: Table(
+                        defaultColumnWidth:
+                            FixedColumnWidth(size.width * 0.25),
+                        // const <int, TableColumnWidth>{
+                        //   0: FlexColumnWidth(3), // Title
+                        //   1: FlexColumnWidth(1), // Qty
+                        //   2: FlexColumnWidth(1), // Type
+                        //   3: FlexColumnWidth(1), // Total
+                        //   4: FlexColumnWidth(1), // Action
+                        // },
+                        // border: TableBorder.all(color: Colors.grey),
+                        // defaultColumnWidth: FixedColumnWidth(size.width * 0.2),
+                        children: [
+                          TableRow(
+                            decoration: const BoxDecoration(
+                                color: Color(0xffececec)),
+                            children: [
+                              Text(
+                                'Date',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012,
+                                ),
+                              ),
+                              Text(
+                                'Order#',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012,
+                                ),
+                              ),
+                              Text(
+                                'Total',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012,
+                                ),
+                              ),
+                              Text(
+                                'Tracking',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Generate table rows
+                          for (var item in account.Shippedorder)
+                            TableRow(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "${item['od_stmp']}",
+                                    style: TextStyle(
+                                        fontSize: allsize * 0.012),
+                                  ),
+                                ),
+                                Text(
+                                  item['od_id'],
+                                  style: TextStyle(
+                                    fontSize: allsize * 0.012,
+                                    color: const Color(0xff006ccf),
+                                  ),
+                                ),
+                                Text(
+                                  "\$${item['order_total']}",
+                                  style: TextStyle(
+                                      fontSize: allsize * 0.012),
+                                ),
+                                Text(
+                                  "-",
+                                  style: TextStyle(
+                                    fontSize: allsize * 0.012,
+                                  ),
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                    ),
+                    //Declined
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Declined",
+                            style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: allsize * 0.012),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Get.to(const MyOrderScreen());
+                              },
+                              child: Text(
+                                "(VIEW ALL)",
+                                style: TextStyle(
+                                    color: const Color(0xff006ccf),
+                                    fontSize: allsize * 0.011,fontWeight: FontWeight.bold),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.025),
+                      child: Table(
+                        defaultColumnWidth:
+                            FixedColumnWidth(size.width * 0.35),
+                        // const <int, TableColumnWidth>{
+                        //   0: FlexColumnWidth(3), // Title
+                        //   1: FlexColumnWidth(1), // Qty
+                        //   2: FlexColumnWidth(1), // Type
+                        //   3: FlexColumnWidth(1), // Total
+                        //   4: FlexColumnWidth(1), // Action
+                        // },
+                        // border: TableBorder.all(color: Colors.grey),
+                        // defaultColumnWidth: FixedColumnWidth(size.width * 0.2),
+                        children: [
+                          TableRow(
+                            decoration: const BoxDecoration(
+                                color: Color(0xffececec)),
+                            children: [
+                              Text(
+                                'Date',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012,
+                                ),
+                              ),
+                              Text(
+                                'Order#',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012,
+                                ),
+                              ),
+                              Text(
+                                'Total',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: allsize * 0.012,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Generate table rows
+                          for (var item in account.declinedorder)
+                            TableRow(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "${item['od_stmp']}",
+                                    style: TextStyle(
+                                        fontSize: allsize * 0.012),
+                                  ),
+                                ),
+                                Text(
+                                  item['od_id'],
+                                  style: TextStyle(
+                                    fontSize: allsize * 0.012,
+                                    color: const Color(0xff006ccf),
+                                  ),
+                                ),
+                                Text(
+                                  "\$${item['order_total']}",
+                                  style: TextStyle(
+                                      fontSize: allsize * 0.012),
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                    ),
+
+                    //My Pull List
+                    AccountSettingMyPulllist(
+                        allsize, size, context, account),
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                    AccountSettingPreviewSetting(
+                        allsize, size, context, account),
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                    account.pullListItem.isNotEmpty
+                        ? Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              "My Orders",
+                              "Upcoming Pull List Items",
                               style: TextStyle(
                                   color: const Color(0xff006ccf),
                                   fontSize: allsize * 0.016,
                                   fontWeight: FontWeight.bold),
-                            )),
-                        // Pending Orders
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Pending",
-                                style: TextStyle(
-                                  color: Colors.grey[700],
-                                  fontSize: allsize * 0.012,
-                                ),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    Get.to(const MyOrderScreen());
-                                  },
-                                  child: Text(
-                                    "(VIEW ALL)",
-                                    style: TextStyle(
-                                        color: const Color(0xff006ccf),
-                                        fontSize: allsize * 0.012),
-                                  ))
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.width * 0.025),
-                          child: Table(
-                            defaultColumnWidth:
-                                FixedColumnWidth(size.width * 0.35),
-                            // const <int, TableColumnWidth>{
-                            //   0: FlexColumnWidth(3), // Title
-                            //   1: FlexColumnWidth(1), // Qty
-                            //   2: FlexColumnWidth(1), // Type
-                            //   3: FlexColumnWidth(1), // Total
-                            //   4: FlexColumnWidth(1), // Action
-                            // },
-                            // border: TableBorder.all(color: Colors.grey),
-                            // defaultColumnWidth: FixedColumnWidth(size.width * 0.2),
-                            children: [
-                              TableRow(
-                                decoration: const BoxDecoration(
-                                    color: Color(0xffececec)),
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      'Date',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.012,
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Order#',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.012,
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Total',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.012,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              // Generate table rows
-                              for (var item in account.orderinprocess)
+                            ))
+                        : Container(),
+                    account.pullListItem.isNotEmpty
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.width * 0.025),
+                            child: Table(
+                              columnWidths: const <int, TableColumnWidth>{
+                                0: FlexColumnWidth(3), // Title
+                                1: FlexColumnWidth(1), // Qty
+                                2: FlexColumnWidth(1), // Type
+                                3: FlexColumnWidth(1), // Total
+                                4: FlexColumnWidth(1), // Action
+                              },
+                              // border: TableBorder.all(color: Colors.grey),
+                              // defaultColumnWidth: FixedColumnWidth(size.width * 0.2),
+                              children: [
                                 TableRow(
+                                  decoration: const BoxDecoration(
+                                      color: Color(0xffececec)),
                                   children: [
                                     Center(
                                       child: Text(
-                                        "${item['od_stmp']}",
+                                        'Title',
                                         style: TextStyle(
-                                            fontSize: allsize * 0.012),
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Text(
-                                        item['od_id'],
-                                        style: TextStyle(
+                                          color: Colors.grey[700],
+                                          fontWeight: FontWeight.bold,
                                           fontSize: allsize * 0.012,
-                                          color: const Color(0xff006ccf),
                                         ),
                                       ),
                                     ),
                                     Center(
                                       child: Text(
-                                        "\$${item['order_total']}",
+                                        'Qty',
                                         style: TextStyle(
-                                            fontSize: allsize * 0.012),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                            ],
-                          ),
-                        ),
-                        //Shipped
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Shipped",
-                                style: TextStyle(
-                                    color: Colors.grey[700],
-                                    fontSize: allsize * 0.012),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    Get.to(const MyOrderScreen());
-                                  },
-                                  child: Text(
-                                    "(VIEW ALL)",
-                                    style: TextStyle(
-                                        color: const Color(0xff006ccf),
-                                        fontSize: allsize * 0.012),
-                                  ))
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.width * 0.025),
-                          child: Table(
-                            defaultColumnWidth:
-                                FixedColumnWidth(size.width * 0.25),
-                            // const <int, TableColumnWidth>{
-                            //   0: FlexColumnWidth(3), // Title
-                            //   1: FlexColumnWidth(1), // Qty
-                            //   2: FlexColumnWidth(1), // Type
-                            //   3: FlexColumnWidth(1), // Total
-                            //   4: FlexColumnWidth(1), // Action
-                            // },
-                            // border: TableBorder.all(color: Colors.grey),
-                            // defaultColumnWidth: FixedColumnWidth(size.width * 0.2),
-                            children: [
-                              TableRow(
-                                decoration: const BoxDecoration(
-                                    color: Color(0xffececec)),
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      'Date',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.012,
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Order#',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.012,
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Total',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.012,
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Tracking',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.012,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              // Generate table rows
-                              for (var item in account.Shippedorder)
-                                TableRow(
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        "${item['od_stmp']}",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.012),
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Text(
-                                        item['od_id'],
-                                        style: TextStyle(
+                                          color: Colors.grey[700],
+                                          fontWeight: FontWeight.bold,
                                           fontSize: allsize * 0.012,
-                                          color: const Color(0xff006ccf),
                                         ),
                                       ),
                                     ),
                                     Center(
                                       child: Text(
-                                        "\$${item['order_total']}",
+                                        'Type',
                                         style: TextStyle(
-                                            fontSize: allsize * 0.012),
+                                          color: Colors.grey[700],
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: allsize * 0.012,
+                                        ),
                                       ),
                                     ),
                                     Center(
                                       child: Text(
-                                        "-",
+                                        'Total',
                                         style: TextStyle(
+                                          color: Colors.grey[700],
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: allsize * 0.012,
+                                        ),
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        'Actions',
+                                        style: TextStyle(
+                                          color: Colors.grey[700],
+                                          fontWeight: FontWeight.bold,
                                           fontSize: allsize * 0.012,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                            ],
-                          ),
-                        ),
-                        //Declined
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Declined",
-                                style: TextStyle(
-                                    color: Colors.grey[700],
-                                    fontSize: allsize * 0.012),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    Get.to(const MyOrderScreen());
-                                  },
-                                  child: Text(
-                                    "(VIEW ALL)",
-                                    style: TextStyle(
-                                        color: const Color(0xff006ccf),
-                                        fontSize: allsize * 0.012),
-                                  ))
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.width * 0.025),
-                          child: Table(
-                            defaultColumnWidth:
-                                FixedColumnWidth(size.width * 0.35),
-                            // const <int, TableColumnWidth>{
-                            //   0: FlexColumnWidth(3), // Title
-                            //   1: FlexColumnWidth(1), // Qty
-                            //   2: FlexColumnWidth(1), // Type
-                            //   3: FlexColumnWidth(1), // Total
-                            //   4: FlexColumnWidth(1), // Action
-                            // },
-                            // border: TableBorder.all(color: Colors.grey),
-                            // defaultColumnWidth: FixedColumnWidth(size.width * 0.2),
-                            children: [
-                              TableRow(
-                                decoration: const BoxDecoration(
-                                    color: Color(0xffececec)),
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      'Date',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.012,
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Order#',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.012,
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Total',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.012,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              // Generate table rows
-                              for (var item in account.declinedorder)
-                                TableRow(
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        "${item['od_stmp']}",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.012),
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Text(
-                                        item['od_id'],
-                                        style: TextStyle(
-                                          fontSize: allsize * 0.012,
-                                          color: const Color(0xff006ccf),
+                                // Generate table rows
+                                for (var item in account.pullListItem)
+                                  TableRow(
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          item['pr_ttle'],
+                                          style: TextStyle(
+                                              fontSize: allsize * 0.012),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                    ),
-                                    Center(
-                                      child: Text(
-                                        "\$${item['order_total']}",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.012),
+                                      Center(
+                                        child: Text(
+                                          "${item['sc_qty']}",
+                                          style: TextStyle(
+                                              fontSize: allsize * 0.012),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                            ],
-                          ),
-                        ),
-
-                        //My Pull List
-                        AccountSettingMyPulllist(
-                            allsize, size, context, account),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        AccountSettingPreviewSetting(
-                            allsize, size, context, account),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        account.pullListItem.isNotEmpty
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "Upcoming Pull List Items",
-                                  style: TextStyle(
-                                      color: const Color(0xff006ccf),
-                                      fontSize: allsize * 0.016,
-                                      fontWeight: FontWeight.bold),
-                                ))
-                            : Container(),
-                        account.pullListItem.isNotEmpty
-                            ? Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: size.width * 0.025),
-                                child: Table(
-                                  columnWidths: const <int, TableColumnWidth>{
-                                    0: FlexColumnWidth(3), // Title
-                                    1: FlexColumnWidth(1), // Qty
-                                    2: FlexColumnWidth(1), // Type
-                                    3: FlexColumnWidth(1), // Total
-                                    4: FlexColumnWidth(1), // Action
-                                  },
-                                  // border: TableBorder.all(color: Colors.grey),
-                                  // defaultColumnWidth: FixedColumnWidth(size.width * 0.2),
-                                  children: [
-                                    TableRow(
-                                      decoration: const BoxDecoration(
-                                          color: Color(0xffececec)),
-                                      children: [
-                                        Center(
-                                          child: Text(
-                                            'Title',
-                                            style: TextStyle(
-                                              color: Colors.grey[700],
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: allsize * 0.012,
-                                            ),
-                                          ),
+                                      Center(
+                                        child: Text(
+                                          item['type'],
+                                          style: TextStyle(
+                                              fontSize: allsize * 0.012),
                                         ),
-                                        Center(
-                                          child: Text(
-                                            'Qty',
-                                            style: TextStyle(
-                                              color: Colors.grey[700],
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: allsize * 0.012,
-                                            ),
-                                          ),
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          "\$${item['pr_lprice']}",
+                                          style: TextStyle(
+                                              fontSize: allsize * 0.012),
                                         ),
-                                        Center(
-                                          child: Text(
-                                            'Type',
-                                            style: TextStyle(
-                                              color: Colors.grey[700],
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: allsize * 0.012,
-                                            ),
-                                          ),
-                                        ),
-                                        Center(
-                                          child: Text(
-                                            'Total',
-                                            style: TextStyle(
-                                              color: Colors.grey[700],
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: allsize * 0.012,
-                                            ),
-                                          ),
-                                        ),
-                                        Center(
-                                          child: Text(
-                                            'Actions',
-                                            style: TextStyle(
-                                              color: Colors.grey[700],
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: allsize * 0.012,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    // Generate table rows
-                                    for (var item in account.pullListItem)
-                                      TableRow(
-                                        children: [
-                                          Center(
-                                            child: Text(
-                                              item['pr_ttle'],
-                                              style: TextStyle(
-                                                  fontSize: allsize * 0.012),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          Center(
-                                            child: Text(
-                                              "${item['sc_qty']}",
-                                              style: TextStyle(
-                                                  fontSize: allsize * 0.012),
-                                            ),
-                                          ),
-                                          Center(
-                                            child: Text(
-                                              item['type'],
-                                              style: TextStyle(
-                                                  fontSize: allsize * 0.012),
-                                            ),
-                                          ),
-                                          Center(
-                                            child: Text(
-                                              "\$${item['pr_lprice']}",
-                                              style: TextStyle(
-                                                  fontSize: allsize * 0.012),
-                                            ),
-                                          ),
-                                          Center(
-                                            child: item['fetchtype'] ==
+                                      ),
+                                      Center(
+                                        child: item['fetchtype'] ==
+                                                    'SUBDETAIL' &&
+                                                item['susp'] == '1'
+                                            ? InkWell(
+                                            child: const Icon(Icons.play_arrow),
+                                          onTap: (){
+                                            final streamedDataProvider =
+                                            Provider.of<StreamedDataProvider>(context,
+                                                listen: false);
+                                              ApiRequests().upcomingPullList(streamedDataProvider.loginuserdata['sh_id'],item['pr_id'],item['fetchtype'],item['su_id'],"0", context);
+                                              },
+                                        )
+                                            : item['fetchtype'] ==
                                                         'SUBDETAIL' &&
-                                                    item['susp'] == '1'
-                                                ? InkWell(
-                                                child: const Icon(Icons.play_arrow),
-                                              onTap: (){
-                                                final streamedDataProvider =
-                                                Provider.of<StreamedDataProvider>(context,
-                                                    listen: false);
-                                                  ApiRequests().upcomingPullList(streamedDataProvider.loginuserdata['sh_id'],item['pr_id'],item['fetchtype'],item['su_id'],"0", context);
-                                                  },
-                                            )
+                                                    item['susp'] == '0'
+                                                ? InkWell(child:
+                                        const Icon(Icons.pause),
+                                          onTap: (){
+                                            final streamedDataProvider =
+                                            Provider.of<StreamedDataProvider>(context,
+                                                listen: false);
+                                            ApiRequests().upcomingPullList(streamedDataProvider.loginuserdata['sh_id'],item['pr_id'],item['fetchtype'],item['su_id'],"1", context);
+                                          },
+                                        )
                                                 : item['fetchtype'] ==
-                                                            'SUBDETAIL' &&
-                                                        item['susp'] == '0'
-                                                    ? InkWell(child:
-                                            const Icon(Icons.pause),
-                                              onTap: (){
-                                                final streamedDataProvider =
-                                                Provider.of<StreamedDataProvider>(context,
-                                                    listen: false);
-                                                ApiRequests().upcomingPullList(streamedDataProvider.loginuserdata['sh_id'],item['pr_id'],item['fetchtype'],item['su_id'],"1", context);
-                                              },
-                                            )
-                                                    : item['fetchtype'] ==
-                                                            'TCART'
-                                                        ? InkWell(
-                                                          child: const Icon(
-                                                              Icons.delete),
-                                              onTap: (){
+                                                        'TCART'
+                                                    ? InkWell(
+                                                      child: const Icon(
+                                                          Icons.delete),
+                                          onTap: (){
 
-                                                final streamedDataProvider =
-                                                Provider.of<StreamedDataProvider>(context,
-                                                    listen: false);
+                                            final streamedDataProvider =
+                                            Provider.of<StreamedDataProvider>(context,
+                                                listen: false);
 
-                                                ApiRequests().upcomingPullList(streamedDataProvider.loginuserdata['sh_id'],item['pr_id'],item['fetchtype'],"0","0", context);
-                                              },
-                                                        )
-                                                        : Text(
-                                                            "-",
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    allsize *
-                                                                        0.012),
-                                                          ),
-                                          ),
-                                        ],
+                                            ApiRequests().upcomingPullList(streamedDataProvider.loginuserdata['sh_id'],item['pr_id'],item['fetchtype'],"0","0", context);
+                                          },
+                                                    )
+                                                    : Text(
+                                                        "-",
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                allsize *
+                                                                    0.012),
+                                                      ),
                                       ),
-                                  ],
-                                ),
-                              )
-                            : Container(),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        const SubcribeWidget(),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        const Footer(),
-                        SizedBox(
-                          height: size.height * 0.05,
-                        )
-                      ],
-                    );
-            })),
-            Header_Widget(
-              searchcontroller: searchController,
-              ontap: () => scaffoldKey.currentState!.openDrawer(),)
-          ],
-        ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          )
+                        : Container(),
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                    const SubcribeWidget(),
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                    const Footer(),
+                    SizedBox(
+                      height: size.height * 0.015,
+                    )
+                  ],
+                );
+        })),
       ),
     );
   }
@@ -1162,7 +1132,7 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Container(
-              height: size.height * 0.07,
+              height: size.height * 0.06,
               color: const Color(0xff006ccf),
               child: Center(
                 child: Text(
@@ -1203,7 +1173,7 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
               "My Pull List",
               style: TextStyle(
                   color: const Color(0xff006ccf),
-                  fontSize: allsize * 0.016,
+                  fontSize: allsize * 0.015,
                   fontWeight: FontWeight.bold),
             )),
         Padding(
@@ -2292,7 +2262,7 @@ class _MyAccountSettingState extends State<MyAccountSetting> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Container(
-              height: size.height * 0.07,
+              height: size.height * 0.06,
               color: const Color(0xff006ccf),
               child: Center(
                 child: Text(

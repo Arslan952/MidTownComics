@@ -55,54 +55,51 @@ class _ShippingFaqScreenState extends State<ShippingFaqScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-      key: scaffoldKey,
-      drawer: const Custom_drawer(),
-      body: SafeArea(
-        child: Stack(
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize:Size(size.width*1,size.height*0.159),
+          child: Header_Widget(
+            ontap: () => scaffoldKey.currentState!.openDrawer(),
+            searchcontroller:searchController,
+          ),),
+        key: scaffoldKey,
+        drawer: const Custom_drawer(),
+        body: SingleChildScrollView(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SingleChildScrollView(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: size.height * 0.16),
-                SearchList(searchcontroller: searchController),
-                const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "FAQ",
-                      style:
-                          TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        return QuestionAnswerTile(questionAnswer: data[index]);
-                      },
-                    )),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                const SubcribeWidget(),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                const Footer(),
-                SizedBox(
-                  height: size.height * 0.05,
-                )
-              ],
-            )),
-            Header_Widget(
-              searchcontroller: searchController,
-              ontap: () => scaffoldKey.currentState!.openDrawer(),
+            SearchList(searchcontroller: searchController),
+            const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "FAQ",
+                  style:
+                      TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                )),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    return QuestionAnswerTile(questionAnswer: data[index]);
+                  },
+                )),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            const SubcribeWidget(),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            const Footer(),
+            SizedBox(
+              height: size.height * 0.05,
             )
           ],
-        ),
+        )),
       ),
     );
   }

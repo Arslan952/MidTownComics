@@ -3,6 +3,7 @@
 import 'package:midtowncomics/export.dart';
 import 'package:midtowncomics/screen/ProductDetailPage.dart';
 import 'package:midtowncomics/screen/landingPage.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Slider1 extends StatefulWidget {
   const Slider1({super.key});
@@ -75,7 +76,8 @@ class _Slider1State extends State<Slider1> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            Container(
+                              color: Colors.white,
                               height: size.height * 0.25,
                               width: double.infinity,
                               child: Image.network(
@@ -116,24 +118,41 @@ class _Slider1State extends State<Slider1> {
                   Positioned(
                     bottom: size.height * 0.04,
                     left: size.width * 0.4,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children:provider.slider1.asMap().entries.map((entry) {
-                        return Container(
-                          width: allsize * 0.012,
-                          height: allsize * 0.012,
-                          margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border:
-                                Border.all(color: Colors.grey[700]!, width: 1),
-                            color: _currentIndex == entry.key
-                                ? Colors.white
-                                : Colors.transparent,
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                    child:
+                    AnimatedSmoothIndicator(
+                      duration: const Duration(milliseconds:300),
+                      activeIndex: _currentIndex,
+                      count: provider.slider1.length,
+                      effect:  WormEffect(
+                        paintStyle: PaintingStyle.stroke,
+                        dotColor: Colors.grey[600]!,
+                        dotHeight: allsize*0.012,
+                        dotWidth: allsize*0.012,
+                        strokeWidth: 1.5,
+                        activeDotColor: Colors.white,
+                      ),
+                    )
+
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children:provider.slider1.asMap().entries.map((entry) {
+                    //     return AnimatedContainer(
+                    //       duration: const Duration(milliseconds:300),
+                    //       width: allsize * 0.012,
+                    //       height: allsize * 0.012,
+                    //       curve: Curves.elasticIn,
+                    //       margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                    //       decoration: BoxDecoration(
+                    //         shape: BoxShape.circle,
+                    //         border:
+                    //             Border.all(color: Colors.grey[700]!, width: 1),
+                    //         color: _currentIndex == entry.key
+                    //             ? Colors.white
+                    //             : Colors.transparent,
+                    //       ),
+                    //     );
+                    //   }).toList(),
+                    // ),
                   ),
                 ],
               ),
@@ -149,7 +168,8 @@ class _Slider1State extends State<Slider1> {
                       // Use the 'title' field from your data
                       style: TextStyle(
                         fontSize: allsize * 0.015,
-                        fontWeight: FontWeight.bold,
+                        // fontWeight: FontWeight.,
+                          fontFamily: 'oswald_semi_bold'
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -157,7 +177,10 @@ class _Slider1State extends State<Slider1> {
                       provider.slider1[_currentIndex]['img_name_sub'],
                       // Use the 'title' field from your data
                       style: TextStyle(
-                          fontSize: allsize * 0.012, color: Colors.grey),
+                          fontSize: allsize * 0.012,
+                        color: Colors.grey,
+                        fontFamily: 'oswald_light'
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -170,3 +193,5 @@ class _Slider1State extends State<Slider1> {
     );
   }
 }
+
+

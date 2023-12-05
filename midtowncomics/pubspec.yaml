@@ -51,6 +51,7 @@ dependencies:
   fluttertoast: ^8.1.1
   url_launcher: ^6.2.1
   simple_html_css: ^4.0.0
+  smooth_page_indicator: ^1.1.0
 
 
 
@@ -111,6 +112,7 @@ flutter:
     - assets/extra/dark_knights.png
     - assets/images/imagecomingsoon_ful.jpg
     - assets/icons/
+    - assets/images/confused_spidey.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -136,6 +138,9 @@ flutter:
      - family: oswald_bold_italic
        fonts:
          - asset: assets/fonts/Oswald-BoldItalic.ttf
+     - family: opensans_semibold
+       fonts:
+        - asset: assets/fonts/opensans_semibold.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

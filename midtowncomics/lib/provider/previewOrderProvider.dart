@@ -65,10 +65,19 @@ Map<String,dynamic>previewFilter={};
   //Preview Data
 Map<String,dynamic>previewData={};
   List<dynamic>previewDataList=[];
+  Map<String,dynamic>previewDataData={};
   updatePreviewData(Map<String,dynamic>data)
   {
     previewData=data;
-    previewDataList=data['DATA']['previewsList'];
+    print(data);
+    if(data['DESCRIPTION']=="data not found")
+      {
+        print("Data Not Found");
+        previewDataList=[];
+      }
+    else{
+      previewDataList=data['DATA']['previewsList'];
+    }
     notifyListeners();
   }
 

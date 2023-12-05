@@ -57,7 +57,6 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
 
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
@@ -87,7 +86,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                 children: [
                   Center(
                     child: SizedBox(
-                      height: size.height * 0.2,
+                      height: size.height * 0.18,
                       width: size.width * 0.3,
                       child: Image.network(
                         widget.adultimage == '0'
@@ -117,7 +116,6 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                     child: InkWell(
                       onTap: () {
                         provider.chanddetai({});
-                        print(widget.image!);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -134,7 +132,10 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                             : "----------",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: allsize * 0.0125,fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: allsize * 0.013,
+                            fontWeight: FontWeight.w500,
+                          fontFamily: ' oswald_bold'
+                        ),
                       ),
                     ),
                   ),
@@ -153,22 +154,29 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                               style: TextStyle(
                                   decoration: TextDecoration.lineThrough,
                                   fontWeight: FontWeight.w900,
-                                  fontSize: allsize * 0.012),
+                                  fontFamily: ' oswald_bold',
+                                  fontSize: allsize * 0.0135),
                             ),
-                            Container(
-                              height: size.height * 0.03,
-                              width: size.width * 0.2,
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: const Color(0xffe3483c), width: 3),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Center(
-                                child: Text(
-                                  "${FunctionClass().findoff(widget.prce1!,widget.price2!)}% OFF",
-                                  style: TextStyle(
-                                      color: const Color(0xffe3483c),
-                                      fontSize: allsize * 0.01,
-                                      fontWeight: FontWeight.bold),
+                            InkWell(
+                              onTap: (){
+                                print(provider.recommendedforyou);
+                              },
+                              child: Container(
+                                height: size.height * 0.033,
+                                width: size.width * 0.24,
+                                decoration: BoxDecoration(
+                                    border:
+                                        Border.all(color: const Color(0xffe3483c), width: 3.4),
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Center(
+                                  child: Text(
+                                    "${FunctionClass().findoff(widget.prce1!,widget.price2!)}% OFF",
+                                    style: TextStyle(
+                                        color: const Color(0xffe3483c),
+                                        fontSize: allsize * 0.011,
+                                        fontFamily: ' oswald_bold',
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                             )
@@ -185,7 +193,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                         fontSize: allsize * 0.0115),
                   ),
                   SizedBox(
-                    height: size.height * 0.01,
+                    height: size.height * 0.005,
                   ),
                   if (widget.incart == 0 || change || showbutton)
                     change
@@ -494,7 +502,6 @@ class ButtonWidget extends StatefulWidget {
 class _ButtonWidgetState extends State<ButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    int quantity = int.parse(widget.quan);
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;

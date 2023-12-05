@@ -2,6 +2,7 @@
 
 import 'package:midtowncomics/export.dart';
 import 'package:midtowncomics/screen/landingPage.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../screen/ProductDetailPage.dart';
 
 
@@ -62,7 +63,7 @@ class _Slider3State extends State<Slider3> {
                       height: size.height*0.52,
                       margin: const EdgeInsets.symmetric(horizontal: 5),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(3),
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
@@ -72,22 +73,25 @@ class _Slider3State extends State<Slider3> {
                         ],
                         color: Colors.white
                       ),
-                      child: Image.network(
-                        item['image_url'], // Use the 'image' field from your data
-                        fit:MediaQuery.of(context).size.shortestSide < 550? BoxFit.fill:BoxFit.fill,
-                        loadingBuilder:  (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                          if(loadingProgress==null)
-                          {
-                            return child;
-                          }
-                          else{
-                            return const Center(child: CircularProgressIndicator());
-                          }
-                        },
-                        errorBuilder: (context, exception, stackTrace) {
-                          return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
-                        },
-                        // width: size.width, // Adjust the width as needed
+                      child: Padding(
+                        padding:EdgeInsets.all(allsize*0.005),
+                        child: Image.network(
+                          item['image_url'], // Use the 'image' field from your data
+                          fit:MediaQuery.of(context).size.shortestSide < 550? BoxFit.fill:BoxFit.fill,
+                          loadingBuilder:  (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                            if(loadingProgress==null)
+                            {
+                              return child;
+                            }
+                            else{
+                              return const Center(child: CircularProgressIndicator());
+                            }
+                          },
+                          errorBuilder: (context, exception, stackTrace) {
+                            return Image.asset('assets/images/imagecomingsoon_ful.jpg',fit: BoxFit.contain,);
+                          },
+                          // width: size.width, // Adjust the width as needed
+                        ),
                       ),
                     ),
                   );
@@ -107,23 +111,38 @@ class _Slider3State extends State<Slider3> {
               Positioned(
                 bottom: size.height*0.03,
                 left: size.width*0.4,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: widget.data.asMap().entries.map((entry) {
-                    return Container(
-                      width:allsize*0.013,
-                      height: allsize*0.013,
-                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.grey[800]!),
-                        color: _currentIndex == entry.key
-                            ? Colors.grey[300]
-                            : Colors.transparent,
-                      ),
-                    );
-                  }).toList(),
+                child: AnimatedSmoothIndicator(
+                  duration: const Duration(milliseconds: 300),
+                  activeIndex: _currentIndex,
+                  count: widget.data.length,
+                  curve: Curves.easeIn,
+                  effect:  WormEffect(
+                    paintStyle: PaintingStyle.stroke,
+                    dotColor: Colors.grey[600]!,
+                    dotHeight: allsize*0.012,
+                    dotWidth: allsize*0.012,
+                    strokeWidth: 1.5,
+                    activeDotColor: Colors.white,
+
+                  ),
                 ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: widget.data.asMap().entries.map((entry) {
+                //     return Container(
+                //       width:allsize*0.013,
+                //       height: allsize*0.013,
+                //       margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                //       decoration: BoxDecoration(
+                //         shape: BoxShape.circle,
+                //         border: Border.all(color: Colors.grey[800]!),
+                //         color: _currentIndex == entry.key
+                //             ? Colors.grey[300]
+                //             : Colors.transparent,
+                //       ),
+                //     );
+                //   }).toList(),
+                // ),
               ),
             ],
           ),

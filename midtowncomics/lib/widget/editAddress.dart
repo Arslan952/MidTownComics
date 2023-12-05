@@ -75,7 +75,7 @@ class _EditAddressState extends State<EditAddress> {
                   child: SizedBox(
                     // height: size.height*1,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding:EdgeInsets.all(allsize*0.015),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

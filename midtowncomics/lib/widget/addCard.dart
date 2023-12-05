@@ -41,7 +41,7 @@ class _AddCardState extends State<AddCard> {
                   child: SizedBox(
                     height: size.height*1,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(allsize*0.015),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -287,7 +287,7 @@ class _AddCardState extends State<AddCard> {
                                 child: Container(
                                   height:
                                   size.height * 0.045,
-                                  width: size.width*0.35,
+                                  width: size.width*0.3,
                                   decoration: BoxDecoration(
                                       color:
                                       Colors.grey[300]),
