@@ -88,7 +88,7 @@ class _Header_WidgetState extends State<Header_Widget> {
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Consumer<StreamedDataProvider>(builder: (context, provider, child) {
       return Container(
-        height: size.height*0.159,
+        height: allsize*0.107,
         color: const Color(0xff006ccf),
         child: Column(
           children: [
@@ -125,7 +125,7 @@ class _Header_WidgetState extends State<Header_Widget> {
                               color: Colors.white,
                               fontFamily: "oswald_bold",
                               fontStyle: FontStyle.italic,
-                              fontSize: allsize * 0.021,
+                              fontSize: allsize * 0.0215,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -196,6 +196,16 @@ class _Header_WidgetState extends State<Header_Widget> {
                                     );
                                   },
                                   child: badges.Badge(
+                                    onTap: (){
+                                      provider.loginuserdata.isEmpty
+                                          ? Get.to(const SignInScreen())
+                                          : showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return const CustomDialugue3();
+                                        },
+                                      );
+                                    },
                                     position: badges.BadgePosition.topEnd(),
                                     showBadge:
                                     provider.loginuserdata.isEmpty || pullListDataList.isEmpty ? false : true,
@@ -212,7 +222,7 @@ class _Header_WidgetState extends State<Header_Widget> {
                                     badgeStyle:badges.BadgeStyle(
                                       badgeColor: regular.length >=10
                                           ? Colors.green
-                                          : Colors.red,
+                                          : const Color(0xffd40e11),
                                       padding: const EdgeInsets.all(5),
                                       borderRadius: BorderRadius.circular(4),
                                     ),
@@ -275,6 +285,16 @@ class _Header_WidgetState extends State<Header_Widget> {
                                     );
                                   },
                                   child: badges.Badge(
+                                    onTap: (){
+                                      provider.loginuserdata.isEmpty
+                                          ? Get.to(const SignInScreen())
+                                          : showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return const CustomDialougue2();
+                                        },
+                                      );
+                                    },
                                     showBadge:
                                     provider.cartdata['DATA'] == null ||
                                         provider.loginuserdata.isEmpty
@@ -294,7 +314,7 @@ class _Header_WidgetState extends State<Header_Widget> {
                                     badgeStyle: badges.BadgeStyle(
                                       badgeColor: totalprice > 89
                                           ? Colors.green
-                                          : Colors.red,
+                                          : const Color(0xffd40e11),
                                       padding: const EdgeInsets.all(5),
                                       borderRadius: BorderRadius.circular(4),
                                     ),
@@ -334,105 +354,114 @@ class _Header_WidgetState extends State<Header_Widget> {
                                 color: Colors.white,
                                 size: allsize * 0.025,
                               )),
+                          InkWell(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const SearchDialugue();
+                                },
+                              );
+                            },
+                            child: Container(
+                                width: size.width * 0.22,
+                                color: const Color(0xffefefef),
+                                height: allsize*0.034,
+                                child: Padding(
+                                  padding: EdgeInsets.all(allsize*0.0068),
+                                  child: Text(
+                                    provider.title,
+                                    style: TextStyle(
+                                        fontSize: allsize * 0.0138,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )),
+                          ),
+                          Flexible(
+                            child: SizedBox(
+                              height: allsize*0.034,
+                              child: TextFormField(
+                                focusNode: _focusNode,
+                                controller: widget.searchcontroller,
+                                textInputAction: TextInputAction.search,
+                                onEditingComplete: () {
+                                  provider.searchlist(false);
+                                  FocusScope.of(context).unfocus();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const SearchPage()));
+                                },
+                                style: const TextStyle(
+                                  // height: 1
+                                  // fontSize: allsize * 0.017,
+                                  // fontWeight: FontWeight.w300,
+                                ),
+                                maxLines: 1,
+                                // textAlignVertical: TextAlignVertical.center,
+                                decoration:  InputDecoration(
+                                  contentPadding:EdgeInsets.all(allsize*0.013),
+                                  prefixIcon: _showIcon
+                                      ? Icon(
+                                    Icons.search_outlined,
+                                    size: allsize * 0.02,
+                                  )
+                                      : null,
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: InputBorder.none,
+                                  // suffixIcon: _focusNode.hasFocus
+                                  //     ? IconButton(
+                                  //   padding: EdgeInsets.zero,
+                                  //   onPressed: () {
+                                  //     provider.searchlist(false);
+                                  //     widget.searchcontroller!.clear();
+                                  //     provider.removesearchdata();
+                                  //     provider
+                                  //         .updatesearchselextion("");
+                                  //     _focusNode.unfocus();
+                                  //   },
+                                  //   icon: Icon(
+                                  //     CupertinoIcons.clear,
+                                  //     size: allsize * 0.02,
+                                  //     color: Colors.grey[500],
+                                  //   ),
+                                  // )
+                                  //     : const SizedBox.shrink(),
+                                ),
+                              ),
+                            ),
+                          ),
                           Container(
                             color: Colors.white,
-                            height: size.height * 0.05,
-                            child: Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const SearchDialugue();
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                      width: size.width * 0.22,
-                                      color: const Color(0xffefefef),
-                                      height: size.height * 0.05,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(
-                                            MediaQuery
-                                                .of(context)
-                                                .size
-                                                .shortestSide <
-                                                550
-                                                ? allsize * 0.01
-                                                : allsize * 0.007),
-                                        child: Text(
-                                          provider.title,
-                                          style: TextStyle(
-                                              fontSize: allsize * 0.013),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      )),
+                            width: size.width*0.1,
+                            height: allsize*0.034,
+                            child: Center(
+                              child:  _focusNode.hasFocus
+                                  ? IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  provider.searchlist(false);
+                                  widget.searchcontroller!.clear();
+                                  provider.removesearchdata();
+                                  provider
+                                      .updatesearchselextion("");
+                                  _focusNode.unfocus();
+                                },
+                                icon: Icon(
+                                  CupertinoIcons.clear,
+                                  size: allsize * 0.02,
+                                  color: Colors.grey[500],
                                 ),
-                                SizedBox(
-                                  width: size.width * 0.59,
-                                  child: TextFormField(
-                                    focusNode: _focusNode,
-                                    controller: widget.searchcontroller,
-                                    textInputAction: TextInputAction.search,
-                                    onEditingComplete: () {
-                                      provider.searchlist(false);
-                                      FocusScope.of(context).unfocus();
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                              const SearchPage()));
-                                    },
-                                    style: TextStyle(
-                                      fontSize: allsize * 0.017,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                    maxLines: 1,
-                                    textAlignVertical: TextAlignVertical.center,
-                                    decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.only(
-                                          top: 0, bottom: 0, left: 8, right: 8),
-                                      prefixIcon: _showIcon
-                                          ? Icon(
-                                        Icons.search,
-                                        size: allsize * 0.02,
-                                      )
-                                          : null,
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      border: InputBorder.none,
-                                      suffixIcon: _focusNode.hasFocus
-                                          ? IconButton(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: () {
-                                          provider.searchlist(false);
-                                          widget.searchcontroller!.clear();
-                                          provider.removesearchdata();
-                                          provider
-                                              .updatesearchselextion("");
-                                          _focusNode.unfocus();
-                                        },
-                                        icon: Icon(
-                                          CupertinoIcons.clear,
-                                          size: allsize * 0.02,
-                                          color: Colors.grey[500],
-                                        ),
-                                      )
-                                          : const SizedBox.shrink(),
-                                    ),
-                                  ),
-                                ),
-
-                              ],
+                              )
+                                  : const SizedBox.shrink(),
                             ),
                           )
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: size.height * 0.005,
-                    )
                   ],
                 ),
               ),

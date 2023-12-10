@@ -86,8 +86,8 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                 children: [
                   Center(
                     child: SizedBox(
-                      height: size.height * 0.18,
-                      width: size.width * 0.3,
+                      height: size.height * 0.19,
+                      width: size.width * 0.25,
                       child: Image.network(
                         widget.adultimage == '0'
                             ? "https://www.midtowncomics.com/images/PRODUCT/FUL/${widget.image}_ful.jpg"
@@ -110,22 +110,22 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                       ),
                     ),
                   ),
-                  SizedBox(height: size.height*0.01,),
-                  SizedBox(
-                    height: size.height * 0.06,
-                    child: InkWell(
-                      onTap: () {
-                        provider.chanddetai({});
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProductDetialPage(
-                                      productid: widget.image!,
-                                    )));
-                        // Get.off(ProductDetialPage(
-                        //   productid: widget.image!,
-                        // ));
-                      },
+                  SizedBox(height: size.height*0.005,),
+                  InkWell(
+                    onTap: () {
+                      provider.chanddetai({});
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductDetialPage(
+                                    productid: widget.image!,
+                                  )));
+                      // Get.off(ProductDetialPage(
+                      //   productid: widget.image!,
+                      // ));
+                    },
+                    child: SizedBox(
+                      height: allsize*0.03,
                       child: Text(
                         widget.title!.isNotEmpty
                             ? widget.title!
@@ -133,7 +133,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: allsize * 0.013,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w400,
                           fontFamily: ' oswald_bold'
                         ),
                       ),
@@ -153,7 +153,7 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                               "\$${widget.prce1}",
                               style: TextStyle(
                                   decoration: TextDecoration.lineThrough,
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: ' oswald_bold',
                                   fontSize: allsize * 0.0135),
                             ),
@@ -452,17 +452,17 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                 : ClipPath(
                     clipper: CustomClipPath(),
                     child: Container(
-                      height: size.height * 0.028,
-                      width: size.width * 0.4,
+                      height: size.height * 0.025,
+                      width: size.width * 0.355,
                       color: const Color(0xff006ccf),
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Padding(
-                          padding: EdgeInsets.only(left:size.width*0.01),
+                          padding: EdgeInsets.only(left:size.width*0.005),
                           child: Text(
-                            "Available for pull list!",
+                            "Available For Pull List!",
                             style: TextStyle(
-                                color: Colors.white, fontSize: allsize * 0.011),
+                                color: Colors.white, fontSize: allsize * 0.01),
                           ),
                         ),
                       ),

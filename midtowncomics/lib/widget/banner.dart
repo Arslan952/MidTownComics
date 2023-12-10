@@ -27,7 +27,7 @@ class HomeScreenBanner extends StatelessWidget {
         // )
             :
         SizedBox(
-        height: size.height * 0.36,
+        height: size.height * 0.37,
         width: double.infinity,
         child: provider.streamedData.isEmpty || imagedata==" "
             ?

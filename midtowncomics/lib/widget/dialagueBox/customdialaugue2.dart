@@ -97,7 +97,7 @@ class CustomDialougue2 extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: size.height * 0.625,
+                height: size.height * 0.57,
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: size.width*0.03),
                     child: ListView.builder(

@@ -231,7 +231,7 @@ class _ListViewBuilderWidgetState extends State<ListViewBuilderWidget> {
                             );
                           },
                           child: Container(
-                            height: widget.size.height * 0.047,
+                            height: widget.allsize*0.033,
                             decoration:
                             BoxDecoration(color: Colors.grey[300]),
                             padding: const EdgeInsets.all(8.0),

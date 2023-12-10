@@ -55,10 +55,11 @@ class _ShippingFaqScreenState extends State<ShippingFaqScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var allsize=size.height+size.width;
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize:Size(size.width*1,size.height*0.159),
+          preferredSize:Size(size.width*1,allsize*0.11),
           child: Header_Widget(
             ontap: () => scaffoldKey.currentState!.openDrawer(),
             searchcontroller:searchController,

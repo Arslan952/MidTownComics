@@ -48,47 +48,51 @@ class _SplashScreenState extends State<SplashScreen> {
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color(0xffd70306),
-      body: SafeArea(
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/splashscreen/splash_page.png'),
-                fit: BoxFit.fill
-              )
+      body: Container(
+        height: size.height*1,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/splashscreen/splash_page.png'),
+            fit: BoxFit.fill
+          )
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+        // SizedBox(
+        //   height: size.height * 0.2,
+        // ),
+        // Center(
+        //   child: SizedBox(
+        //     height: size.height * 0.3,
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: size.height * 0.28,
+        // ),
+        Center(
+          child: Text(
+            "Loading...",
+            style: TextStyle(fontSize: allsize * 0.015, color: Colors.white),
+          ),
+        ),
+        SizedBox(
+          height: size.height * 0.05,
+        ),
+           Center(
+          child: Transform.scale(
+            scale: allsize*0.0007,
+            child: const CircularProgressIndicator(
+              color: Color(0xff016fdf),
             ),
-            child: Column(
-        children: [
-            SizedBox(
-              height: size.height * 0.2,
+          ),
+        ),
+      SizedBox(
+        height: size.height*0.02,
+      )
+              ],
             ),
-            Center(
-              child: SizedBox(
-                height: size.height * 0.3,
-              ),
-            ),
-            SizedBox(
-              height: size.height * 0.28,
-            ),
-            Center(
-              child: Text(
-                "Loading...",
-                style: TextStyle(fontSize: allsize * 0.015, color: Colors.white),
-              ),
-            ),
-            SizedBox(
-              height: size.height * 0.05,
-            ),
-               Center(
-              child: Transform.scale(
-                scale: allsize*0.0007,
-                child: const CircularProgressIndicator(
-                  color: Color(0xff016fdf),
-                ),
-              ),
-            )
-        ],
       ),
-          )),
     );
   }
 }

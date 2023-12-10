@@ -106,7 +106,7 @@ class CustomDialugue3 extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: size.height * 0.625,
+                height: size.height * 0.57,
                 child: Padding(
                     padding: EdgeInsets.all(size.height * 0.01),
                     child: ListView.builder(

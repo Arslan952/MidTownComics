@@ -161,7 +161,7 @@ class _Slider1State extends State<Slider1> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: size.height * 0.01,
+                      height: size.height * 0.012,
                     ),
                     Text(
                       provider.slider1[_currentIndex]['img_name'],
@@ -178,7 +178,7 @@ class _Slider1State extends State<Slider1> {
                       // Use the 'title' field from your data
                       style: TextStyle(
                           fontSize: allsize * 0.012,
-                        color: Colors.grey,
+                        color: const Color(0xff7a7a7a),
                         fontFamily: 'oswald_light'
                       ),
                       textAlign: TextAlign.center,

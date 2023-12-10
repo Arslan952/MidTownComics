@@ -33,11 +33,11 @@ class WeeklyReleaseButton extends StatelessWidget {
                      print(data);
                     },
                     child: Text(
-                      "WEEKLY RELEASE",
+                      "WEEKLY RELEASES",
                       style: TextStyle(
                           color: const Color(0xff006ccf),
-                          fontFamily: 'oswald_light',
-                          fontSize: allsize*0.019,
+                          fontFamily: 'opensans_regular',
+                          fontSize: allsize*0.0175,
                           letterSpacing: 1,
                           fontWeight: FontWeight.bold),
                     ),
@@ -46,7 +46,7 @@ class WeeklyReleaseButton extends StatelessWidget {
                         padding: EdgeInsets.only(left: size.width*0.14),
                         child: Text(
                     "Updated every wednesday",
-                    style: TextStyle(color: const Color(0xff7c7c7c),fontSize: allsize*0.011),
+                    style: TextStyle(color: const Color(0xff868686),fontSize: allsize*0.011),
                   ),
                       )
                 ],

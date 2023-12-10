@@ -29,7 +29,7 @@ class CardGridView extends StatelessWidget {
           shrinkWrap: true,
           crossAxisCount: 2,
           childAspectRatio: MediaQuery.of(context).size.shortestSide < 550
-              ? (2 / 4.25)
+              ? (2 / 4.23)
               : (2 / 2.7),
           children: [
             //New to Mid tOWN
@@ -68,9 +68,11 @@ class CardGridView extends StatelessWidget {
                           "New to Midtown\n"
                           "Comics?":"Welcome ${provider.loginuserdata['sh_fname']}",
                           style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontSize: allsize * 0.016,
-                              fontWeight: FontWeight.bold),
+                              color: const Color(0xff066ecc),
+                              fontSize: allsize * 0.015,
+                              fontFamily: 'opensans_semibold',
+                              fontWeight: FontWeight.w800
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         Flexible(
@@ -158,9 +160,11 @@ class CardGridView extends StatelessWidget {
                         Text(
                           'New Release',
                           style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontSize: allsize * 0.016,
-                              fontWeight: FontWeight.bold),
+                              color: const Color(0xff066ecc),
+                              fontSize: allsize * 0.015,
+                              fontFamily: 'opensans_semibold',
+                              fontWeight: FontWeight.w800
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         Flexible(
@@ -256,9 +260,11 @@ class CardGridView extends StatelessWidget {
                         Text(
                           "My Pull List",
                           style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontSize: allsize * 0.016,
-                              fontWeight: FontWeight.bold),
+                              color: const Color(0xff066ecc),
+                              fontSize: allsize * 0.015,
+                              fontFamily: 'opensans_semibold',
+                              fontWeight: FontWeight.w800
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         Flexible(
@@ -337,9 +343,11 @@ class CardGridView extends StatelessWidget {
                         Text(
                           "Pre Order",
                           style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontSize: allsize * 0.016,
-                              fontWeight: FontWeight.bold),
+                            color: const Color(0xff066ecc),
+                            fontSize: allsize * 0.015,
+                            fontFamily: 'opensans_semibold',
+                            fontWeight: FontWeight.w800
+                            ,),
                           textAlign: TextAlign.center,
                         ),
                         Flexible(
@@ -418,9 +426,11 @@ class CardGridView extends StatelessWidget {
                         Text(
                           "My Wish List",
                           style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontSize: allsize * 0.016,
-                              fontWeight: FontWeight.bold),
+                              color: const Color(0xff066ecc),
+                              fontSize: allsize * 0.015,
+                              fontFamily: 'opensans_semibold',
+                              fontWeight: FontWeight.w800
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         Flexible(
@@ -500,9 +510,11 @@ class CardGridView extends StatelessWidget {
                         Text(
                           "Deals of the Day",
                           style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontSize: allsize * 0.016,
-                              fontWeight: FontWeight.bold),
+                              color: const Color(0xff066ecc),
+                              fontSize: allsize * 0.015,
+                              fontFamily: 'opensans_semibold',
+                              fontWeight: FontWeight.w800
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         Flexible(

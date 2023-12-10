@@ -45,7 +45,7 @@ class _EditProfileDialagueState extends State<EditProfileDialague> {
                 insetPadding:EdgeInsets.symmetric(horizontal:allsize*0.012,vertical: allsize*0.01),
                 child: SingleChildScrollView(
                   child: SizedBox(
-                    height: size.height*1,
+                    // height: size.height*1,
                     child: Column(
                       children: [
                         Container(

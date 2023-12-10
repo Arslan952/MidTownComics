@@ -19,6 +19,7 @@ class _Custom_drawerState extends State<Custom_drawer> {
     var allsize=MediaQuery.of(context).size.height+MediaQuery.of(context).size.width;
     var size=MediaQuery.of(context).size;
     return SafeArea(
+      bottom:FunctionClass().getDevicetType()=="IOS"?false:true,
       child: Drawer(
         width: size.width*0.6,
         child: ListView(

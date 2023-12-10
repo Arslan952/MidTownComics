@@ -29,7 +29,7 @@ class _Slider3State extends State<Slider3> {
     var allsize=MediaQuery.of(context).size.height+MediaQuery.of(context).size.width;
     _precacheImages(widget.data);
     return Padding(
-      padding: const EdgeInsets.all(3),
+      padding:EdgeInsets.all(allsize*0.0035),
       child: Stack(
         children: [
           Stack(
@@ -61,14 +61,14 @@ class _Slider3State extends State<Slider3> {
                     },
                     child: Container(
                       height: size.height*0.52,
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                      margin: EdgeInsets.symmetric(horizontal: allsize*0.0035),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3),
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
-                            blurRadius: 5.0,
-                            offset: Offset(0, 2),
+                            blurRadius: 3,
+                            offset: Offset(1, 1),
                           ),
                         ],
                         color: Colors.white

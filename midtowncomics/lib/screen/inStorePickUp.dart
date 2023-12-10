@@ -18,50 +18,54 @@ class _loadInstorePickUpState extends State<loadInstorePickUp> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-        key: scaffoldKey,
-        drawer: const Custom_drawer(),
-        body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SearchList(searchcontroller: searchController),
-                Consumer<ShippingInformationProvider>(
-                    builder: (context, information, child) {
-                      var document = parse(information.shippingInformation['DATA']['shippingInfo']['val']);
-                      String informationData=document.outerHtml.toString();
-                      return Column(
-                        crossAxisAlignment:CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                "Shipping Information",
-                                style:
-                                TextStyle(
-                                    fontSize: 23,
-                                    fontFamily: 'oswald_bold',
-                                    fontWeight: FontWeight.bold),
-                              )),
-                          SizedBox(height: size.height*0.3),
-                          Html(
-                            data: informationData,
-                          )
-                          // Text(FunctionClass().parseHtmlString(document.outerHtml))
-                        ],
-                      );
-                    }),
-                const SubcribeWidget(),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                const Footer(),
-                SizedBox(
-                  height: size.height * 0.05,
-                )
-              ],
-            )),
+    return Container(
+      color: const Color(0xff006ccf),
+      child: SafeArea(
+        bottom:FunctionClass().getDevicetType()=="IOS"?false:true,
+        child: Scaffold(
+          key: scaffoldKey,
+          drawer: const Custom_drawer(),
+          body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SearchList(searchcontroller: searchController),
+                  Consumer<ShippingInformationProvider>(
+                      builder: (context, information, child) {
+                        var document = parse(information.shippingInformation['DATA']['shippingInfo']['val']);
+                        String informationData=document.outerHtml.toString();
+                        return Column(
+                          crossAxisAlignment:CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Shipping Information",
+                                  style:
+                                  TextStyle(
+                                      fontSize: 23,
+                                      fontFamily: 'oswald_bold',
+                                      fontWeight: FontWeight.bold),
+                                )),
+                            SizedBox(height: size.height*0.3),
+                            Html(
+                              data: informationData,
+                            )
+                            // Text(FunctionClass().parseHtmlString(document.outerHtml))
+                          ],
+                        );
+                      }),
+                  const SubcribeWidget(),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  const Footer(),
+                  SizedBox(
+                    height: size.height * 0.05,
+                  )
+                ],
+              )),
+        ),
       ),
     );
   }

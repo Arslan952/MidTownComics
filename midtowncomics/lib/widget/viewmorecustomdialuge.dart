@@ -9,7 +9,7 @@ class ViewMoreCustomDialugue extends StatelessWidget {
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Dialog(
         child: SizedBox(
-      height: size.height * 0.43,
+      height:allsize*0.282,
       child: Center(
         child: Column(
           children: [

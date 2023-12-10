@@ -59,6 +59,7 @@ class SubcribeWidget extends StatelessWidget {
                           "SUBSCRIBE",
                           style: TextStyle(
                             color: Colors.white,
+                            fontFamily: 'opensans_semibold',
                             fontSize: allsize * 0.015,
                             fontWeight: FontWeight.w600,
                           ),
@@ -75,7 +76,7 @@ class SubcribeWidget extends StatelessWidget {
                 children: [
                   Text("Weekly",style: TextStyle(color: Colors.grey[600],fontSize: allsize*0.0113),),
                   Text('Daily Deals',style: TextStyle(color: Colors.grey[600],fontSize: allsize*0.0113)),
-                  Text("Back Issue",style: TextStyle(color: Colors.grey[600],fontSize: allsize*0.0113))
+                  Text("Back Issues",style: TextStyle(color: Colors.grey[600],fontSize: allsize*0.0113))
                 ],
               )
             ],

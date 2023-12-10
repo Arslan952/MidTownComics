@@ -25,472 +25,476 @@ class _CartDetailState extends State<CartDetail> {
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize:Size(size.width*1,size.height*0.159),
-          child: Header_Widget(
-            ontap: () => scaffoldKey.currentState!.openDrawer(),
-            searchcontroller:searchcontroller,
-          ),),
-        key: scaffoldKey,
-        drawer: const Custom_drawer(),
-        body: SingleChildScrollView(
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Consumer<StreamedDataProvider>(
-                    builder: (context, provider, child) {
-                  List<dynamic> cartdatalist =
-                      provider.cartdata['DATA'] == null
-                          ? []
-                          : provider.cartdata['DATA']['cartList'];
-                  String totalcart = provider.cartdata['DATA'] == null
-                      ? "0"
-                      : cartdatalist[0]['cart_total_qty'];
-                  double totalprice = double.parse(
-                      provider.cartdata['DATA'] == null
-                          ? "0"
-                          : cartdatalist[0]['cart_total']);
-                  int convert = totalprice.toInt();
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SearchList(searchcontroller: searchcontroller),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Your Cart",
-                          style: TextStyle(
-                              fontSize: allsize * 0.02,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[500]),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 0.2,
-                                offset: Offset(1, 1),
-                              ),
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 0.2,
-                                offset: Offset(1, 1),
-                              ),
-                            ],
+    return Container(
+      color: const Color(0xff006ccf),
+      child: SafeArea(
+        bottom:FunctionClass().getDevicetType()=="IOS"?false:true,
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize:Size(size.width*1,allsize*0.11),
+            child: Header_Widget(
+              ontap: () => scaffoldKey.currentState!.openDrawer(),
+              searchcontroller:searchcontroller,
+            ),),
+          key: scaffoldKey,
+          drawer: const Custom_drawer(),
+          body: SingleChildScrollView(
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Consumer<StreamedDataProvider>(
+                      builder: (context, provider, child) {
+                    List<dynamic> cartdatalist =
+                        provider.cartdata['DATA'] == null
+                            ? []
+                            : provider.cartdata['DATA']['cartList'];
+                    String totalcart = provider.cartdata['DATA'] == null
+                        ? "0"
+                        : cartdatalist[0]['cart_total_qty'];
+                    double totalprice = double.parse(
+                        provider.cartdata['DATA'] == null
+                            ? "0"
+                            : cartdatalist[0]['cart_total']);
+                    int convert = totalprice.toInt();
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SearchList(searchcontroller: searchcontroller),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Your Cart",
+                            style: TextStyle(
+                                fontSize: allsize * 0.02,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[500]),
                           ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Regular Items",
-                                    style: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontSize: allsize * 0.017,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: size.width * 0.03),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(
-                                            "\$$convert",
-                                            style: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize: allsize * 0.011),
-                                          ),
-                                          SizedBox(
-                                            width: size.width * 0.5,
-                                            child: LinearProgressIndicator(
-                                              value: convert / 89,
-                                              color: const Color(0xff006ccf),
-                                              backgroundColor: Colors.grey,
-                                            ),
-                                          ),
-                                          Text(
-                                            "89",
-                                            style: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize: allsize * 0.011),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: size.height * 0.01,
-                                  ),
-                                  Text(
-                                    "Spend \$${89 - convert} to unlock free Shipping",
-                                    style: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: allsize * 0.013),
-                                  ),
-                                  SizedBox(
-                                    height: size.height * 0.02,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Subtotal($totalcart Items)",
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: allsize * 0.012),
-                                      ),
-                                      Text(
-                                        "\$$totalprice",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.012,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
-                                  ),
-                                  const Divider(),
-                                  SizedBox(
-                                    height: size.height * 0.01,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Total",
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: allsize * 0.016),
-                                      ),
-                                      Text(
-                                        "\$$totalprice",
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.017,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.02,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Container(
-                          height: size.height * 0.06,
-                          width: double.infinity,
-                          color: const Color(0xff006ccf),
-                          child: Center(
-                            child: Text(
-                              "CHECK OUT",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: allsize * 0.014),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.015,
-                      ),
-                      //Promo Codes
-                      Text(
-                        "Apply Promo Code",
-                        style: TextStyle(
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500,
-                            fontSize: allsize * 0.016),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 7),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: size.width * 0.6,
-                              child: TextFormField(),
-                            ),
-                            SizedBox(
-                              width: size.width * 0.1,
-                            ),
-                            TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  "Apply",
-                                  style:
-                                      TextStyle(fontSize: allsize * 0.015),
-                                ))
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.005,
-                      ),
-                      Text(
-                        "Use a Gift Card",
-                        style: TextStyle(
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500,
-                            fontSize: allsize * 0.016),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 7),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: size.width * 0.5,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    hintText: "GC#",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey[500],
-                                        fontSize: allsize * 0.013)),
-                              ),
-                            ),
-                            SizedBox(
-                              width: size.width * 0.4,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    hintText: "PIN #",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey[500],
-                                        fontSize: allsize * 0.013)),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.01,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Container(
-                          height: size.height * 0.06,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: const Color(0xff006ccf), width: 3)),
-                          child: Center(
-                            child: Text(
-                              "APPLY GIFT CARD",
-                              style: TextStyle(
-                                  color: const Color(0xff006ccf),
-                                  fontSize: allsize * 0.014),
-                            ),
-                          ),
-                        ),
-                      ),
-                      //Shipping Cost Calculator
-                      Text(
-                        "Shipping Cost Calculator",
-                        style: TextStyle(
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.bold,
-                            fontSize: allsize * 0.015),
-                      ),
-                      Text(
-                        "International Residents, Please Select your country",
-                        style: TextStyle(
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w300,
-                            fontSize: allsize * 0.012),
-                      ),
-                      //Dropdown
-                      InkWell(
-                        onTap: () {
-                          provider.loginuserdata.isEmpty?
-                          Get.to(const SignInScreen()):
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                insetPadding: EdgeInsets.symmetric(
-                                    horizontal: allsize * 0.016,
-                                    vertical: allsize * 0.04),
-                                child: Scrollbar(
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: provider.countries.map<Widget>((dynamic item) {
-                                        return ListTile(
-                                          title: Text(item['ct_name']),
-                                          onTap: () async {
-                                            setState(() {
-                                              countryValue=item['ct_name'];
-                                            });
-                                            Navigator.of(context).pop();
-                                          },
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 0.2,
+                                  offset: Offset(1, 1),
                                 ),
-                              );
-                            },
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 7),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: size.height * 0.06,
-                                width: size.width * 0.7,
-                                decoration:
-                                BoxDecoration(color: Colors.grey[300]),
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 0.2,
+                                  offset: Offset(1, 1),
+                                ),
+                              ],
+                            ),
+                            child: Container(
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.center,
                                   children: [
-                                    Flexible(
-                                      child: Text(
-                                        countryValue,
-                                        style: TextStyle(
-                                            fontSize: allsize * 0.014),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
+                                    Text(
+                                      "Regular Items",
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: allsize * 0.017,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: size.width * 0.03),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Text(
+                                              "\$$convert",
+                                              style: TextStyle(
+                                                  color: Colors.grey[600],
+                                                  fontSize: allsize * 0.011),
+                                            ),
+                                            SizedBox(
+                                              width: size.width * 0.5,
+                                              child: LinearProgressIndicator(
+                                                value: convert / 89,
+                                                color: const Color(0xff006ccf),
+                                                backgroundColor: Colors.grey,
+                                              ),
+                                            ),
+                                            Text(
+                                              "89",
+                                              style: TextStyle(
+                                                  color: Colors.grey[600],
+                                                  fontSize: allsize * 0.011),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.arrow_drop_down,
-                                      size: allsize * 0.02,
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Text(
+                                      "Spend \$${89 - convert} to unlock free Shipping",
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: allsize * 0.013),
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.02,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Subtotal($totalcart Items)",
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: allsize * 0.012),
+                                        ),
+                                        Text(
+                                          "\$$totalprice",
+                                          style: TextStyle(
+                                              fontSize: allsize * 0.012,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ],
+                                    ),
+                                    const Divider(),
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Total",
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: allsize * 0.016),
+                                        ),
+                                        Text(
+                                          "\$$totalprice",
+                                          style: TextStyle(
+                                              fontSize: allsize * 0.017,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ],
                                     ),
                                   ],
                                 ),
                               ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Container(
+                            height: size.height * 0.06,
+                            width: double.infinity,
+                            color: const Color(0xff006ccf),
+                            child: Center(
+                              child: Text(
+                                "CHECK OUT",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: allsize * 0.014),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.015,
+                        ),
+                        //Promo Codes
+                        Text(
+                          "Apply Promo Code",
+                          style: TextStyle(
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w500,
+                              fontSize: allsize * 0.016),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 7),
+                          child: Row(
+                            children: [
                               SizedBox(
-                                width: size.width * 0.05,
+                                width: size.width * 0.6,
+                                child: TextFormField(),
+                              ),
+                              SizedBox(
+                                width: size.width * 0.1,
                               ),
                               TextButton(
                                   onPressed: () {},
                                   child: Text(
-                                    "APPLY",
-                                    style: TextStyle(
-                                        fontSize: allsize * 0.016,
-                                        fontWeight: FontWeight.bold),
+                                    "Apply",
+                                    style:
+                                        TextStyle(fontSize: allsize * 0.015),
                                   ))
                             ],
                           ),
                         ),
-                      ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 7),
-                      //   child: Row(
-                      //     children: [
-                      //       Container(
-                      //         height: size.height * 0.06,
-                      //         width: size.width * 0.7,
-                      //         decoration:
-                      //             BoxDecoration(color: Colors.grey[300]),
-                      //         padding: const EdgeInsets.all(8.0),
-                      //         child: Row(
-                      //           mainAxisAlignment:
-                      //               MainAxisAlignment.spaceBetween,
-                      //           children: [
-                      //             Text(
-                      //               countryValue,
-                      //               style: TextStyle(
-                      //                   fontSize: allsize * 0.014),
-                      //             ),
-                      //             Icon(
-                      //               Icons.arrow_drop_down,
-                      //               size: allsize * 0.02,
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //       SizedBox(
-                      //         width: size.width * 0.05,
-                      //       ),
-                      //       TextButton(
-                      //           onPressed: () {},
-                      //           child: Text(
-                      //             "APPLY",
-                      //             style: TextStyle(
-                      //                 fontSize: allsize * 0.016,
-                      //                 fontWeight: FontWeight.bold),
-                      //           ))
-                      //     ],
-                      //   ),
-                      // ),
-                      SizedBox(
-                        height: size.height * 0.01,
-                      ),
-                      //List Of Product
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 7),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Your Regular Item",
-                              style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: allsize * 0.019),
-                            ),
-                            SizedBox(
-                              width: size.width * 0.05,
-                            ),
-                            Text(
-                              "$totalcart Items",
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: allsize * 0.015),
-                            )
-                          ],
+                        SizedBox(
+                          height: size.height * 0.005,
                         ),
-                      ),
-                      const Divider(
-                        color: Color(0xff006ccf),
-                        thickness: 2,
-                      ),
-                      ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: cartdatalist.length,
-                          itemBuilder: (context, index) {
-                            return DetailPageListViewWidget(
-                              size: size,
-                              cartdatalist: cartdatalist,
-                              allsize: allsize,
-                              index: index,
+                        Text(
+                          "Use a Gift Card",
+                          style: TextStyle(
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w500,
+                              fontSize: allsize * 0.016),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 7),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: size.width * 0.5,
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      hintText: "GC#",
+                                      hintStyle: TextStyle(
+                                          color: Colors.grey[500],
+                                          fontSize: allsize * 0.013)),
+                                ),
+                              ),
+                              SizedBox(
+                                width: size.width * 0.4,
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      hintText: "PIN #",
+                                      hintStyle: TextStyle(
+                                          color: Colors.grey[500],
+                                          fontSize: allsize * 0.013)),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Container(
+                            height: size.height * 0.06,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: const Color(0xff006ccf), width: 3)),
+                            child: Center(
+                              child: Text(
+                                "APPLY GIFT CARD",
+                                style: TextStyle(
+                                    color: const Color(0xff006ccf),
+                                    fontSize: allsize * 0.014),
+                              ),
+                            ),
+                          ),
+                        ),
+                        //Shipping Cost Calculator
+                        Text(
+                          "Shipping Cost Calculator",
+                          style: TextStyle(
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.bold,
+                              fontSize: allsize * 0.015),
+                        ),
+                        Text(
+                          "International Residents, Please Select your country",
+                          style: TextStyle(
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w300,
+                              fontSize: allsize * 0.012),
+                        ),
+                        //Dropdown
+                        InkWell(
+                          onTap: () {
+                            provider.loginuserdata.isEmpty?
+                            Get.to(const SignInScreen()):
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  insetPadding: EdgeInsets.symmetric(
+                                      horizontal: allsize * 0.016,
+                                      vertical: allsize * 0.04),
+                                  child: Scrollbar(
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: provider.countries.map<Widget>((dynamic item) {
+                                          return ListTile(
+                                            title: Text(item['ct_name']),
+                                            onTap: () async {
+                                              setState(() {
+                                                countryValue=item['ct_name'];
+                                              });
+                                              Navigator.of(context).pop();
+                                            },
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             );
-                          }),
-                      SizedBox(
-                        height: size.height * 0.02,
-                      ),
-                      const SubcribeWidget(),
-                      SizedBox(
-                        height: size.height * 0.02,
-                      ),
-                      const Footer(),
-                      SizedBox(
-                        height: size.height * 0.05,
-                      )
-                    ],
-                  );
-                }))),
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 7),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: size.height * 0.06,
+                                  width: size.width * 0.6,
+                                  decoration:
+                                  BoxDecoration(color: Colors.grey[300]),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          countryValue,
+                                          style: TextStyle(
+                                              fontSize: allsize * 0.014),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_drop_down,
+                                        size: allsize * 0.02,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: size.width * 0.05,
+                                ),
+                                TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      "APPLY",
+                                      style: TextStyle(
+                                          fontSize: allsize * 0.016,
+                                          fontWeight: FontWeight.bold),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 7),
+                        //   child: Row(
+                        //     children: [
+                        //       Container(
+                        //         height: size.height * 0.06,
+                        //         width: size.width * 0.7,
+                        //         decoration:
+                        //             BoxDecoration(color: Colors.grey[300]),
+                        //         padding: const EdgeInsets.all(8.0),
+                        //         child: Row(
+                        //           mainAxisAlignment:
+                        //               MainAxisAlignment.spaceBetween,
+                        //           children: [
+                        //             Text(
+                        //               countryValue,
+                        //               style: TextStyle(
+                        //                   fontSize: allsize * 0.014),
+                        //             ),
+                        //             Icon(
+                        //               Icons.arrow_drop_down,
+                        //               size: allsize * 0.02,
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       SizedBox(
+                        //         width: size.width * 0.05,
+                        //       ),
+                        //       TextButton(
+                        //           onPressed: () {},
+                        //           child: Text(
+                        //             "APPLY",
+                        //             style: TextStyle(
+                        //                 fontSize: allsize * 0.016,
+                        //                 fontWeight: FontWeight.bold),
+                        //           ))
+                        //     ],
+                        //   ),
+                        // ),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        //List Of Product
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 7),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Your Regular Item",
+                                style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: allsize * 0.019),
+                              ),
+                              SizedBox(
+                                width: size.width * 0.05,
+                              ),
+                              Text(
+                                "$totalcart Items",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: allsize * 0.015),
+                              )
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          color: Color(0xff006ccf),
+                          thickness: 2,
+                        ),
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: cartdatalist.length,
+                            itemBuilder: (context, index) {
+                              return DetailPageListViewWidget(
+                                size: size,
+                                cartdatalist: cartdatalist,
+                                allsize: allsize,
+                                index: index,
+                              );
+                            }),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        const SubcribeWidget(),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        const Footer(),
+                        SizedBox(
+                          height: size.height * 0.05,
+                        )
+                      ],
+                    );
+                  }))),
+        ),
       ),
     );
   }
@@ -575,7 +579,7 @@ class _DetailPageListViewWidgetState extends State<DetailPageListViewWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: widget.size.width * 0.35,
+                        width: widget.size.width * 0.32,
                         child: Column(
                           children: [
                             Flexible(
@@ -837,7 +841,7 @@ class _DetailPageListViewWidgetState extends State<DetailPageListViewWidget> {
                                       onPressed: () {},
                                       child: Text("SAVE FOR\nLATER",
                                           style: TextStyle(
-                                              fontSize: widget.allsize * 0.008))),
+                                              fontSize: widget.allsize * 0.007))),
                                 ],
                               )
                             ],

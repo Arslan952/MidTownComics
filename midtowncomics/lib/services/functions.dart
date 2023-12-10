@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:html/parser.dart';
+import 'dart:io' show Platform;
 
 class FunctionClass{
   List<String> generateStringListFromInteger(int count) {
@@ -96,10 +97,21 @@ class FunctionClass{
     return result;
   }
 
-  void main() {
-    String input = 'JAN21';
-    String output = convertToFullMonth(input);
-    print(output); // Output: JANUARY 2021
-  }
+
+  //Get Device Type
+String getDevicetType()
+{
+  if(Platform.isIOS)
+    {
+      return 'IOS';
+    }
+  else if(Platform.isAndroid)
+    {
+      return 'Android';
+    }
+  return "Unknown";
+}
+
+
 
 }

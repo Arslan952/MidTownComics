@@ -77,15 +77,15 @@ class _Slider2State extends State<Slider2> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: const Color(0xffdcdcda)),
                           color: const Color(0xfff7f7f5)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FaIcon(
                             Ico[itemIndex],
-                            color: const Color(0xff1277d1),
+                            color: const Color(0xff017ff0),
                             size: allsize * 0.018,
                           ),
                           SizedBox(
@@ -94,7 +94,7 @@ class _Slider2State extends State<Slider2> {
                           Text(
                             data[itemIndex],
                             style: TextStyle(
-                                color: const Color(0xff1277d1),
+                                color: const Color(0xff017ff0),
                                 fontFamily: 'opensans_semibold',
                                 fontWeight: FontWeight.w900,
                                 fontSize: allsize * 0.017),
@@ -153,7 +153,7 @@ class _Slider2State extends State<Slider2> {
             //     );
             //   }).toList(),
             // ),
-            SizedBox(height: size.height*0.03,)
+            SizedBox(height: size.height*0.035,)
           ],
         ),
       );

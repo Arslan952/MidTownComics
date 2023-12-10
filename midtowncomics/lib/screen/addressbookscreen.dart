@@ -26,85 +26,89 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
     var size = MediaQuery.of(context).size;
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize:Size(size.width*1,size.height*0.159),
-          child: Header_Widget(
-            ontap: () => scaffoldKey.currentState!.openDrawer(),
-            searchcontroller:searchcontroller,
-          ),),
-        key: scaffoldKey,
-        drawer: const Custom_drawer(),
-        body: SingleChildScrollView(child:
-            Consumer<AddressProvider>(builder: (context,address, child) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SearchList(searchcontroller: searchcontroller),
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Address Book",
-                    style: TextStyle(
-                        fontFamily: 'oswald_bold',
-                        fontSize: allsize * 0.02,
-                        fontWeight: FontWeight.bold),
-                  )),
-              address.address.isEmpty?const Center(child: CircularProgressIndicator(),):
-              ListView.builder(
-              itemCount:address.address.length
-              ,shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context,index){
-                return  ListViewWidgetAddress(allsize: allsize, size: size,index:index);
+    return Container(
+      color: const Color(0xff006ccf),
+      child: SafeArea(
+        bottom:FunctionClass().getDevicetType()=="IOS"?false:true,
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize:Size(size.width*1,allsize*0.11),
+            child: Header_Widget(
+              ontap: () => scaffoldKey.currentState!.openDrawer(),
+              searchcontroller:searchcontroller,
+            ),),
+          key: scaffoldKey,
+          drawer: const Custom_drawer(),
+          body: SingleChildScrollView(child:
+              Consumer<AddressProvider>(builder: (context,address, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SearchList(searchcontroller: searchcontroller),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Address Book",
+                      style: TextStyle(
+                          fontFamily: 'oswald_bold',
+                          fontSize: allsize * 0.02,
+                          fontWeight: FontWeight.bold),
+                    )),
+                address.address.isEmpty?const Center(child: CircularProgressIndicator(),):
+                ListView.builder(
+                itemCount:address.address.length
+                ,shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context,index){
+                  return  ListViewWidgetAddress(allsize: allsize, size: size,index:index);
 
-              }
-              ),
-              InkWell(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: size.height * 0.06,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: const Color(0xff006ccf), width: 3)),
-                    child: Center(
-                      child: Text(
-                        "ADD NEW ADDRESS",
-                        style: TextStyle(
-                            color: const Color(0xff006ccf),
-                            fontSize: allsize * 0.015,
-                            fontFamily: 'opensans_semibold',
-                            fontWeight: FontWeight.w900),
+                }
+                ),
+                InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: size.height * 0.06,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: const Color(0xff006ccf), width: 3)),
+                      child: Center(
+                        child: Text(
+                          "ADD NEW ADDRESS",
+                          style: TextStyle(
+                              color: const Color(0xff006ccf),
+                              fontSize: allsize * 0.015,
+                              fontFamily: 'opensans_semibold',
+                              fontWeight: FontWeight.w900),
+                        ),
                       ),
                     ),
                   ),
+                  onTap: (){
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const AddNewAddress();
+                      },
+                    );
+                  },
                 ),
-                onTap: (){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const AddNewAddress();
-                    },
-                  );
-                },
-              ),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              const SubcribeWidget(),
-              SizedBox(
-                height: size.height * 0.02,
-              ),
-              const Footer(),
-              SizedBox(
-                height: size.height * 0.015,
-              )
-            ],
-          );
-        })),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                const SubcribeWidget(),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                const Footer(),
+                SizedBox(
+                  height: size.height * 0.015,
+                )
+              ],
+            );
+          })),
+        ),
       ),
     );
   }
@@ -229,17 +233,18 @@ class _ListViewWidgetAddressState extends State<ListViewWidgetAddress> {
                     );
                   },
                 ),
+                SizedBox(height: size.height*0.01,),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       "DEFAULT SHIPPING",
                       style: TextStyle(
                           color: const Color(0xff006ccf),
-                          fontSize: widget.allsize * 0.011),
+                          fontSize: widget.allsize * 0.01),
                     ),
                     Transform.scale(
-                      scale: widget.allsize * 0.0007,
+                      scale: widget.allsize * 0.0006,
                       child: Switch(
                           activeColor: const Color(0xff006ccf),
                           value: defaultshipping,
@@ -260,10 +265,10 @@ class _ListViewWidgetAddressState extends State<ListViewWidgetAddress> {
                       "DEFAULT BILLING",
                       style: TextStyle(
                           color: const Color(0xff006ccf),
-                          fontSize: widget.allsize * 0.011),
+                          fontSize: widget.allsize * 0.01),
                     ),
                     Transform.scale(
-                      scale: widget.allsize * 0.0007,
+                      scale: widget.allsize * 0.0006,
                       child: Switch(
                           activeColor: const Color(0xff006ccf),
                           value: defaultbilling,
@@ -278,7 +283,8 @@ class _ListViewWidgetAddressState extends State<ListViewWidgetAddress> {
                           }),
                     )
                   ],
-                )
+                ),
+                SizedBox(height: size.height*0.01,)
               ],
             ),
           ),

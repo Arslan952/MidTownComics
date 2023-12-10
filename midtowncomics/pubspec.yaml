@@ -141,6 +141,12 @@ flutter:
      - family: opensans_semibold
        fonts:
         - asset: assets/fonts/opensans_semibold.ttf
+     - family: opensans_regular
+       fonts:
+        - asset: assets/fonts/opensans_regular.ttf
+     - family: opensans_extrabold
+       fonts:
+         - asset: assets/fonts/opensans_extrabold.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

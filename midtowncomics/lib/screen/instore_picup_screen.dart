@@ -18,71 +18,76 @@ class _InStorePickupScreenState extends State<InStorePickupScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize:Size(size.width*1,size.height*0.159),
-          child: Header_Widget(
-            ontap: () => scaffoldKey.currentState!.openDrawer(),
-            searchcontroller:searchController,
-          ),),
-        key: scaffoldKey,
-        drawer: const Custom_drawer(),
-        body: SingleChildScrollView(
-            child:
-            Consumer<InStorePickUpProvider>(
-            builder: (context,inStore, child) {
-              var document = parse(inStore.inStorePickupData['DATA']['instorePickup']['val']);
-              String informationData=document.outerHtml.toString();
-              return  Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+    var allsize=size.height+size.width;
+    return Container(
+      color:const Color(0xff006ccf),
+      child: SafeArea(
+        bottom:FunctionClass().getDevicetType()=="IOS"?false:true,
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize:Size(size.width*1,allsize*0.11),
+            child: Header_Widget(
+              ontap: () => scaffoldKey.currentState!.openDrawer(),
+              searchcontroller:searchController,
+            ),),
+          key: scaffoldKey,
+          drawer: const Custom_drawer(),
+          body: SingleChildScrollView(
+              child:
+              Consumer<InStorePickUpProvider>(
+              builder: (context,inStore, child) {
+                var document = parse(inStore.inStorePickupData['DATA']['instorePickup']['val']);
+                String informationData=document.outerHtml.toString();
+                return  Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-                  SearchList(searchcontroller: searchController),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "IN-STORE PICKUP",
-                      style: TextStyle(fontSize: 23,
-                          fontFamily: 'oswald_bold',
-                          fontWeight: FontWeight.bold),
+                    SearchList(searchcontroller: searchController),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "IN-STORE PICKUP",
+                        style: TextStyle(fontSize: 23,
+                            fontFamily: 'oswald_bold',
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: size.height*0.01,),
-                      Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      inStore.inStorePickupData['DATA']['instorePickup']['subHeading'],
-                      style: const TextStyle(fontSize: 17,
-                          fontFamily: 'oswald_bold',
-                          fontWeight: FontWeight.bold),
+                    SizedBox(height: size.height*0.01,),
+                        Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        inStore.inStorePickupData['DATA']['instorePickup']['subHeading'],
+                        style: const TextStyle(fontSize: 17,
+                            fontFamily: 'oswald_bold',
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  // SizedBox(height: size.height*0.01,),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width*0.01),
-                    child: Html(
-                      data: informationData,
-                        style: {
-                          "p":Style(
-                            fontSize:FontSize(17)
-                          ),
-                          "h4":Style(
-                            fontSize: FontSize(20),
-                            fontWeight: FontWeight.bold
-                          )
-                        }
+                    // SizedBox(height: size.height*0.01,),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: size.width*0.01),
+                      child: Html(
+                        data: informationData,
+                          style: {
+                            "p":Style(
+                              fontSize:FontSize(17)
+                            ),
+                            "h4":Style(
+                              fontSize: FontSize(20),
+                              fontWeight: FontWeight.bold
+                            )
+                          }
+                      ),
                     ),
-                  ),
-                  const SubcribeWidget(),
-                  const Footer(),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  )
-                ],
-              );
-            })
+                    const SubcribeWidget(),
+                    const Footer(),
+                    SizedBox(
+                      height: size.height * 0.05,
+                    )
+                  ],
+                );
+              })
 
+          ),
         ),
       ),
     );

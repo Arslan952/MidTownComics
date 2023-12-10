@@ -51,12 +51,13 @@ class CardGridView2 extends StatelessWidget {
                       children: [
                         Text(
                           "Action Figures",
-                          style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontSize: allsize * 0.016,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
+                                style: TextStyle(
+                                    color: const Color(0xff066ecc),
+                                    fontSize: allsize * 0.015,
+                                    fontFamily: 'opensans_semibold',
+                                    fontWeight: FontWeight.w800),
+                                textAlign: TextAlign.center,
+                              ),
                         Flexible(
                           child: Image.network(
                             "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.featurenewrelease1['pr_id']}_ful.jpg",
@@ -110,12 +111,13 @@ class CardGridView2 extends StatelessWidget {
                       children: [
                         Text(
                           "Japanese Import",
-                          style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontSize: allsize * 0.016,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
+                                style: TextStyle(
+                                    color: const Color(0xff066ecc),
+                                    fontSize: allsize * 0.015,
+                                    fontFamily: 'opensans_semibold',
+                                    fontWeight: FontWeight.w800),
+                                textAlign: TextAlign.center,
+                              ),
                         Flexible(
                           child: Image.network(
                             "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['featureNewAdditionSection2']['pr_id']}_ful.jpg",
@@ -172,12 +174,13 @@ class CardGridView2 extends StatelessWidget {
                       children: [
                         Text(
                           "Funko",
-                          style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontSize: allsize * 0.016,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
+                                style: TextStyle(
+                                    color: const Color(0xff066ecc),
+                                    fontSize: allsize * 0.015,
+                                    fontFamily: 'opensans_semibold',
+                                    fontWeight: FontWeight.w800),
+                                textAlign: TextAlign.center,
+                              ),
                         Flexible(
                           child: Image.network(
                             "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['featureNewAdditionSection3']['pr_id']}_ful.jpg",
@@ -231,12 +234,13 @@ class CardGridView2 extends StatelessWidget {
                       children: [
                         Text(
                           "Apparel",
-                          style: TextStyle(
-                              color: const Color(0xff1569b4),
-                              fontSize: allsize * 0.016,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
+                                style: TextStyle(
+                                    color: const Color(0xff066ecc),
+                                    fontSize: allsize * 0.015,
+                                    fontFamily: 'opensans_semibold',
+                                    fontWeight: FontWeight.w800),
+                                textAlign: TextAlign.center,
+                              ),
                         Flexible(
                           child: Image.network(
                             "https://www.midtowncomics.com/images/PRODUCT/FUL/${provider.streamedData['DATA']['featureNewAdditionSection4']['pr_id']}_ful.jpg",

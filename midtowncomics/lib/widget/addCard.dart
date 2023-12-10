@@ -211,7 +211,7 @@ class _AddCardState extends State<AddCard> {
                                 child: Container(
                                   height:
                                   size.height * 0.045,
-                                  width: size.width*0.5,
+                                  width: size.width*0.49,
                                   decoration: BoxDecoration(
                                       color:
                                       Colors.grey[300]),
@@ -287,7 +287,7 @@ class _AddCardState extends State<AddCard> {
                                 child: Container(
                                   height:
                                   size.height * 0.045,
-                                  width: size.width*0.3,
+                                  width: size.width*0.25,
                                   decoration: BoxDecoration(
                                       color:
                                       Colors.grey[300]),

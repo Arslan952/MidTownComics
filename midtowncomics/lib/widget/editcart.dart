@@ -252,7 +252,7 @@ class _EditCardState extends State<EditCard> {
                                 child: Container(
                                   height:
                                   size.height * 0.045,
-                                  width: size.width*0.5,
+                                  width: size.width*0.48,
                                   decoration: BoxDecoration(
                                       color:
                                       Colors.grey[300]),
@@ -328,7 +328,7 @@ class _EditCardState extends State<EditCard> {
                                 child: Container(
                                   height:
                                   size.height * 0.045,
-                                  width: size.width*0.3,
+                                  width: size.width*0.25,
                                   decoration: BoxDecoration(
                                       color:
                                       Colors.grey[300]),
