@@ -41,7 +41,7 @@ class _HomeSeriesCrossOverState extends State<HomeSeriesCrossOver> {
                     final streamedDataProvider =
                     Provider.of<StreamedDataProvider>(context, listen: false);
                     ApiRequests().SearchApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'],widget.data[index]['search_object']['q'],"","10","","","","","","", "","", "", "", "", "","",false,"", context);
-                    Get.to(const SearchPage());
+                    Get.to(SearchPage(data: '',));
                   }
                   else if(widget.data[index]['url_type']=="L")
                   {

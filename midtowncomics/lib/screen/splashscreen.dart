@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
         SizedBox(
-          height: size.height * 0.05,
+          height: size.height * 0.01,
         ),
            Center(
           child: Transform.scale(
@@ -88,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
       SizedBox(
-        height: size.height*0.02,
+        height: size.height*0.04,
       )
               ],
             ),

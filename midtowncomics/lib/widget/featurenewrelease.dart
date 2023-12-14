@@ -61,6 +61,8 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Consumer<StreamedDataProvider>(builder: (context, provider, child) {
+      // print(widget.data);
+      // print(provider.recommendedforyou);
       return InkWell(
         onTap: () async {
           provider.chanddetai({});
@@ -114,12 +116,9 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                   InkWell(
                     onTap: () {
                       provider.chanddetai({});
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProductDetialPage(
-                                    productid: widget.image!,
-                                  )));
+                     Get.off(ProductDetialPage(
+                       productid: widget.image!,
+                     ));
                       // Get.off(ProductDetialPage(
                       //   productid: widget.image!,
                       // ));
@@ -161,21 +160,26 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                               onTap: (){
                                 print(provider.recommendedforyou);
                               },
-                              child: Container(
-                                height: size.height * 0.033,
-                                width: size.width * 0.24,
-                                decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: const Color(0xffe3483c), width: 3.4),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Center(
-                                  child: Text(
-                                    "${FunctionClass().findoff(widget.prce1!,widget.price2!)}% OFF",
-                                    style: TextStyle(
-                                        color: const Color(0xffe3483c),
-                                        fontSize: allsize * 0.011,
-                                        fontFamily: ' oswald_bold',
-                                        fontWeight: FontWeight.bold),
+                              child: InkWell(
+                                onTap: (){
+                                  print(provider.recommendedforyou);
+                                },
+                                child: Container(
+                                  height: size.height * 0.033,
+                                  width: size.width * 0.24,
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: const Color(0xffe3483c), width: 3.4),
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Center(
+                                    child: Text(
+                                      "${FunctionClass().findoff(widget.prce1!,widget.price2!)}% OFF",
+                                      style: TextStyle(
+                                          color: const Color(0xffe3483c),
+                                          fontSize: allsize * 0.011,
+                                          fontFamily: ' oswald_bold',
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -219,47 +223,56 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                     return ListTile(
                                       title: Text(item),
                                       onTap: () async {
-                                        setState(() {
+                                        setState(()
+                                        async {
                                           if (item == '-Remove-') {
-                                            showDropdown = false;
-                                            dropdownValue = '1 in Cart';
                                             provider.call(widget.image!, "0","1",widget.addedtowl.toString());
+                                            setState(() {
+                                              showDropdown = false;
+                                            });
+                                            dropdownValue = '1 in Cart';
+                                            Navigator.of(context).pop();
                                           }
-                                          dropdownValue = item;
+                                          else{
+                                            dropdownValue = item;
+                                            int value1 =
+                                            FunctionClass(). extractIntegerBeforeSpace(item);
 
-                                        });
-                                        Navigator.of(context).pop();
-                                        final streamedDataProvider =
-                                        Provider.of<StreamedDataProvider>(
-                                            context,
-                                            listen: false);
-                                        int value1 =
-                                        FunctionClass(). extractIntegerBeforeSpace(item);
-                                        var request = http.Request(
-                                            'GET',
-                                            Uri.parse(
-                                                'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${widget.image}&sc_qty=${ item == "-Remove-"
-                                                    ? "0"
-                                                    : value1}&app_id='));
-                                        http.StreamedResponse
-                                        response =
-                                        await request.send();
-                                        if (response.statusCode ==
-                                            200) {
-                                          final data = await response
-                                              .stream
-                                              .bytesToString();
-                                          streamedDataProvider
-                                              .updateCartData(
-                                              jsonDecode(data));
-                                          Map<String, dynamic>
-                                          datache =
-                                          jsonDecode(data);
-                                        } else {
-                                          debugPrint(
-                                              response.reasonPhrase);
+                                            provider.call(widget.image!, "1",value1.toString(),widget.addedtowl.toString());
+                                            Navigator.of(context).pop();
+                                          }
+                                          int value1 =
+                                          FunctionClass(). extractIntegerBeforeSpace(item);
+                                          final streamedDataProvider =
+                                          Provider.of<StreamedDataProvider>(
+                                              context,
+                                              listen: false);
+                                          var request = http.Request(
+                                              'GET',
+                                              Uri.parse(
+                                                  'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${widget.image}&sc_qty=${ item == "-Remove-"
+                                                      ? "0"
+                                                      : value1}&app_id='));
+                                          http.StreamedResponse
+                                          response =
+                                          await request.send();
+                                          if (response.statusCode ==
+                                              200) {
+                                            final data = await response
+                                                .stream
+                                                .bytesToString();
+                                            streamedDataProvider
+                                                .updateCartData(
+                                                jsonDecode(data));
+                                            Map<String, dynamic>
+                                            datache =
+                                            jsonDecode(data);
+                                          } else {
+                                            debugPrint(
+                                                response.reasonPhrase);
+                                          }
                                         }
-                                        provider.call(widget.image!, "1",value1.toString(),widget.addedtowl.toString());
+                                        );
                                       },
                                     );
                                   }).toList(),
@@ -372,15 +385,67 @@ class _FeatureNewReleaseState extends State<FeatureNewRelease> {
                                     return ListTile(
                                       title: Text(item),
                                       onTap: () async {
-                                        setState(() {
+                                        setState(()
+                                        async {
                                           if (item == '-Remove-') {
-                                            showDropdown = false;
-                                            dropdownValue = '1 in Cart';
                                             provider.call(widget.image!, "0","1",widget.addedtowl.toString());
+                                            setState(() {
+                                              showDropdown = false;
+                                            });
+                                            dropdownValue = '1 in Cart';
+                                            Navigator.of(context).pop();
                                           }
-                                          dropdownValue = item;
+                                          else{
+                                            dropdownValue = item;
+                                            int value1 =
+                                            FunctionClass(). extractIntegerBeforeSpace(item);
 
-                                        });
+                                            provider.call(widget.image!, "1",value1.toString(),widget.addedtowl.toString());
+                                            Navigator.of(context).pop();
+                                          }
+                                          int value1 =
+                                          FunctionClass(). extractIntegerBeforeSpace(item);
+                                          final streamedDataProvider =
+                                          Provider.of<StreamedDataProvider>(
+                                              context,
+                                              listen: false);
+                                          var request = http.Request(
+                                              'GET',
+                                              Uri.parse(
+                                                  'https://www.midtowncomics.com/wcfmt/services/cart.svc/save?apiKey=&mtUser=&mtPass=&sh_id=76367&pr_id=${widget.image}&sc_qty=${ item == "-Remove-"
+                                                      ? "0"
+                                                      : value1}&app_id='));
+                                          http.StreamedResponse
+                                          response =
+                                          await request.send();
+                                          if (response.statusCode ==
+                                              200) {
+                                            final data = await response
+                                                .stream
+                                                .bytesToString();
+                                            streamedDataProvider
+                                                .updateCartData(
+                                                jsonDecode(data));
+                                            Map<String, dynamic>
+                                            datache =
+                                            jsonDecode(data);
+                                          } else {
+                                            debugPrint(
+                                                response.reasonPhrase);
+                                          }
+                                        }
+                                        // {
+                                        //   if (item == '-Remove-') {
+                                        //     provider.call(widget.image!, "0","1",widget.addedtowl.toString());
+                                        //     setState(() {
+                                        //       showDropdown = false;
+                                        //     });
+                                        //     dropdownValue = '1 in Cart';
+                                        //   }
+                                        //   dropdownValue = item;
+                                        //
+                                        // }
+                                        );
                                         Navigator.of(context).pop();
                                         final streamedDataProvider =
                                             Provider.of<StreamedDataProvider>(
@@ -507,9 +572,13 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Container(
       height: size.height * 0.06,
-      color: (widget.preorder == "1")
-          ? const Color(0xff9048c4)
-              : const Color(0xff006ccf),
+      decoration: BoxDecoration(
+        color: (widget.preorder == "1")
+            ? const Color(0xff9048c4)
+            : const Color(0xff006ccf),
+        borderRadius: BorderRadius.circular(allsize*0.0015)
+      ),
+      
       child: Center(
           child: Text(
         widget.preorder == "1"

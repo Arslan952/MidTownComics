@@ -30,20 +30,29 @@ class CardGridView2 extends StatelessWidget {
                 final streamedDataProvider =
                 Provider.of<StreamedDataProvider>(context, listen: false);
                 ApiRequests().SearchApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'],provider.featurenewrelease1['pageparameters']['cat'],provider.featurenewrelease1['pageparameters']['cat'],"10","","","","","","", "","", "", "", "", "","",false,"", context);
-                Get.to(const SearchPage());
+                Get.to(SearchPage(data: '',));
               },
               child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 1,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(allsize*0.003),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(0.8, 1), // Right and bottom shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(-0.6, 0), // Left and bottom shadow
+                      ),
+                    ]
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(allsize*0.003),
+                    color: Colors.white,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
                     child:provider.featurenewreleasegrid.isEmpty?const Center(child: CircularProgressIndicator(),):
@@ -55,7 +64,7 @@ class CardGridView2 extends StatelessWidget {
                                     color: const Color(0xff066ecc),
                                     fontSize: allsize * 0.015,
                                     fontFamily: 'opensans_semibold',
-                                    fontWeight: FontWeight.w800),
+                                    fontWeight: FontWeight.w700),
                                 textAlign: TextAlign.center,
                               ),
                         Flexible(
@@ -89,20 +98,29 @@ class CardGridView2 extends StatelessWidget {
                 final streamedDataProvider =
                 Provider.of<StreamedDataProvider>(context, listen: false);
                 ApiRequests().SearchApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'],provider.featurenewrelease2['pageparameters']['q'],"","10","","","","","","", "","", "", "", "", "","",false,"", context);
-                Get.to(const SearchPage());
+                Get.to(SearchPage(data: '',));
               },
               child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 1,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                decoration: BoxDecoration(
+                 borderRadius: BorderRadius.circular(allsize*0.003),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(0.8, 1), // Right and bottom shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(-0.6, 0), // Left and bottom shadow
+                      ),
+                    ]
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(allsize*0.003),
+                    color: Colors.white,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
                     child:
@@ -115,7 +133,7 @@ class CardGridView2 extends StatelessWidget {
                                     color: const Color(0xff066ecc),
                                     fontSize: allsize * 0.015,
                                     fontFamily: 'opensans_semibold',
-                                    fontWeight: FontWeight.w800),
+                                    fontWeight: FontWeight.w700),
                                 textAlign: TextAlign.center,
                               ),
                         Flexible(
@@ -155,17 +173,26 @@ class CardGridView2 extends StatelessWidget {
                 Get.to(LandingPage());
               },
               child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 1,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.circular(allsize*0.003),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(0.8, 1), // Right and bottom shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(-0.6, 0), // Left and bottom shadow
+                      ),
+                    ]
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(allsize*0.003),
+                    color: Colors.white,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
                     child:
@@ -178,7 +205,7 @@ class CardGridView2 extends StatelessWidget {
                                     color: const Color(0xff066ecc),
                                     fontSize: allsize * 0.015,
                                     fontFamily: 'opensans_semibold',
-                                    fontWeight: FontWeight.w800),
+                                    fontWeight: FontWeight.w700),
                                 textAlign: TextAlign.center,
                               ),
                         Flexible(
@@ -212,20 +239,29 @@ class CardGridView2 extends StatelessWidget {
                 final streamedDataProvider =
                 Provider.of<StreamedDataProvider>(context, listen: false);
                 ApiRequests().SearchApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'],provider.featurenewrelease4['pageparameters']['cat'],provider.featurenewrelease4['pageparameters']['cat'],"10","","","","","","", "","", "", "", "", "","",false,"", context);
-                Get.to(const SearchPage());
+                Get.to(SearchPage(data: '',));
               },
               child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 1,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.circular(allsize*0.003),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(0.8, 1), // Right and bottom shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(-0.6, 0), // Left and bottom shadow
+                      ),
+                    ]
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(allsize*0.003),
+                    color: Colors.white,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
                     child:
@@ -238,7 +274,7 @@ class CardGridView2 extends StatelessWidget {
                                     color: const Color(0xff066ecc),
                                     fontSize: allsize * 0.015,
                                     fontFamily: 'opensans_semibold',
-                                    fontWeight: FontWeight.w800),
+                                    fontWeight: FontWeight.w700),
                                 textAlign: TextAlign.center,
                               ),
                         Flexible(

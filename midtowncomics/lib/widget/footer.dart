@@ -55,7 +55,7 @@ class _FooterState extends State<Footer> {
                 "ABOUT US",
                 style: GoogleFonts.openSans(
                     color: const Color(0xff006ccf),
-                    fontSize: allsize * 0.0113,
+                    fontSize: allsize * 0.0095,
                     fontWeight: FontWeight.w600),
               ),
               onExpansionChanged: (value) {
@@ -68,7 +68,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "CONTACT INFORMATION",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -79,7 +79,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "CUSTOMER TESTIMONIALS",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -88,7 +88,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "SIGNING & EVENTS",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -109,7 +109,7 @@ class _FooterState extends State<Footer> {
                 "OUR STORIES",
                 style: GoogleFonts.openSans(
                     color: const Color(0xff006ccf),
-                    fontSize: allsize * 0.0113,
+                    fontSize: allsize * 0.0095,
                     fontWeight: FontWeight.w600),
               ),
               onExpansionChanged: (value) {
@@ -122,7 +122,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "DOWNTOWN",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -131,7 +131,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "GRAND CENTRAL",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -140,7 +140,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "TIMES SQUARE",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -149,7 +149,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "ASTORIA OUTLET",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -170,7 +170,7 @@ class _FooterState extends State<Footer> {
                 "COMMUNITY",
                 style: GoogleFonts.openSans(
                     color: const Color(0xff006ccf),
-                    fontSize: allsize * 0.0113,
+                    fontSize: allsize * 0.0095,
                     fontWeight: FontWeight.w600),
               ),
               onExpansionChanged: (value) {
@@ -183,7 +183,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "BLOG",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -192,7 +192,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "FACEBOOK",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -201,7 +201,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "INSTAGRAM",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -210,7 +210,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "TUMBLR",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -219,7 +219,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "TWITTER",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -228,7 +228,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "YOUTUBE",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -249,7 +249,7 @@ class _FooterState extends State<Footer> {
                 "MY ACCOUNT",
                 style: GoogleFonts.openSans(
                     color: const Color(0xff006ccf),
-                    fontSize: allsize * 0.0113,
+                    fontSize: allsize * 0.0095,
                     fontWeight: FontWeight.w600),
               ),
               onExpansionChanged: (value) {
@@ -262,7 +262,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "ORDER STATUS",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -273,7 +273,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "ACCOUNT SETTINGS",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -284,7 +284,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "SUBSCRIPTION SETTINGS",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -295,7 +295,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "CHECK GIFT CARD BALANCE",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -308,7 +308,7 @@ class _FooterState extends State<Footer> {
                         title: Text(
                           "PULL LIST FAQ",
                           style: GoogleFonts.openSans(
-                              fontSize: allsize * 0.0113,
+                              fontSize: allsize * 0.0095,
                               fontWeight: FontWeight.w600),
                         ),
                         onTap: () {
@@ -321,7 +321,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "PULL LIST",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -334,7 +334,7 @@ class _FooterState extends State<Footer> {
                         title: Text(
                           "PREVIEWS FAQ",
                           style: GoogleFonts.openSans(
-                              fontSize: allsize * 0.0113,
+                              fontSize: allsize * 0.0095,
                               fontWeight: FontWeight.w600),
                         ),
                         onTap: () {
@@ -347,7 +347,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "PREVIEWS",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -368,7 +368,7 @@ class _FooterState extends State<Footer> {
                 "CUSTOMER SERVICE",
                 style: GoogleFonts.openSans(
                     color: const Color(0xff006ccf),
-                    fontSize: allsize * 0.0113,
+                    fontSize: allsize * 0.0095,
                     fontWeight: FontWeight.w600),
               ),
               onExpansionChanged: (value) {
@@ -381,7 +381,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "IN-STORE PICK-UP",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -392,7 +392,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "SITEMAP",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -401,7 +401,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "FAQ",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -412,7 +412,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "PRIVACY POLICY",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -423,7 +423,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "UNSUBSCRIBE NEWSLETTER",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -434,7 +434,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "TERMS & CONDITIONS",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {},
@@ -443,7 +443,7 @@ class _FooterState extends State<Footer> {
                   title: Text(
                     "SHIPPING INFORMATION",
                     style: GoogleFonts.openSans(
-                        fontSize: allsize * 0.0113,
+                        fontSize: allsize * 0.0095,
                         fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
@@ -479,7 +479,10 @@ class _FooterState extends State<Footer> {
             "All Site Content and 2018 Midtown Comics, unless otherwise noted\n All Right Reserved",
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: const Color(0xff006ccf), fontSize: allsize * 0.0097),
+
+                color: const Color(0xff006ccf), fontSize: allsize * 0.009,
+                 fontFamily: 'opensans_semibold'
+            ),
           )
         ],
       ),

@@ -66,7 +66,7 @@ class _Slider1State extends State<Slider1> {
                              final streamedDataProvider =
                              Provider.of<StreamedDataProvider>(context, listen: false);
                               ApiRequests().SearchApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'], item['search_object']['q'],"","10","","","","","","", "","", "", "", "", "","",false,"", context);
-                             Get.to(const SearchPage());
+                             Get.to(SearchPage(data: '',));
                            }
                          else if(item['url_type']=="L")
                            {
@@ -103,7 +103,7 @@ class _Slider1State extends State<Slider1> {
                       );
                     },
                     options: CarouselOptions(
-                      autoPlayInterval: const Duration(seconds: 5),
+                      autoPlayInterval: const Duration(seconds: 3),
                       autoPlay: true,
                       enableInfiniteScroll: false,
                       height: size.height * 0.25,
@@ -117,7 +117,7 @@ class _Slider1State extends State<Slider1> {
                   ),
                   Positioned(
                     bottom: size.height * 0.04,
-                    left: size.width * 0.4,
+                    left: (size.width - (provider.slider1.length * allsize * 0.011)) / 2,
                     child:
                     AnimatedSmoothIndicator(
                       duration: const Duration(milliseconds:300),
@@ -126,8 +126,8 @@ class _Slider1State extends State<Slider1> {
                       effect:  WormEffect(
                         paintStyle: PaintingStyle.stroke,
                         dotColor: Colors.grey[600]!,
-                        dotHeight: allsize*0.012,
-                        dotWidth: allsize*0.012,
+                        dotHeight: allsize*0.011,
+                        dotWidth: allsize*0.011,
                         strokeWidth: 1.5,
                         activeDotColor: Colors.white,
                       ),
@@ -177,9 +177,10 @@ class _Slider1State extends State<Slider1> {
                       provider.slider1[_currentIndex]['img_name_sub'],
                       // Use the 'title' field from your data
                       style: TextStyle(
-                          fontSize: allsize * 0.012,
+                          fontSize: allsize * 0.01,
                         color: const Color(0xff7a7a7a),
-                        fontFamily: 'oswald_light'
+                        fontFamily: 'oswald_light',
+                        fontWeight: FontWeight.bold
                       ),
                       textAlign: TextAlign.center,
                     ),

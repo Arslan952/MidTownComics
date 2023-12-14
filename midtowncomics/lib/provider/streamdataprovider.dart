@@ -226,9 +226,23 @@ class StreamedDataProvider extends ChangeNotifier {
   }
 
   //Update Recomended For You
+  // void updateInreco(String productId, String inCartValue, String scQty, String addedtowl) {
+  //   int index = recommendedforyou.indexWhere((product) => product["pr_id"].toString() == productId);
+  //   if (index != -1) {
+  //     recommendedforyou[index]["in_cart"] = inCartValue;
+  //     recommendedforyou[index]["sc_qty"] = scQty;
+  //     recommendedforyou[index]["addedtowl"] = addedtowl;
+  //     notifyListeners();
+  //     print('Product updated at index $index');
+  //   }
+  //   print(recommendedforyou[index]["in_cart"]);
+  // }
+
+
   void updateInreco(String productId, String inCartValue, scQty,addedtowl) {
     print('InCartValue');
     print(inCartValue);
+    print(recommendedforyou);
     for (var product in recommendedforyou) {
       print(productId);
       if (product["pr_id"] == productId) {
@@ -312,12 +326,12 @@ class StreamedDataProvider extends ChangeNotifier {
   void call(String productId, String inCartValue, scQty,addedtowl) {
     print("-------InCart Value------");
     print(inCartValue);
-    updateInreco(productId, inCartValue, scQty,addedtowl);
-    updatefeature(productId, inCartValue, scQty,addedtowl);
-    updatepreorder(productId, inCartValue, scQty,addedtowl);
-    updateback(productId, inCartValue, scQty,addedtowl);
-    updatebest(productId, inCartValue, scQty,addedtowl);
-    updateexclusive(productId, inCartValue, scQty,addedtowl);
+    updateInreco(productId, inCartValue.toString(), scQty,addedtowl);
+    updatefeature(productId, inCartValue.toString(), scQty,addedtowl);
+    updatepreorder(productId, inCartValue.toString(), scQty,addedtowl);
+    updateback(productId, inCartValue.toString(), scQty,addedtowl);
+    updatebest(productId, inCartValue.toString(), scQty,addedtowl);
+    updateexclusive(productId, inCartValue.toString(), scQty,addedtowl);
   }
 
   //Login Data Management

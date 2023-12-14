@@ -97,15 +97,15 @@ class CustomDialougue2 extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: size.height * 0.57,
+                height:allsize*0.38,
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: size.width*0.03),
                     child: ListView.builder(
                         itemCount: cartdatalist.length,
                         itemBuilder: (context, index) {
-                          double quantity =
-                              double.parse(cartdatalist[index]['pr_price']);
-                          int quant = quantity.toInt();
+                          // double quantity =
+                          //     double.parse(cartdatalist[index]['pr_price']);
+                          // int quant = quantity.toInt();
                           return Column(
                             children: [
                               SizedBox(
@@ -214,7 +214,7 @@ class CustomDialougue2 extends StatelessWidget {
                                                   fontSize: allsize * 0.011),
                                             ),
                                             Text(
-                                              "\$$quant",
+                                              "\$${double.parse(cartdatalist[index]['pr_price'])}",
                                               style: TextStyle(
                                                   fontSize: allsize * 0.011),
                                             )

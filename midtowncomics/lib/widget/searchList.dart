@@ -17,7 +17,7 @@ class _SearchListState extends State<SearchList> {
           return Column(
             children: [
               provider.showsearchlist == true
-                  ? provider.returnproduct.isEmpty
+                  ? provider.returnproduct.isEmpty || widget.searchcontroller.text.trim().isEmpty
                   ? Container()
                   : ListView.builder(
                   physics:
@@ -43,13 +43,17 @@ class _SearchListState extends State<SearchList> {
                             ? const Color(0xffececec)
                             : Colors.white,
                         child: Padding(
-                          padding: EdgeInsets.all(
-                              allsize * 0.005),
+                          padding: EdgeInsets.symmetric(
+                          vertical:  allsize * 0.013,
+                            horizontal: allsize*0.01
+                          ),
                           child: RichText(
                             text: TextSpan(
                               style: TextStyle(
                                   fontSize:
-                                  allsize * 0.012,
+                                  allsize * 0.0115,
+                                  fontFamily: 'opensans_regular',
+                                  fontWeight: FontWeight.w500,
                                   color: Colors.black),
                               children: <TextSpan>[
                                 TextSpan(

@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:midtowncomics/screen/homescreen.dart';
 import 'package:midtowncomics/widget/searchList.dart';
 
 import '../widget/dialagueBox/filterdialugue.dart';
@@ -8,7 +9,8 @@ import '../widget/searchListViewbuilderWidget.dart';
 import 'package:midtowncomics/export.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+  String data;
+  SearchPage({super.key,required this.data});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -27,13 +29,14 @@ class _SearchPageState extends State<SearchPage> {
   bool data = false;
 
   Future<bool> _onWillPop() async {
-    Navigator.of(context).popUntil((route) => route.isFirst);
+    Get.off(const HomeScreen());
     return false;
   }
 
   @override
   void initState() {
     // TODO: implement initState
+    searchcontroller.text=widget.data;
     super.initState();
   }
 
@@ -71,9 +74,10 @@ class _SearchPageState extends State<SearchPage> {
                       }
                 return SingleChildScrollView(
                   child: provider.searchpagein == true
-                      ? Column(
+                      ?  Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            SizedBox(height: size.height*0.1,),
                             const Center(
                                 child: CircularProgressIndicator()),
                           ],
@@ -426,24 +430,35 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     var allsize =
         MediaQuery.of(context).size.height + MediaQuery.of(context).size.width;
     return Container(
-      height: size.height * 0.06,
-      color: (widget.preorder == "1")
-          ? const Color(0xff9048c4)
-          : (quantity == 0 || quantity < 0)
-              ? Colors.red
-              : const Color(0xff006ccf),
-      child: Center(
-          child: Text(
-        widget.preorder == "1"
-            ? "PRE-ORDER"
+      decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius:0.1,
+              offset: Offset(0, 1), // Right and bottom shadow
+            ),
+          ]
+      ),
+      child: Container(
+        height: size.height * 0.06,
+        color: (widget.preorder == "1")
+            ? const Color(0xff9048c4)
             : (quantity == 0 || quantity < 0)
-                ? "ADD TO WISH LIST"
-                : "ADD TO CART",
-        style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: allsize * 0.012),
-      )),
+                ? Colors.red
+                : const Color(0xff006ccf),
+        child: Center(
+            child: Text(
+          widget.preorder == "1"
+              ? "PRE-ORDER"
+              : (quantity == 0 || quantity < 0)
+                  ? "ADD TO WISH LIST"
+                  : "ADD TO CART",
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: allsize * 0.012),
+        )),
+      ),
     );
   }
 }

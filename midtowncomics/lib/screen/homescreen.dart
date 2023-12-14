@@ -174,7 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Container(
                                           height: size.height * 0.04,
                                           width: size.width * 0.4,
-                                          color: const Color(0xffe0e0e0),
+                                          color: const Color(0xffE0E0E0),
+
                                           child: Padding(
                                             padding:
                                                 EdgeInsets.all(allsize * 0.005),
@@ -192,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   //   height: size.height * 0.01,
                                   // ),
                                   SizedBox(
-                                      height: allsize * 0.285,
+                                      height: allsize * 0.29,
                                       child: HomeScrrenHorizantalList(
                                         data: provider.featurenewrelease,
                                         scrollController:
@@ -206,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           //Series Cross Over List
                           Container(
-                            color: const Color(0xfff7f7f5),
+                            color: const Color(0xffefefef),
                             height: allsize * 0.105,
                             width: double.infinity,
                             child: Column(
@@ -278,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: allsize * 0.285,
+                                    height: allsize * 0.29,
                                     child: HomeScrrenHorizantalList(
                                       data: provider.recommendedforyou,
                                       scrollController: forYouScrollController,
@@ -329,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         false,
                                         "",
                                         context);
-                                    Get.to(const SearchPage());
+                                    Get.to(SearchPage(data: '',));
                                   },
                                   child: Container(
                                     // height:size.height*0.12,
@@ -417,7 +418,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                   SizedBox(
-                                      height: allsize * 0.285,
+                                      height: allsize * 0.29,
                                       child: HomeScrrenHorizantalList(
                                         data: provider.recomendedpreorder,
                                         scrollController:
@@ -481,7 +482,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: allsize * 0.285,
+                                    height: allsize * 0.29,
                                     child: HomeScrrenHorizantalList(
                                       data: provider.recomendedbackissue,
                                       scrollController:
@@ -546,7 +547,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: allsize * 0.285,
+                                    height: allsize * 0.29,
                                     child: HomeScrrenHorizantalList(
                                       data: provider.bestSeller,
                                       scrollController:
@@ -575,8 +576,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Padding(
                                       padding: EdgeInsets.all(allsize * 0.008),
                                       child: Text(
-                                          'Featured Midtown Comics\n'
-                                          'Signed/Exclusive',
+                                          'Featured Midtown Comics '
+                                          'Signed/\nExclusive',
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: allsize * 0.0125,
@@ -593,16 +594,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                         );
                                       },
                                       child: Container(
-                                        height: size.height * 0.04,
-                                        width: size.width * 0.4,
+                                        height:allsize*0.05,
+                                        width: size.width * 0.28,
                                         color: const Color(0xffe0e0e0),
                                         child: Padding(
                                           padding:
                                               EdgeInsets.all(allsize * 0.005),
-                                          child: Text(
-                                            "View More",
-                                            style: TextStyle(
-                                                fontSize: allsize * 0.013),
+                                          child: Center(
+                                            child: Text(
+                                              "View More",
+                                              style: TextStyle(
+                                                  fontSize: allsize * 0.013),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -613,7 +616,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: size.height * 0.01,
                                 ),
                                 SizedBox(
-                                  height: allsize * 0.285,
+                                  height: allsize * 0.29,
                                   child: HomeScrrenHorizantalList(
                                     data: provider.exclusive,
                                     scrollController: exclusiveScrollController,
@@ -670,20 +673,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                         false,
                                         "",
                                         context);
-                                    Get.to(const SearchPage());
+                                    Get.to(SearchPage(data: '',));
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: allsize * 0.005),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(2),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.black26,
-                                          blurRadius: 2,
-                                          offset: Offset(1, 1),
-                                        ),
-                                      ],
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius:0.1,
+                                            offset: Offset(0.8, 1), // Right and bottom shadow
+                                          ),
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius:0.1,
+                                            offset: Offset(-1, 0), // Left and bottom shadow
+                                          ),
+                                        ]
                                     ),
                                     child: Container(
                                       color: Colors.white,
@@ -765,20 +773,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                         false,
                                         "",
                                         context);
-                                    Get.to(const SearchPage());
+                                    Get.to(SearchPage(data: '',));
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: allsize * 0.005),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(2),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.black26,
-                                          blurRadius: 2.0,
-                                          offset: Offset(1, 1),
-                                        ),
-                                      ],
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius:0.1,
+                                            offset: Offset(0.8, 1), // Right and bottom shadow
+                                          ),
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius:0.1,
+                                            offset: Offset(-1, 0), // Left and bottom shadow
+                                          ),
+                                        ]
                                     ),
                                     child: Container(
                                       color: Colors.white,
@@ -840,13 +853,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                         horizontal: allsize * 0.005),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(2),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.black26,
-                                          blurRadius: 2.0,
-                                          offset: Offset(1, 1),
-                                        ),
-                                      ],
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius:0.1,
+                                            offset: Offset(0.8, 1), // Right and bottom shadow
+                                          ),
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius:0.1,
+                                            offset: Offset(-1, 0), // Left and bottom shadow
+                                          ),
+                                        ]
                                     ),
                                     child: Container(
                                       color: Colors.white,
@@ -892,7 +910,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: size.height * 0.01,
                           ),
                           //News Letter Subcribe Widget
-                          const SubcribeWidget(),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: allsize*0.005),
+                            child: const SubcribeWidget(),
+                          ),
                           SizedBox(
                             height: size.height * 0.02,
                           ),

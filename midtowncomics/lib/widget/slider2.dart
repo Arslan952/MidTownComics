@@ -86,7 +86,7 @@ class _Slider2State extends State<Slider2> {
                           FaIcon(
                             Ico[itemIndex],
                             color: const Color(0xff017ff0),
-                            size: allsize * 0.018,
+                            size: allsize * 0.015,
                           ),
                           SizedBox(
                             width: size.width * 0.03,
@@ -121,14 +121,14 @@ class _Slider2State extends State<Slider2> {
               height: size.height * 0.01,
             ),
             AnimatedSmoothIndicator(
-              duration: const Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 200),
               activeIndex: _currentIndex,
               count: data.length,
               effect:  WormEffect(
                 paintStyle: PaintingStyle.stroke,
                 dotColor: Colors.grey[600]!,
-                dotHeight: allsize*0.012,
-                dotWidth: allsize*0.012,
+                dotHeight: allsize*0.011,
+                dotWidth: allsize*0.011,
                 strokeWidth: 1.5,
                 activeDotColor: Colors.white,
               ),

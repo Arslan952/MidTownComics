@@ -113,6 +113,7 @@ flutter:
     - assets/images/imagecomingsoon_ful.jpg
     - assets/icons/
     - assets/images/confused_spidey.png
+    - assets/images/midtown.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -147,6 +148,12 @@ flutter:
      - family: opensans_extrabold
        fonts:
          - asset: assets/fonts/opensans_extrabold.ttf
+     - family: Dhurjati_Italic
+       fonts:
+         - asset: assets/fonts/Dhurjati Italic.otf
+     - family: Dhurjati-Regular
+       fonts:
+         - asset: assets/fonts/Dhurjati-Regular.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

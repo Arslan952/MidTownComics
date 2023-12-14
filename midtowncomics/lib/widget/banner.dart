@@ -7,6 +7,7 @@ class HomeScreenBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var allsize=size.height+size.width;
     return Consumer<StreamedDataProvider>(builder: (context, provider, child) {
       String imagedata= "";
 
@@ -27,7 +28,7 @@ class HomeScreenBanner extends StatelessWidget {
         // )
             :
         SizedBox(
-        height: size.height * 0.37,
+        height:allsize*0.245,
         width: double.infinity,
         child: provider.streamedData.isEmpty || imagedata==" "
             ?

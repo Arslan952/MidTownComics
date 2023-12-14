@@ -35,7 +35,7 @@ class WeeklyReleaseButton extends StatelessWidget {
                     child: Text(
                       "WEEKLY RELEASES",
                       style: TextStyle(
-                          color: const Color(0xff006ccf),
+                          color: const Color(0xff1c62b9),
                           fontFamily: 'opensans_regular',
                           fontSize: allsize*0.0175,
                           letterSpacing: 1,
@@ -46,27 +46,61 @@ class WeeklyReleaseButton extends StatelessWidget {
                         padding: EdgeInsets.only(left: size.width*0.14),
                         child: Text(
                     "Updated every wednesday",
-                    style: TextStyle(color: const Color(0xff868686),fontSize: allsize*0.011),
+                    style: TextStyle(color: const Color(0xff777777),fontSize: allsize*0.011),
                   ),
                       )
                 ],
               ),
-              ElevatedButton(
-                style: const ButtonStyle(
-                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero
-                  )),
-                  backgroundColor: MaterialStatePropertyAll(Colors.white)
-                ),
-                  onPressed: () {
-                  Provider.of<WeeklyReleaseProvider>(context,listen: false). updatesortby("TITLE");
-                  Get.to(const WeeklyReleasePage());
-                  },
-                  child:  Center(
+              InkWell(
+                onTap: (){
+                  // Provider.of<WeeklyReleaseProvider>(context,listen: false). updatesortby("TITLE");
+                      Get.to(const WeeklyReleasePage());
+                },
+                child: Container(
+                  height: size.height*0.06,
+                  width: size.width*0.23,
+                  decoration: const BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius:0.1,
+                          offset: Offset(0.8, 1), // Right and bottom shadow
+                        ),
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius:0.1,
+                          offset: Offset(-1, 0), // Left and bottom shadow
+                        ),
+                      ]
+                  ),
+                  child: Container(
+                    color: Colors.white,
+                    child: Center(
                       child: Text(
-                    "VIEW ALL",
-                    style: TextStyle(color: Colors.black,fontSize: allsize*0.012),
-                  )))
+                        "VIEW ALL",
+                          style: TextStyle(color: Colors.black,
+                              fontFamily: 'opensans_semibold',
+                              fontSize: allsize*0.012,fontWeight: FontWeight.w500)
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // ElevatedButton(
+              //   style: const ButtonStyle(
+              //     shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.zero
+              //     )),
+              //     backgroundColor: MaterialStatePropertyAll(Colors.white)
+              //   ),
+              //     onPressed: () {
+              //
+              //     },
+              //     child:  Center(
+              //         child: Text(
+              //       "VIEW ALL",
+              //       style: TextStyle(color: Colors.black,fontSize: allsize*0.012),
+              //     )))
             ],
           ),
         ),

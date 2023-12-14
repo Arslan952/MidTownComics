@@ -38,7 +38,8 @@ class _Slider3State extends State<Slider3> {
                 itemCount: widget.data.length, // Use the length of your data list
                 itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
                   final item = widget.data[itemIndex];
-                  return InkWell(
+                  return
+                    InkWell(
                     onTap: (){
                       final provider=Provider.of<StreamedDataProvider>(context,listen: false);
                       if(item['target_page_name']=="ipd")
@@ -52,7 +53,7 @@ class _Slider3State extends State<Slider3> {
                         final streamedDataProvider =
                         Provider.of<StreamedDataProvider>(context, listen: false);
                         ApiRequests().SearchApi(streamedDataProvider.loginuserdata.isEmpty ? "" :streamedDataProvider.loginuserdata['sh_id'], item['search_object']['q'],"","10","","","","","","", "","", "", "", "", "","",false,"", context);
-                        Get.to(const SearchPage());
+                        Get.to(SearchPage(data: "",));
                       }
                       else if(item['target_page_name']=="L")
                       {
@@ -109,18 +110,18 @@ class _Slider3State extends State<Slider3> {
                 ),
               ),
               Positioned(
-                bottom: size.height*0.03,
+                bottom: size.height*0.04,
                 left: size.width*0.4,
                 child: AnimatedSmoothIndicator(
-                  duration: const Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 200),
                   activeIndex: _currentIndex,
                   count: widget.data.length,
                   curve: Curves.easeIn,
                   effect:  WormEffect(
                     paintStyle: PaintingStyle.stroke,
                     dotColor: Colors.grey[600]!,
-                    dotHeight: allsize*0.012,
-                    dotWidth: allsize*0.012,
+                    dotHeight: allsize*0.011,
+                    dotWidth: allsize*0.011,
                     strokeWidth: 1.5,
                     activeDotColor: Colors.white,
 

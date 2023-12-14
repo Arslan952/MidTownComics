@@ -67,6 +67,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     TextFormField(
                       style: TextStyle(fontSize: allsize * 0.012),
                     controller: password,
+                    obscureText: true,
                     decoration: const InputDecoration(
                       hintText: 'Password',
                     ),

@@ -46,20 +46,28 @@ class CardGridView extends StatelessWidget {
                 );
               },
               child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 1,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.circular(allsize*0.003),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(0.8, 1), // Right and bottom shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(-0.6, 0), // Left and bottom shadow
+                      ),
+                    ]
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(allsize*0.003),
+                    color: Colors.white,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
-
                     child: provider.shoppersummary.isEmpty?const Center(child: CircularProgressIndicator(),):
                     Column(
                       children: [
@@ -141,17 +149,26 @@ class CardGridView extends StatelessWidget {
                 print(provider.weeklyReleasegrid);
               },
               child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 1,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.circular(allsize*0.003),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(0.8, 1), // Right and bottom shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(-0.6, 0), // Left and bottom shadow
+                      ),
+                    ]
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(allsize*0.003),
+                    color: Colors.white,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
                     child: provider.weeklyReleasegrid.isEmpty?const Center(child: CircularProgressIndicator(),):
@@ -240,17 +257,27 @@ class CardGridView extends StatelessWidget {
                 );
               },
               child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 1,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.circular(allsize*0.003),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(0.8, 1), // Right and bottom shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(-0.6, 0), // Left and bottom shadow
+                      ),
+                    ]
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(allsize*0.003),
+                    color: Colors.white,
+                  ),
+
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
                     child:
@@ -324,17 +351,26 @@ class CardGridView extends StatelessWidget {
                 );
               },
               child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 1,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.circular(allsize*0.003),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(0.8, 1), // Right and bottom shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(-0.6, 0), // Left and bottom shadow
+                      ),
+                    ]
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(allsize*0.003),
+                    color: Colors.white,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
                     child: provider.preorderSummary.isEmpty?const Center(child: CircularProgressIndicator(),):
@@ -407,17 +443,27 @@ class CardGridView extends StatelessWidget {
                 );
               },
               child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 1,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.circular(allsize*0.003),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(0.8, 1), // Right and bottom shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(-0.6, 0), // Left and bottom shadow
+                      ),
+                    ]
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(allsize*0.003),
+                    color: Colors.white,
+                  ),
+
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
                     child:provider.whishlistSummary.isEmpty?const Center(child: CircularProgressIndicator(),):
@@ -490,17 +536,26 @@ class CardGridView extends StatelessWidget {
                 Get.to(const DealOfTheDay());
               },
               child: Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 1,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(allsize*0.003),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(0.8, 1), // Right and bottom shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius:0.1,
+                        offset: Offset(-0.6, 0), // Left and bottom shadow
+                      ),
+                    ]
                 ),
                 child: Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(allsize*0.003),
+                    color: Colors.white,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.all(allsize * 0.01),
                     child:
